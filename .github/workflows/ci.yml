@@ -1,0 +1,43 @@
+name: CI
+
+on: [ push ]
+
+jobs:
+  unix:
+    name: compile - Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Configure
+      run: mkdir build && cd build && cmake ..
+    - name: Build
+      run: cmake --build build
+
+  mac:
+    name: compile - MacOS
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Dependancies
+      run: brew install openssl
+    - name: Configure
+      run: mkdir build && cd build && cmake -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1 ..
+    - name: Build
+      run: cmake --build build
+
+  win:
+    name: compile - windows
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Dependancies
+      run: |
+        mkdir build; cd build
+        Invoke-WebRequest -Uri https://mirror.firedaemon.com/OpenSSL/openssl-1.1.1e-dev.zip -OutFile openssl.zip
+        Expand-Archive openssl.zip
+    - name: Configure
+      run: cd build; cmake -D OPENSSL_ROOT_DIR="$pwd\openssl\openssl-1.1\x64" ..
+    - name: Build
+      run: cmake --build build
