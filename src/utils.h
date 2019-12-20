@@ -29,4 +29,6 @@
 
 std::vector<std::string> strsplit(const std::string& str, const std::string& delim);
 
+void strtolower(std::string& str);
+
 #endif /* UTILS_H */
