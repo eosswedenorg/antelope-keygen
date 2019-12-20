@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include <algorithm>
 #include <iostream>
 #include <cstring>
 #include "utils.h"
@@ -43,11 +44,13 @@ static void search(const char *words, size_t n) {
 	std::cout << "Searching for " << n << " keys containing: " << words << std::endl;
 
 	word_list = strsplit(words, ",");
+	std::for_each(word_list.begin(), word_list.end(), strtolower);
 
 	while (count < n) {
 		std::string pubstr;
 		ec_generate_key(&pair);
 		pubstr = wif_pub_encode(pair.pub);
+		strtolower(pubstr);
 
 		for(auto const& word: word_list) {
 			if (pubstr.find(word) != std::string::npos) {
