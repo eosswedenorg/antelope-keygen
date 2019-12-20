@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.4)
 project(eosio-keygen)
 
+set( CMAKE_CXX_STANDARD 11 )
+set( CMAKE_CXX_STANDARD_REQUIRED ON )
+set( CMAKE_CXX_EXTENSIONS OFF )
+
 set( INSTALL_BIN_DIR bin )
 set( INSTALL_SHARE_DIR share/${CMAKE_PROJECT_NAME} )
 
