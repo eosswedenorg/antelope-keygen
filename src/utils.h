@@ -31,4 +31,8 @@ std::vector<std::string> strsplit(const std::string& str, const std::string& del
 
 void strtolower(std::string& str);
 
+std::string& rtrim(std::string& str);
+std::string& ltrim(std::string& str);
+std::string& trim(std::string& str);
+
 #endif /* UTILS_H */
