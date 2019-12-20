@@ -17,6 +17,7 @@ add_executable( ${CMAKE_PROJECT_NAME}
 	src/base58.cpp
 	src/checksum.cpp
 	src/WIF.cpp
+	src/utils.cpp
 	src/main.cpp
 )
 
