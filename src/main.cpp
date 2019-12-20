@@ -22,18 +22,58 @@
  * SOFTWARE.
  */
 #include <iostream>
+#include <cstring>
+#include "utils.h"
 #include "base58.h"
 #include "WIF.h"
 #include "ec.h"
 
+static void print_key(struct ec_keypair *key) {
+
+	std::cout << "Private: " << wif_priv_encode(key->secret) << std::endl;
+	std::cout << "Public: " << wif_pub_encode(key->pub) << std::endl;
+}
+
+static void search(const char *words, size_t n) {
+
+	size_t count = 0;
+	struct ec_keypair pair;
+	std::vector<std::string> word_list;
+
+	std::cout << "Searching for " << n << " keys containing: " << words << std::endl;
+
+	word_list = strsplit(words, ",");
+
+	while (count < n) {
+		std::string pubstr;
+		ec_generate_key(&pair);
+		pubstr = wif_pub_encode(pair.pub);
+
+		for(auto const& word: word_list) {
+			if (pubstr.find(word) != std::string::npos) {
+				std::cout << "----" << std::endl;
+				std::cout << "Found: " << word << std::endl;
+				print_key(&pair);
+				count++;
+			}
+		}
+	}
+}
+
 int main(int argc, char **argv) {
 
-	struct ec_keypair pair;
-
-	ec_generate_key(&pair);
-
-	std::cout << "Private: " << wif_priv_encode(pair.secret) << std::endl;
-	std::cout << "Public: " << wif_pub_encode(pair.pub) << std::endl;
+	// search <word_list> [ <count> ]
+	if (argc > 2 && !strcmp(argv[1], "search")) {
+		int n = 100;
+		if (argc > 3) {
+			n = atoi(argv[3]);
+		}
+		search(argv[2], n);
+	} else {
+		struct ec_keypair pair;
+		ec_generate_key(&pair);
+		print_key(&pair);
+	}
 
 	return 0;
 }
