@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+PACKAGE_NAME="@PROJECT_NAME@"
+PACKAGE_VERSION="@PROJECT_VERSION@"
+PACKAGE_DESCRIPTION="Keygenerator for EOSIO"
+PACKAGE_PREFIX=$(echo "@CMAKE_INSTALL_PREFIX@" | sed -E 's~^/~~')
+PACKAGE_BINDIR="@INSTALL_BIN_DIR@"
+PACKAGE_SHAREDIR="@INSTALL_SHARE_DIR@"
+PACKAGE_TMPDIR="tmp/debroot"
+
+# Default to 1 if no release is set.
+if [[ -z $RELEASE ]]; then
+  RELEASE="1"
+fi
+
+PACKAGE_FULLNAME="${PACKAGE_NAME}_${PACKAGE_VERSION}-${RELEASE}_amd64"
+
+rm -fr ${BASE_DIR}/${PACKAGE_TMPDIR}
+
+# Create debian files.
+mkdir -p ${BASE_DIR}/${PACKAGE_TMPDIR}/DEBIAN
+echo "Package: ${PACKAGE_NAME}
+Version: ${PACKAGE_VERSION}-${RELEASE}
+Section: misc
+Priority: optional
+Architecture: amd64
+Homepage: https://github.com/eosswedenorg/eosio-keygen
+Maintainer: Henrik Hautakoski <henrik@eossweden.org>
+Description: ${PACKAGE_DESCRIPTION}
+Depends: libssl1.1" &> ${BASE_DIR}/${PACKAGE_TMPDIR}/DEBIAN/control
+
+cat ${BASE_DIR}/${PACKAGE_TMPDIR}/DEBIAN/control
+
+mkdir -p ${BASE_DIR}/${PACKAGE_TMPDIR}/${PACKAGE_PREFIX}/${PACKAGE_BINDIR}
+mkdir -p ${BASE_DIR}/${PACKAGE_TMPDIR}/${PACKAGE_PREFIX}/${PACKAGE_SHAREDIR}
+
+cp ${BASE_DIR}/${PACKAGE_NAME} ${BASE_DIR}/${PACKAGE_TMPDIR}/${PACKAGE_PREFIX}/${PACKAGE_BINDIR}/${PACKAGE_NAME}
+
+for file in README.md LICENSE LICENSE.bitcoin ; do
+    cp ${BASE_DIR}/../${file} ${BASE_DIR}/${PACKAGE_TMPDIR}/${PACKAGE_PREFIX}/${PACKAGE_SHAREDIR}
+done
+
+fakeroot dpkg-deb --build ${BASE_DIR}/${PACKAGE_TMPDIR} ${BASE_DIR}/${PACKAGE_FULLNAME}.deb
