@@ -12,6 +12,12 @@ find_package(OpenSSL 1.1 REQUIRED)
 
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 
+# Hack to set the right permissions :)
+configure_file(scripts/generate_deb.sh.in ${PROJECT_BINARY_DIR}/tmp/generate_deb.sh @ONLY)
+file(COPY ${PROJECT_BINARY_DIR}/tmp/generate_deb.sh DESTINATION ${PROJECT_BINARY_DIR}
+    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+)
+
 add_executable( ${CMAKE_PROJECT_NAME}
 	src/ec.cpp
 	src/base58.cpp
