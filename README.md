@@ -66,6 +66,17 @@ C:\repo\build> cmake -D OPENSSL_ROOT_DIR="C:/path/to/openssl-1.1/x86" ..
 C:\repo\build> cmake --build . --config Release
 ```
 
+### WebAssembly (Emscripten / Linux)
+
+It is possible to build WASM code using [emscripten](https://emscripten.org/).
+Consult the manual for how to get it setup. No dependencies are needed as the build
+script will download and compile `openssl` for wasm by itself.
+
+Once your emscripten environment is setup, call `build.sh` with the following flag.
+```sh
+$ ./build.sh em-wasm
+```
+
 ## Install
 
 After the project has been compiled. run `sudo ./install.sh` or the following code if you dont want to use that:
