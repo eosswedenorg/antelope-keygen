@@ -11,6 +11,7 @@ emconfigure cmake \
 	  -DOPENSSL_ROOT_DIR="openssl" \
 	  -DOPENSSL_CRYPTO_LIBRARY="openssl/libcrypto.a" \
 	  -DOPENSSL_SSL_LIBRARY="openssl/libssl.a" \
-      -G "Unix Makefiles" $@ .. 
+      -G "Unix Makefiles" $@ .. \
+	  -DCMAKE_EXE_LINKER_FLAGS="--bind"
 
 emmake make
