@@ -12,13 +12,19 @@ find_package(OpenSSL 1.1 REQUIRED)
 
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 
+if (${CMAKE_SYSTEM_NAME} STREQUAL Emscripten)
+	set (src_main src/wasm.cpp)
+else()
+	set (src_main src/main.cpp)
+endif()
+
 add_executable( ${CMAKE_PROJECT_NAME}
 	src/ec.cpp
 	src/base58.cpp
 	src/checksum.cpp
 	src/WIF.cpp
 	src/utils.cpp
-	src/main.cpp
+	${src_main}
 )
 
 target_link_libraries( ${CMAKE_PROJECT_NAME} PUBLIC ${OPENSSL_LIBRARIES} )
