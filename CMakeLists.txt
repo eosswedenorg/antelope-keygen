@@ -55,5 +55,9 @@ if (UNIX) # Only include in bash environments.
 	)
 endif (UNIX)
 
+if (${CMAKE_SYSTEM_NAME} STREQUAL Emscripten)
+	file(COPY template/wasm_example.html DESTINATION ${PROJECT_BINARY_DIR})
+endif ()
+
 install(TARGETS ${CMAKE_PROJECT_NAME} RUNTIME DESTINATION ${INSTALL_BIN_DIR})
 install(FILES README.md LICENSE LICENSE.bitcoin DESTINATION ${INSTALL_SHARE_DIR})
