@@ -6,5 +6,16 @@
 	</head>
 	<body>
 		<script type="text/javascript" src="eosio-keygen.js"></script>
+
+		<script type="text/javascript">
+			// Wait for module to load
+			Module.onRuntimeInitialized = async _ => {
+				// Declare a variable to the function.
+				let eosio_keygen = Module['eosio_keygen'];
+
+				// Call it!
+				console.log(eosio_keygen());
+			};
+		</script>
 	</body>
 </html>
