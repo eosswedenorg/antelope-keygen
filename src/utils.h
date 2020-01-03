@@ -29,7 +29,7 @@
 
 std::vector<std::string> strsplit(const std::string& str, const std::string& delim);
 
-void strtolower(std::string& str);
+std::string& strtolower(std::string& str);
 
 std::string& rtrim(std::string& str);
 std::string& ltrim(std::string& str);

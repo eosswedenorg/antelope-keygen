@@ -39,8 +39,9 @@ std::vector<std::string> strsplit(const std::string& str, const std::string& del
 	return r;
 }
 
-void strtolower(std::string& str) {
+std::string& strtolower(std::string& str) {
 	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c){ return std::tolower(c); });
+	return str;
 }
 
 std::string& ltrim(std::string& str) {
