@@ -28,43 +28,22 @@
 #include "base58.h"
 #include "WIF.h"
 #include "ec.h"
-
-static void search(std::string words, size_t n) {
-
-	size_t count = 0;
-	struct ec_keypair pair;
-	std::vector<std::string> word_list;
-
-	std::cout << "Searching for " << n << " keys containing: " << words << std::endl;
-
-	word_list = strsplitwords(strtolower(words));
-
-	while (count < n) {
-		std::string pubstr;
-		ec_generate_key(&pair);
-		pubstr = wif_pub_encode(pair.pub);
-		strtolower(pubstr);
-
-		for(auto const& word: word_list) {
-			if (pubstr.find(word) != std::string::npos) {
-				std::cout << "----" << std::endl;
-				std::cout << "Found: " << word << std::endl;
-				wif_print_key(&pair);
-				count++;
-			}
-		}
-	}
-}
+#include "key_search.h"
 
 int main(int argc, char **argv) {
 
 	// search <word_list> [ <count> ]
 	if (argc > 2 && !strcmp(argv[1], "search")) {
 		int n = 100;
+		std::string search(argv[2]);
+
 		if (argc > 3) {
 			n = atoi(argv[3]);
 		}
-		search(argv[2], n);
+
+		std::cout << "Searching for " << n << " keys containing: " << search << std::endl;
+
+		key_search(strsplitwords(strtolower(search)), n);
 	} else {
 		struct ec_keypair pair;
 		ec_generate_key(&pair);
