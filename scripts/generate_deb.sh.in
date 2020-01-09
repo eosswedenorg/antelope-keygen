@@ -29,7 +29,7 @@ Architecture: amd64
 Homepage: https://github.com/eosswedenorg/eosio-keygen
 Maintainer: Henrik Hautakoski <henrik@eossweden.org>
 Description: ${PACKAGE_DESCRIPTION}
-Depends: libssl1.1" &> ${BASE_DIR}/${PACKAGE_TMPDIR}/DEBIAN/control
+Depends: libssl1.1, libc6" &> ${BASE_DIR}/${PACKAGE_TMPDIR}/DEBIAN/control
 
 cat ${BASE_DIR}/${PACKAGE_TMPDIR}/DEBIAN/control
 
