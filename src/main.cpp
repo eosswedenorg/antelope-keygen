@@ -29,7 +29,7 @@
 #include "WIF.h"
 #include "ec.h"
 
-static void search(const char *words, size_t n) {
+static void search(std::string words, size_t n) {
 
 	size_t count = 0;
 	struct ec_keypair pair;
@@ -37,9 +37,7 @@ static void search(const char *words, size_t n) {
 
 	std::cout << "Searching for " << n << " keys containing: " << words << std::endl;
 
-	word_list = strsplit(words, ",");
-	std::for_each(word_list.begin(), word_list.end(), trim);
-	std::for_each(word_list.begin(), word_list.end(), strtolower);
+	word_list = strsplitwords(strtolower(words));
 
 	while (count < n) {
 		std::string pubstr;
