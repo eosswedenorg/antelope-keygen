@@ -24,7 +24,7 @@
 #include <algorithm>
 #include <iostream>
 #include <cstring>
-#include "utils.h"
+#include "string.h"
 #include "base58.h"
 #include "WIF.h"
 #include "ec.h"

@@ -13,11 +13,11 @@ find_package(OpenSSL 1.1 REQUIRED)
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 
 add_executable( ${CMAKE_PROJECT_NAME}
+	src/string.cpp
 	src/ec.cpp
 	src/base58.cpp
 	src/checksum.cpp
 	src/WIF.cpp
-	src/utils.cpp
 	src/main.cpp
 )
 

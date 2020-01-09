@@ -21,18 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef UTILS_H
-#define UTILS_H
+#include <algorithm>
+#include <cctype>
+#include "string.h"
 
-#include <vector>
-#include <string>
+std::vector<std::string> strsplit(const std::string& str, const std::string& delim) {
 
-std::vector<std::string> strsplit(const std::string& str, const std::string& delim);
+	std::vector<std::string> r;
+	size_t s = 0, e = 0, dlen = delim.length();
 
-std::string& strtolower(std::string& str);
+	while((e = str.find(delim, s)) != std::string::npos) {
+		r.push_back(str.substr(s, e - s));
+		s = e + dlen;
+	}
 
-std::string& rtrim(std::string& str);
-std::string& ltrim(std::string& str);
-std::string& trim(std::string& str);
+	r.push_back(str.substr(s));
+	return r;
+}
 
-#endif /* UTILS_H */
+std::string& strtolower(std::string& str) {
+	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c){ return std::tolower(c); });
+	return str;
+}
+
+std::string& ltrim(std::string& str) {
+	auto it = std::find_if(str.begin(), str.end(), [](char ch){ return !std::isspace(ch); });
+	str.erase(str.begin(), it);
+	return str;
+}
+
+std::string& rtrim(std::string& str) {
+	auto it = std::find_if(str.rbegin(), str.rend(), [](char ch){ return !std::isspace(ch); });
+	str.erase(it.base(), str.end());
+	return str;
+}
+
+std::string& trim(std::string& str) {
+	return ltrim(rtrim(str));
+}
