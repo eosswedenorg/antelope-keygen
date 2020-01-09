@@ -1,15 +1,37 @@
 cmake_minimum_required(VERSION 3.4)
+
+# Project name and version
 project(eosio-keygen VERSION 0.1.0)
 
+# Options
 option(USE_THREADS "Compile with support for threads (if available)." ON)
 
+# Paths
+set( INSTALL_BIN_DIR bin )
+set( INSTALL_SHARE_DIR share/${CMAKE_PROJECT_NAME} )
+
+# --------------------------------
+#  Program
+# --------------------------------
+
+set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
+
+set (PROGRAM_SOURCE
+	src/string.cpp
+	src/ec.cpp
+	src/base58.cpp
+	src/checksum.cpp
+	src/WIF.cpp
+	src/key_search.cpp
+	src/main.cpp
+)
+
+# Configure the compiler options
 set( CMAKE_CXX_STANDARD 11 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS OFF )
 
-set( INSTALL_BIN_DIR bin )
-set( INSTALL_SHARE_DIR share/${CMAKE_PROJECT_NAME} )
-
+# Libraries
 find_package(OpenSSL 1.1 REQUIRED)
 
 if (USE_THREADS)
@@ -20,20 +42,7 @@ if (USE_THREADS)
 	endif (Threads_FOUND)
 endif (USE_THREADS)
 
-include_directories( ${OPENSSL_INCLUDE_DIR} )
-
-add_executable( ${CMAKE_PROJECT_NAME}
-	src/string.cpp
-	src/ec.cpp
-	src/base58.cpp
-	src/checksum.cpp
-	src/WIF.cpp
-	src/key_search.cpp
-	src/main.cpp
-)
-
-target_link_libraries( ${CMAKE_PROJECT_NAME} PUBLIC ${OPENSSL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
-
+# Win32 specific.
 if (WIN32)
 	if (CMAKE_SIZEOF_VOID_P EQUAL 8)
 		set (OPENSSL_LIBCRYPTO_NAME libcrypto-1_1-x64)
@@ -43,7 +52,7 @@ if (WIN32)
 	set( OPENSSL_LIBCRYPTO_DLL ${OPENSSL_ROOT_DIR}/bin/${OPENSSL_LIBCRYPTO_NAME}.dll )
 
 	# Need to copy libcrypto dll to binary folder.
-	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+	add_custom_command(TARGET ${PROGRAM_EXE} POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E copy_if_different
 		${OPENSSL_LIBCRYPTO_DLL}
 		${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR}
@@ -57,7 +66,29 @@ if (WIN32)
 	install(FILES ${OPENSSL_LIBCRYPTO_DLL} DESTINATION ${INSTALL_BIN_DIR})
 endif (WIN32)
 
-# Debian .deb generation script
+# Include OpenSSL headers
+include_directories( ${OPENSSL_INCLUDE_DIR} )
+
+add_executable( ${PROGRAM_EXE} ${PROGRAM_SOURCE} )
+
+target_link_libraries( ${PROGRAM_EXE}
+	PUBLIC
+	${OPENSSL_LIBRARIES}
+	${CMAKE_THREAD_LIBS_INIT}
+)
+
+install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${INSTALL_BIN_DIR})
+
+# --------------------------------
+#  Additional install files
+# --------------------------------
+
+install(FILES README.md LICENSE LICENSE.bitcoin DESTINATION ${INSTALL_SHARE_DIR})
+
+# --------------------------------
+#  Debian package script
+# --------------------------------
+
 if (UNIX) # Only include in bash environments.
 	# Hack to set the right permissions :)
 	configure_file(scripts/generate_deb.sh.in ${PROJECT_BINARY_DIR}/tmp/generate_deb.sh @ONLY)
@@ -65,6 +96,3 @@ if (UNIX) # Only include in bash environments.
 	    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 	)
 endif (UNIX)
-
-install(TARGETS ${CMAKE_PROJECT_NAME} RUNTIME DESTINATION ${INSTALL_BIN_DIR})
-install(FILES README.md LICENSE LICENSE.bitcoin DESTINATION ${INSTALL_SHARE_DIR})
