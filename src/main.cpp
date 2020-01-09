@@ -28,43 +28,76 @@
 #include "base58.h"
 #include "WIF.h"
 #include "ec.h"
+#include "key_search.h"
 
-static void search(std::string words, size_t n) {
+#ifdef HAVE_THREADS
+#include <thread>
+#include <vector>
 
-	size_t count = 0;
-	struct ec_keypair pair;
-	std::vector<std::string> word_list;
+// Minium number of threads.
+#define MIN_THREADS 2
 
-	std::cout << "Searching for " << n << " keys containing: " << words << std::endl;
+// Number of threads to use.
+static int n_threads;
 
-	word_list = strsplitwords(strtolower(words));
+#define search_func thread_search
+static void thread_search(const strlist_t& words, int n) {
 
-	while (count < n) {
-		std::string pubstr;
-		ec_generate_key(&pair);
-		pubstr = wif_pub_encode(pair.pub);
-		strtolower(pubstr);
+	// create n_threads - 1 as we use main process also.
+	std::vector<std::thread> t(n_threads - 1);
+	// divide the number of results for all threads.
+	int d = n / n_threads;
+	// Also calculate the reminder (will be assigned to the main thread)
+	int m = n % n_threads;
 
-		for(auto const& word: word_list) {
-			if (pubstr.find(word) != std::string::npos) {
-				std::cout << "----" << std::endl;
-				std::cout << "Found: " << word << std::endl;
-				wif_print_key(&pair);
-				count++;
-			}
-		}
+	// Launch threads.
+	for(int i = 0; i < t.size(); i++) {
+		t[i] = std::thread(key_search, words, d);
+	}
+
+	// Use main thread for 1 search
+	key_search(words, d + m);
+
+	// Wait for all threads to compelete.
+	for(int i = 0; i < t.size(); i++) {
+		t[i].join();
 	}
 }
+#else
+#define search_func key_search
+#endif
 
 int main(int argc, char **argv) {
 
 	// search <word_list> [ <count> ]
 	if (argc > 2 && !strcmp(argv[1], "search")) {
 		int n = 100;
+		std::string search(argv[2]);
+		strlist_t words = strsplitwords(strtolower(search));
+
 		if (argc > 3) {
 			n = atoi(argv[3]);
 		}
-		search(argv[2], n);
+
+#ifdef HAVE_THREADS
+		if (argc > 4) {
+			n_threads = atoi(argv[4]);
+			// Make sure we never go under min threads.
+			if (n_threads < MIN_THREADS) {
+				n_threads = MIN_THREADS;
+			}
+		}
+# endif /* HAVE_THREADS */
+
+std::cout << "Searching for " << n
+			<< " keys containing: " << search
+#ifdef HAVE_THREADS
+			<< ", Using: " << n_threads << " threads"
+#endif /* HAVE_THREADS */
+			<< std::endl;
+
+		search_func(words, n);
+
 	} else {
 		struct ec_keypair pair;
 		ec_generate_key(&pair);

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.4)
 project(eosio-keygen VERSION 0.1.0)
 
+option(USE_THREADS "Compile with support for threads (if available)." ON)
+
 set( CMAKE_CXX_STANDARD 11 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS OFF )
@@ -10,6 +12,14 @@ set( INSTALL_SHARE_DIR share/${CMAKE_PROJECT_NAME} )
 
 find_package(OpenSSL 1.1 REQUIRED)
 
+if (USE_THREADS)
+	find_package(Threads)
+	if (Threads_FOUND)
+		# Add preprocessor flag
+		add_definitions( "-DHAVE_THREADS=1" )
+	endif (Threads_FOUND)
+endif (USE_THREADS)
+
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 
 add_executable( ${CMAKE_PROJECT_NAME}
@@ -18,10 +28,11 @@ add_executable( ${CMAKE_PROJECT_NAME}
 	src/base58.cpp
 	src/checksum.cpp
 	src/WIF.cpp
+	src/key_search.cpp
 	src/main.cpp
 )
 
-target_link_libraries( ${CMAKE_PROJECT_NAME} PUBLIC ${OPENSSL_LIBRARIES} )
+target_link_libraries( ${CMAKE_PROJECT_NAME} PUBLIC ${OPENSSL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
 
 if (WIN32)
 	if (CMAKE_SIZEOF_VOID_P EQUAL 8)
