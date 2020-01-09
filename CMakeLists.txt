@@ -6,9 +6,8 @@ project(eosio-keygen VERSION 0.1.0)
 # Options
 option(USE_THREADS "Compile with support for threads (if available)." ON)
 
-# Paths
-set( INSTALL_BIN_DIR bin )
-set( INSTALL_SHARE_DIR share/${CMAKE_PROJECT_NAME} )
+# Use installpath from GNUInstallDirs as default.
+include(GNUInstallDirs)
 
 # --------------------------------
 #  Program
@@ -59,11 +58,11 @@ if (WIN32)
 	)
 
 	# "Flat" install on windows.
-	set( INSTALL_BIN_DIR "." )
-	set( INSTALL_SHARE_DIR "." )
+	set( CMAKE_INSTALL_BINDIR "." )
+	set( CMAKE_INSTALL_DATADIR "." )
 
 	# We also need to copy libcrypto dll during install
-	install(FILES ${OPENSSL_LIBCRYPTO_DLL} DESTINATION ${INSTALL_BIN_DIR})
+	install(FILES ${OPENSSL_LIBCRYPTO_DLL} DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif (WIN32)
 
 # Include OpenSSL headers
@@ -77,13 +76,14 @@ target_link_libraries( ${PROGRAM_EXE}
 	${CMAKE_THREAD_LIBS_INIT}
 )
 
-install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${INSTALL_BIN_DIR})
+install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # --------------------------------
 #  Additional install files
 # --------------------------------
 
-install(FILES README.md LICENSE LICENSE.bitcoin DESTINATION ${INSTALL_SHARE_DIR})
+install(FILES README.md LICENSE LICENSE.bitcoin
+		DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME})
 
 # --------------------------------
 #  Debian package script
