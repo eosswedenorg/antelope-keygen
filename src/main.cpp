@@ -30,20 +30,74 @@
 #include "ec.h"
 #include "key_search.h"
 
+#ifdef HAVE_THREADS
+#include <thread>
+#include <vector>
+
+// Minium number of threads.
+#define MIN_THREADS 2
+
+// Number of threads to use.
+static int n_threads;
+
+#define search_func thread_search
+static void thread_search(const strlist_t& words, int n) {
+
+	// create n_threads - 1 as we use main process also.
+	std::vector<std::thread> t(n_threads - 1);
+	// divide the number of results for all threads.
+	int d = n / n_threads;
+	// Also calculate the reminder (will be assigned to the main thread)
+	int m = n % n_threads;
+
+	// Launch threads.
+	for(int i = 0; i < t.size(); i++) {
+		t[i] = std::thread(key_search, words, d);
+	}
+
+	// Use main thread for 1 search
+	key_search(words, d + m);
+
+	// Wait for all threads to compelete.
+	for(int i = 0; i < t.size(); i++) {
+		t[i].join();
+	}
+}
+#else
+#define search_func key_search
+#endif
+
 int main(int argc, char **argv) {
 
 	// search <word_list> [ <count> ]
 	if (argc > 2 && !strcmp(argv[1], "search")) {
 		int n = 100;
 		std::string search(argv[2]);
+		strlist_t words = strsplitwords(strtolower(search));
 
 		if (argc > 3) {
 			n = atoi(argv[3]);
 		}
 
-		std::cout << "Searching for " << n << " keys containing: " << search << std::endl;
+#ifdef HAVE_THREADS
+		if (argc > 4) {
+			n_threads = atoi(argv[4]);
+			// Make sure we never go under min threads.
+			if (n_threads < MIN_THREADS) {
+				n_threads = MIN_THREADS;
+			}
+		}
+# endif /* HAVE_THREADS */
 
-		key_search(strsplitwords(strtolower(search)), n);
+std::cout << "Searching for " << n
+			<< " keys containing: " << search
+#ifdef HAVE_THREADS
+			<< ", Using: " << n_threads << " threads"
+#endif /* HAVE_THREADS */
+			<< std::endl;
+
+		search_func(words, n);
+
 	} else {
 		struct ec_keypair pair;
 		ec_generate_key(&pair);
