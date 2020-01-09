@@ -25,6 +25,13 @@
 #include <cctype>
 #include "string.h"
 
+std::vector<std::string> strsplitwords(const std::string& str, const std::string& delim) {
+
+	std::vector<std::string> words = strsplit(str, delim);
+	std::for_each(words.begin(), words.end(), trim);
+	return words;
+}
+
 std::vector<std::string> strsplit(const std::string& str, const std::string& delim) {
 
 	std::vector<std::string> r;

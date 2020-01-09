@@ -27,6 +27,8 @@
 #include <vector>
 #include <string>
 
+std::vector<std::string> strsplitwords(const std::string& str, const std::string& delim = ",");
+
 std::vector<std::string> strsplit(const std::string& str, const std::string& delim);
 
 std::string& strtolower(std::string& str);
