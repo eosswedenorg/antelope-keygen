@@ -38,7 +38,7 @@
 #define MIN_THREADS 2
 
 // Number of threads to use.
-static int n_threads;
+static int n_threads = MIN_THREADS;
 
 #define search_func thread_search
 static void thread_search(const strlist_t& words, int n) {
@@ -67,37 +67,83 @@ static void thread_search(const strlist_t& words, int n) {
 #define search_func key_search
 #endif
 
+void cmd_search(int argc, char **argv) {
+
+	int n = 100;
+	std::string search(argv[0]);
+	strlist_t words = strsplitwords(strtolower(search));
+
+	if (argc > 1) {
+		n = atoi(argv[1]);
+	}
+
+#ifdef HAVE_THREADS
+	if (argc > 2) {
+		n_threads = atoi(argv[2]);
+		// Make sure we never go under min threads.
+		if (n_threads < MIN_THREADS) {
+			n_threads = MIN_THREADS;
+		}
+	}
+# endif /* HAVE_THREADS */
+
+	std::cout << "Searching for " << n
+	<< " keys containing: " << search
+#ifdef HAVE_THREADS
+	<< ", Using: " << n_threads << " threads"
+#endif /* HAVE_THREADS */
+	<< std::endl;
+
+	search_func(words, n);
+}
+
+void usage(const char *name) {
+
+	std::cout << name
+		<< " [ --help|-h ] [ search <word_list> [ <count:100> ]"
+#ifdef HAVE_THREADS
+		<< " [ <threads:2> ]"
+#endif /* HAVE_THREADS */
+		" ]" << std::endl << std::endl;
+
+	std::cout << " - Output one EOSIO key pair if no arguments are given" << std::endl << std::endl;
+
+	std::cout << " search: " << std::endl
+			  << "  performs a search, finding <count> public keys "
+			  << "containing one or more words from <word_list>."
+#ifdef HAVE_THREADS
+			  << std::endl << "  <threads> specify the number of parallel threads to use."
+#endif /* HAVE_THREADS */
+			  << std::endl;
+}
+
 int main(int argc, char **argv) {
 
 	// search <word_list> [ <count> ]
-	if (argc > 2 && !strcmp(argv[1], "search")) {
-		int n = 100;
-		std::string search(argv[2]);
-		strlist_t words = strsplitwords(strtolower(search));
+	if (argc > 1) {
 
-		if (argc > 3) {
-			n = atoi(argv[3]);
+		if (!strcmp(argv[1], "-h") && !strcmp(argv[1], "--help")) {
+			usage(argv[0]);
+			return 0;
 		}
 
-#ifdef HAVE_THREADS
-		if (argc > 4) {
-			n_threads = atoi(argv[4]);
-			// Make sure we never go under min threads.
-			if (n_threads < MIN_THREADS) {
-				n_threads = MIN_THREADS;
+		if (!strcmp(argv[1], "search")) {
+			int n = 100;
+			std::string search;
+			strlist_t words;
+
+			if (argc < 3) {
+				std::cout << "You must specify a word list." << std::endl;
+				usage(argv[0]);
+				return 1;
 			}
+
+			cmd_search(argc - 2, &argv[2]);
+		} else {
+			std::cout << "Unrecogniced command: " << argv[1] << std::endl;
+			usage(argv[0]);
+			return 1;
 		}
-# endif /* HAVE_THREADS */
-
-std::cout << "Searching for " << n
-			<< " keys containing: " << search
-#ifdef HAVE_THREADS
-			<< ", Using: " << n_threads << " threads"
-#endif /* HAVE_THREADS */
-			<< std::endl;
-
-		search_func(words, n);
-
 	} else {
 		struct ec_keypair pair;
 		ec_generate_key(&pair);
