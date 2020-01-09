@@ -29,12 +29,6 @@
 #include "WIF.h"
 #include "ec.h"
 
-static void print_key(struct ec_keypair *key) {
-
-	std::cout << "Private: " << wif_priv_encode(key->secret) << std::endl;
-	std::cout << "Public: " << wif_pub_encode(key->pub) << std::endl;
-}
-
 static void search(const char *words, size_t n) {
 
 	size_t count = 0;
@@ -57,7 +51,7 @@ static void search(const char *words, size_t n) {
 			if (pubstr.find(word) != std::string::npos) {
 				std::cout << "----" << std::endl;
 				std::cout << "Found: " << word << std::endl;
-				print_key(&pair);
+				wif_print_key(&pair);
 				count++;
 			}
 		}
@@ -76,7 +70,7 @@ int main(int argc, char **argv) {
 	} else {
 		struct ec_keypair pair;
 		ec_generate_key(&pair);
-		print_key(&pair);
+		wif_print_key(&pair);
 	}
 
 	return 0;

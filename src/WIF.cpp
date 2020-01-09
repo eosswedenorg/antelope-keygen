@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include <iostream>
 #include <string.h>
 #include "base58.h"
 #include "checksum.h"
@@ -49,4 +50,10 @@ std::string wif_pub_encode(ec_pubkey_t pub) {
 	memcpy(buf + 33, check.data(), check.size());
 
 	return "EOS" + base58_encode(buf, buf + sizeof(buf));
+}
+
+void wif_print_key(struct ec_keypair *key) {
+
+   std::cout << "Private: " << wif_priv_encode(key->secret) << std::endl;
+   std::cout << "Public: " << wif_pub_encode(key->pub) << std::endl;
 }
