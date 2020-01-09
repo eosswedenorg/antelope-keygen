@@ -41,6 +41,19 @@ if (USE_THREADS)
 	endif (Threads_FOUND)
 endif (USE_THREADS)
 
+# Include OpenSSL headers
+include_directories( ${OPENSSL_INCLUDE_DIR} )
+
+add_executable( ${PROGRAM_EXE} ${PROGRAM_SOURCE} )
+
+target_link_libraries( ${PROGRAM_EXE}
+	PUBLIC
+	${OPENSSL_LIBRARIES}
+	${CMAKE_THREAD_LIBS_INIT}
+)
+
+install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
 # Win32 specific.
 if (WIN32)
 	if (CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -64,19 +77,6 @@ if (WIN32)
 	# We also need to copy libcrypto dll during install
 	install(FILES ${OPENSSL_LIBCRYPTO_DLL} DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif (WIN32)
-
-# Include OpenSSL headers
-include_directories( ${OPENSSL_INCLUDE_DIR} )
-
-add_executable( ${PROGRAM_EXE} ${PROGRAM_SOURCE} )
-
-target_link_libraries( ${PROGRAM_EXE}
-	PUBLIC
-	${OPENSSL_LIBRARIES}
-	${CMAKE_THREAD_LIBS_INIT}
-)
-
-install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # --------------------------------
 #  Additional install files
