@@ -27,8 +27,6 @@
 #include "string.h"
 #include "ec.h"
 
-bool key_search(struct ec_keypair* out, std::string& word, const strlist_t& word_list);
-
 void key_search_n(const strlist_t& word_list, size_t n);
 
 #ifdef HAVE_THREADS
