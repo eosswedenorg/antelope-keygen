@@ -27,10 +27,10 @@
 #include "string.h"
 #include "ec.h"
 
-void key_search_n(const strlist_t& word_list, size_t n);
+void key_search(const strlist_t& word_list, size_t n);
 
 #ifdef HAVE_THREADS
-void key_search_nt(const strlist_t& word_list, size_t n, size_t n_threads = 0);
+void key_search_mt(const strlist_t& word_list, size_t n, size_t n_threads = 0);
 #endif /* HAVE_THREADS */
 
 #endif /* KEY_SEARCH_H */

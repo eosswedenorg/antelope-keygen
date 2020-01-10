@@ -5,7 +5,7 @@
 #include "key_search_helpers.h"
 #include "key_search.h"
 
-void key_search_n(const strlist_t& word_list, size_t n) {
+void key_search(const strlist_t& word_list, size_t n) {
 
 	size_t count = 0;
 	struct ec_keypair pair;

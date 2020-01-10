@@ -15,7 +15,7 @@ unsigned int g_count;
 std::mutex g_count_mtx;
 
 // Thread process.
-static void thr_proc(const strlist_t& word_list) {
+static void _mt_search(const strlist_t& word_list) {
 
 	struct ec_keypair pair;
 
@@ -43,14 +43,14 @@ static void thr_proc(const strlist_t& word_list) {
 	}
 }
 
-void key_search_nt(const strlist_t& word_list, size_t n, size_t n_threads) {
+void key_search_mt(const strlist_t& word_list, size_t n, size_t n_threads) {
 
 	std::vector<std::thread> t;
 
 	// Not enough threads passed in by caller.
 	if (n_threads < 2) {
 		// Just use linear function.
-		key_search_n(word_list, n);
+		key_search(word_list, n);
 		return;
 	}
 
@@ -62,11 +62,11 @@ void key_search_nt(const strlist_t& word_list, size_t n, size_t n_threads) {
 
 	// Launch them.
 	for(int i = 0; i < t.size(); i++) {
-		t[i] = std::thread(thr_proc, word_list);
+		t[i] = std::thread(_mt_search, word_list);
 	}
 
 	// Use main thread for 1 search
-	thr_proc(word_list);
+	_mt_search(word_list);
 
 	// Wait for all threads to compelete.
 	for(int i = 0; i < t.size(); i++) {

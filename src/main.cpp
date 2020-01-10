@@ -43,12 +43,12 @@
 		}							\
 	}
 #define n_thread_outp << ", Using: " << n_threads << " threads"
-#define call_search key_search_nt(words, n, n_threads)
+#define call_search key_search_mt(words, n, n_threads)
 #else
 #define n_thread_decl
 #define n_thread_argv
 #define n_thread_outp
-#define call_search key_search_n(words, n)
+#define call_search key_search(words, n)
 #endif /* HAVE_THREADS */
 
 void cmd_search(int argc, char **argv) {
