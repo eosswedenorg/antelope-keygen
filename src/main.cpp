@@ -38,7 +38,7 @@
 #define MIN_THREADS 2
 
 // Number of threads to use.
-static int n_threads = MIN_THREADS;
+static int n_threads = std::thread::hardware_concurrency();
 
 #define search_func thread_search
 static void thread_search(const strlist_t& words, int n) {
