@@ -31,6 +31,6 @@ std::string wif_priv_encode(ec_privkey_t priv);
 
 std::string wif_pub_encode(ec_pubkey_t pub);
 
-void wif_print_key(struct ec_keypair *key);
+void wif_print_key(const struct ec_keypair *key);
 
 #endif /* WIF_H */

@@ -52,7 +52,7 @@ std::string wif_pub_encode(ec_pubkey_t pub) {
 	return "EOS" + base58_encode(buf, buf + sizeof(buf));
 }
 
-void wif_print_key(struct ec_keypair *key) {
+void wif_print_key(const struct ec_keypair *key) {
 
    std::cout << "Private: " << wif_priv_encode(key->secret) << std::endl;
    std::cout << "Public: " << wif_pub_encode(key->pub) << std::endl;
