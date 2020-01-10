@@ -22,6 +22,7 @@ set (PROGRAM_SOURCE
 	src/checksum.cpp
 	src/WIF.cpp
 	src/key_search.cpp
+	src/key_search_helpers.cpp
 	src/main.cpp
 )
 
