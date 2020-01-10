@@ -31,4 +31,8 @@ bool key_search(struct ec_keypair* out, std::string& word, const strlist_t& word
 
 void key_search_n(const strlist_t& word_list, size_t n);
 
+#ifdef HAVE_THREADS
+void key_search_nt(const strlist_t& word_list, size_t n, size_t n_threads = 0);
+#endif /* HAVE_THREADS */
+
 #endif /* KEY_SEARCH_H */

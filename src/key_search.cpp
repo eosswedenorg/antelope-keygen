@@ -1,29 +1,9 @@
 
-#ifdef HAVE_THREADS
-#include <mutex>
-#endif /* HAVE_THREADS */
 #include <iostream>
 #include <string>
-#include "ec.h"
 #include "WIF.h"
+#include "key_search_helpers.h"
 #include "key_search.h"
-
-#ifdef HAVE_THREADS
-// Guards result output.
-std::mutex search_mutex;
-#endif /* HAVE_THREADS */
-
-static void key_result(const std::string& word, const struct ec_keypair* pair) {
-
-#ifdef HAVE_THREADS
-	// Guard output with mutex, so we don't get interrupted mid write.
-	const std::lock_guard<std::mutex> lock(search_mutex);
-#endif /* HAVE_THREADS */
-
-	std::cout << "----" << std::endl;
-	std::cout << "Found: " << word << std::endl;
-	wif_print_key(pair);
-}
 
 bool key_search(struct ec_keypair* key, std::string& word, const strlist_t& word_list) {
 
@@ -50,7 +30,7 @@ void key_search_n(const strlist_t& word_list, size_t n) {
 	while (count < n) {
 		std::string word;
 		if (key_search(&pair, word, word_list)) {
-			key_result(word, &pair);
+			key_search_result(word, &pair);
 			count++;
 		}
 	}
