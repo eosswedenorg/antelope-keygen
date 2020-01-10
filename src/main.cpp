@@ -65,11 +65,11 @@ static void thread_search(const strlist_t& words, int n) {
 
 	// Launch threads.
 	for(int i = 0; i < t.size(); i++) {
-		t[i] = std::thread(key_search, words, d);
+		t[i] = std::thread(key_search_n, words, d);
 	}
 
 	// Use main thread for 1 search
-	key_search(words, d + m);
+	key_search_n(words, d + m);
 
 	// Wait for all threads to compelete.
 	for(int i = 0; i < t.size(); i++) {
@@ -77,7 +77,7 @@ static void thread_search(const strlist_t& words, int n) {
 	}
 }
 #else
-#define search_func key_search
+#define search_func key_search_n
 #endif
 
 void cmd_search(int argc, char **argv) {

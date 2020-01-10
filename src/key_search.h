@@ -25,7 +25,10 @@
 #define KEY_SEARCH_H
 
 #include "string.h"
+#include "ec.h"
 
-void key_search(strlist_t word_list, size_t n);
+bool key_search(struct ec_keypair* out, std::string& word, const strlist_t& word_list);
+
+void key_search_n(const strlist_t& word_list, size_t n);
 
 #endif /* KEY_SEARCH_H */
