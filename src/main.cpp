@@ -21,6 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#ifdef HAVE_THREADS
+#include <thread>
+#endif /* HAVE_THREADS */
 #include <algorithm>
 #include <iostream>
 #include <cstring>
@@ -31,58 +34,27 @@
 #include "key_search.h"
 
 #ifdef HAVE_THREADS
-#include <thread>
-#include <vector>
-
-// Minium number of threads.
-#define MIN_THREADS 2
-
-// Number of threads to use.
-static int n_threads = std::thread::hardware_concurrency();
-
-#define search_func thread_search
-static void thread_search(const strlist_t& words, int n) {
-
-	std::vector<std::thread> t;
-	int d, m;
-
-	// We can use all threads
-	if (n >= n_threads) {
-
-		// create n_threads - 1 as we use main process also.
-		t.resize(n_threads - 1);
-		// divide the number of results for all threads.
-		d = n / n_threads;
-		// Also calculate the reminder (will be assigned to the main thread)
-		m = n % n_threads;
+#define n_thread_decl int n_threads = std::thread::hardware_concurrency()
+#define n_thread_argv 				\
+	if (argc > 2) { 				\
+		n_threads = atoi(argv[2]);	\
+		if (n_threads < 2) {		\
+			n_threads = 2;			\
+		}							\
 	}
-	// not enough results to use all threads.
-	else {
-		t.resize(n);
-		d = 1;
-		m = 0;
-	}
-
-	// Launch threads.
-	for(int i = 0; i < t.size(); i++) {
-		t[i] = std::thread(key_search_n, words, d);
-	}
-
-	// Use main thread for 1 search
-	key_search_n(words, d + m);
-
-	// Wait for all threads to compelete.
-	for(int i = 0; i < t.size(); i++) {
-		t[i].join();
-	}
-}
+#define n_thread_outp << ", Using: " << n_threads << " threads"
+#define call_search key_search_nt(words, n, n_threads)
 #else
-#define search_func key_search_n
-#endif
+#define n_thread_decl
+#define n_thread_argv
+#define n_thread_outp
+#define call_search key_search_n(words, n)
+#endif /* HAVE_THREADS */
 
 void cmd_search(int argc, char **argv) {
 
 	int n = 100;
+	n_thread_decl;
 	std::string search(argv[0]);
 	strlist_t words = strsplitwords(strtolower(search));
 
@@ -93,24 +65,14 @@ void cmd_search(int argc, char **argv) {
 		}
 	}
 
-#ifdef HAVE_THREADS
-	if (argc > 2) {
-		n_threads = atoi(argv[2]);
-		// Make sure we never go under min threads.
-		if (n_threads < MIN_THREADS) {
-			n_threads = MIN_THREADS;
-		}
-	}
-# endif /* HAVE_THREADS */
+	n_thread_argv;
 
 	std::cout << "Searching for " << n
-	<< " keys containing: " << search
-#ifdef HAVE_THREADS
-	<< ", Using: " << n_threads << " threads"
-#endif /* HAVE_THREADS */
-	<< std::endl;
+		<< " keys containing: " << search
+		n_thread_outp
+		<< std::endl;
 
-	search_func(words, n);
+	call_search;
 }
 
 void usage(const char *name) {
