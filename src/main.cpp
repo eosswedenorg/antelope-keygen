@@ -75,6 +75,9 @@ void cmd_search(int argc, char **argv) {
 
 	if (argc > 1) {
 		n = atoi(argv[1]);
+		if (n < 1) {
+			n = 1;
+		}
 	}
 
 #ifdef HAVE_THREADS
