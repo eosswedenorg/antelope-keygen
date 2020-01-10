@@ -126,7 +126,7 @@ void usage(const char *name) {
 
 	std::cout << " search: " << std::endl
 			  << "  performs a search, finding <count> public keys "
-			  << "containing one or more words from <word_list>."
+			  << "containing one or more words from <word_list> (separated with ',')."
 #ifdef HAVE_THREADS
 			  << std::endl << "  <threads> specify the number of parallel threads to use."
 #endif /* HAVE_THREADS */
