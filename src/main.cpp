@@ -43,12 +43,25 @@ static int n_threads = std::thread::hardware_concurrency();
 #define search_func thread_search
 static void thread_search(const strlist_t& words, int n) {
 
-	// create n_threads - 1 as we use main process also.
-	std::vector<std::thread> t(n_threads - 1);
-	// divide the number of results for all threads.
-	int d = n / n_threads;
-	// Also calculate the reminder (will be assigned to the main thread)
-	int m = n % n_threads;
+	std::vector<std::thread> t;
+	int d, m;
+
+	// We can use all threads
+	if (n >= n_threads) {
+
+		// create n_threads - 1 as we use main process also.
+		t.resize(n_threads - 1);
+		// divide the number of results for all threads.
+		d = n / n_threads;
+		// Also calculate the reminder (will be assigned to the main thread)
+		m = n % n_threads;
+	}
+	// not enough results to use all threads.
+	else {
+		t.resize(n);
+		d = 1;
+		m = 0;
+	}
 
 	// Launch threads.
 	for(int i = 0; i < t.size(); i++) {
