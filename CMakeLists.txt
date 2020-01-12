@@ -22,6 +22,7 @@ set (PROGRAM_SOURCE
 	src/checksum.cpp
 	src/WIF.cpp
 	src/key_search.cpp
+	src/key_search_helpers.cpp
 	src/main.cpp
 )
 
@@ -38,6 +39,7 @@ if (USE_THREADS)
 	if (Threads_FOUND)
 		# Add preprocessor flag
 		add_definitions( "-DHAVE_THREADS=1" )
+		set (PROGRAM_SOURCE ${PROGRAM_SOURCE} src/key_search_mt.cpp)
 	endif (Threads_FOUND)
 endif (USE_THREADS)
 

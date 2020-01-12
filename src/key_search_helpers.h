@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef KEY_SEARCH_H
-#define KEY_SEARCH_H
+#ifndef KEY_SEARCH_HELPSER_H
+#define KEY_SEARCH_HELPERS_H
 
 #include "string.h"
 #include "ec.h"
 
-void key_search(const strlist_t& word_list, size_t n);
+void key_search_result(const std::string& word, const struct ec_keypair* pair);
 
-#ifdef HAVE_THREADS
-void key_search_mt(const strlist_t& word_list, size_t n, size_t n_threads = 0);
-#endif /* HAVE_THREADS */
+// Check if any word in <word_list> appears in <key>'s public key.
+// returns true if a word was found (stored in <word>), false otherwise.
+bool key_contains_word(const struct ec_keypair* key, const strlist_t& word_list, std::string& word);
 
-#endif /* KEY_SEARCH_H */
+#endif /* KEY_SEARCH_HELPERS_H */
