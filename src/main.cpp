@@ -78,7 +78,7 @@ void cmd_search(int argc, char **argv) {
 void usage(const char *name) {
 
 	std::cout << name
-		<< " [ --help|-h ] [ search <word_list> [ <count:100> ]"
+		<< " [ --help|-h ] [ search <word_list> [ <count:10> ]"
 #ifdef HAVE_THREADS
 		<< " [ <threads:2> ]"
 #endif /* HAVE_THREADS */
@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
 		}
 
 		if (!strcmp(argv[1], "search")) {
-			int n = 100;
+			int n = 10;
 			std::string search;
 			strlist_t words;
 
