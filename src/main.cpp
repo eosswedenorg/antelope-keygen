@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
 	// search <word_list> [ <count> ]
 	if (argc > 1) {
 
-		if (!strcmp(argv[1], "-h") && !strcmp(argv[1], "--help")) {
+		if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
 			usage(argv[0]);
 			return 0;
 		}
