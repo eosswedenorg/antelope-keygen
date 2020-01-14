@@ -56,7 +56,7 @@ void cmd_search(int argc, char **argv) {
 	int n = 100;
 	n_thread_decl;
 	std::string search(argv[0]);
-	strlist_t words = strsplitwords(strtolower(search));
+	strlist_t words = strsplitwords(strtolower(base58_strip(search)));
 
 	if (argc > 1) {
 		n = atoi(argv[1]);
