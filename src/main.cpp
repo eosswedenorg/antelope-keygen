@@ -106,10 +106,6 @@ int main(int argc, char **argv) {
 		}
 
 		if (!strcmp(argv[1], "search")) {
-			int n = 10;
-			std::string search;
-			strlist_t words;
-
 			if (argc < 3) {
 				std::cout << "You must specify a word list." << std::endl;
 				usage(argv[0]);
