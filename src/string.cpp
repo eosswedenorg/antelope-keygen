@@ -94,6 +94,12 @@ std::string& base58_strip(std::string &str) {
     return str;
 }
 
+strlist_t& base58_strip(strlist_t& list) {
+
+	std::transform(list.begin(), list.end(), list.begin(), [](std::string& str){ return base58_strip(str); });
+	return list;
+}
+
 static bool is_l33t(char ch, char& r) {
 
 	//                          '1', '2', '3', '4', '5', '6', '7', '8', '9'

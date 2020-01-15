@@ -69,7 +69,8 @@ void cmd_search(int argc, char **argv) {
 			words.insert(words.end(), list.begin(), list.end());
 		}
 	} else {
-		words = strsplitwords(strtolower(base58_strip(search)));
+		words = strsplitwords(strtolower(search));
+		base58_strip(words);
 	}
 
 	if (argc > 1) {
