@@ -8,54 +8,44 @@ on:
       - '!master'
 
 jobs:
-  unix:
-    name: compile - Ubuntu
-    runs-on: ubuntu-latest
-
+  compile:
     strategy:
       matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
         build-opts: [ "-DUSE_THREADS=ON", "-DUSE_THREADS=OFF" ]
+
+    name: ${{matrix.os}} (${{matrix.build-opts}})
+    runs-on: ${{matrix.os}}
 
     steps:
     - uses: actions/checkout@v1
-    - name: Configure
-      run: mkdir build && cd build && cmake ${{matrix.build-opts}} ..
-    - name: Build
-      run: cmake --build build
 
-  mac:
-    name: compile - MacOS
-    runs-on: macos-latest
-
-    strategy:
-      matrix:
-        build-opts: [ "-DUSE_THREADS=ON", "-DUSE_THREADS=OFF" ]
-
-    steps:
-    - uses: actions/checkout@v1
     - name: Dependancies
-      run: brew install openssl
-    - name: Configure
-      run: mkdir build && cd build && cmake ${{matrix.build-opts}} -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1 ..
-    - name: Build
-      run: cmake --build build
-
-  win:
-    name: compile - windows
-    runs-on: windows-latest
-
-    strategy:
-      matrix:
-        build-opts: [ "-DUSE_THREADS=ON", "-DUSE_THREADS=OFF" ]
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Dependancies
+      shell: bash
       run: |
-        mkdir build; cd build
-        Invoke-WebRequest -Uri https://mirror.firedaemon.com/OpenSSL/openssl-1.1.1e-dev.zip -OutFile openssl.zip
-        Expand-Archive openssl.zip
-    - name: Configure
-      run: cd build; cmake ${{matrix.build-opts}} -D OPENSSL_ROOT_DIR="$pwd\openssl\openssl-1.1\x64" ..
+        mkdir -p build
+        if [ "$RUNNER_OS" == "macOS" ]; then
+            brew install openssl
+        elif [ "$RUNNER_OS" == "Windows" ]; then
+            cd build
+            curl https://mirror.firedaemon.com/OpenSSL/openssl-1.1.1e-dev.zip -O
+            7z x openssl-1.1.1e-dev.zip
+        fi
+
+    - name: Configure (nix)
+      if: runner.os != 'Windows'
+      shell: bash
+      run: |
+        if [ "$RUNNER_OS" == "macOS" ]; then
+            SSL_OPTS="-D OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1"
+        fi
+        cd build && cmake ${SSL_OPTS} ${{matrix.build-opts}} ..
+
+    - name: Configure (win)
+      if: runner.os == 'Windows'
+      # cmake in windows bash can't find openssl. so we use windows cli.
+      run: cd build; cmake ${{matrix.build-opts}} -D OPENSSL_ROOT_DIR="$pwd\openssl-1.1\x64" ..
+
     - name: Build
+      shell: bash
       run: cmake --build build
