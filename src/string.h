@@ -33,6 +33,8 @@ strlist_t strsplitwords(const std::string& str, const std::string& delim = ",");
 
 strlist_t strsplit(const std::string& str, const std::string& delim);
 
+std::string strjoin(const strlist_t& list, const std::string& delim);
+
 std::string& strtolower(std::string& str);
 
 std::string& rtrim(std::string& str);

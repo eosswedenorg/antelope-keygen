@@ -46,6 +46,21 @@ strlist_t strsplit(const std::string& str, const std::string& delim) {
 	return r;
 }
 
+std::string strjoin(const strlist_t& list, const std::string& delim) {
+
+	std::string out;
+
+	for(const std::string& item : list) {
+		out += item + delim;
+	}
+
+	if (out.length() > 0) {
+		out.erase(out.end() - delim.length());
+	}
+
+	return out;
+}
+
 std::string& strtolower(std::string& str) {
 	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c){ return std::tolower(c); });
 	return str;
