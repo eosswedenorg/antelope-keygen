@@ -25,7 +25,6 @@
 #define KEY_SEARCH_H
 
 #include "string.h"
-#include "ec.h"
 
 class KeySearch
 {

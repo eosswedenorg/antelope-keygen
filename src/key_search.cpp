@@ -1,7 +1,6 @@
 
-#include <iostream>
 #include <string>
-#include "WIF.h"
+#include "ec.h"
 #include "key_search_helpers.h"
 #include "key_search.h"
 

@@ -24,11 +24,9 @@
 #ifdef HAVE_THREADS
 #include <thread>
 #endif /* HAVE_THREADS */
-#include <algorithm>
 #include <iostream>
 #include <cstring>
 #include "string.h"
-#include "base58.h"
 #include "WIF.h"
 #include "ec.h"
 #include "key_search.h"
