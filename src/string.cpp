@@ -78,3 +78,52 @@ std::string& base58_strip(std::string &str) {
 	), str.end());
     return str;
 }
+
+static bool is_l33t(char ch, char& r) {
+
+	//                          '1', '2', '3', '4', '5', '6', '7', '8', '9'
+	static char alphabet[9] = { 'l', 'z', 'e', 'a', 's', 'G', 't', 'B', 'g' };
+
+	for(int i = 0; i < sizeof(alphabet) / sizeof(char); i++) {
+
+		if (ch == alphabet[i]) {
+			r = '1' + i;
+			return true;
+		}
+	}
+	return false;
+}
+
+static void _l33t(strlist_t& list, const std::string& a, int pos) {
+
+	// Find the next character to be replaced.
+	for(int i = pos; i < a.length(); i++) {
+
+		char ch;
+		if (is_l33t(a[i], ch)) {
+			// create a new string and replace the character.
+			std::string b = a;
+			b[i] = ch;
+
+			// Store the new string as the result.
+			list.push_back(b);
+
+			// Perform the same algorithm for both strings
+			// at the next position.
+			_l33t(list, a, i + 1);
+			_l33t(list, b, i + 1);
+			break;
+		}
+	}
+}
+
+strlist_t l33twords(const std::string& str) {
+
+	strlist_t list;
+
+	// Store the original string as the first in list.
+	list.push_back(str);
+
+	_l33t(list, str, 0);
+	return list;
+}
