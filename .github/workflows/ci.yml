@@ -12,10 +12,14 @@ jobs:
     name: compile - Ubuntu
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        build-opts: [ "-DUSE_THREADS=ON", "-DUSE_THREADS=OFF" ]
+
     steps:
     - uses: actions/checkout@v1
     - name: Configure
-      run: mkdir build && cd build && cmake ..
+      run: mkdir build && cd build && cmake ${{matrix.build-opts}} ..
     - name: Build
       run: cmake --build build
 
@@ -23,18 +27,27 @@ jobs:
     name: compile - MacOS
     runs-on: macos-latest
 
+    strategy:
+      matrix:
+        build-opts: [ "-DUSE_THREADS=ON", "-DUSE_THREADS=OFF" ]
+
     steps:
     - uses: actions/checkout@v1
     - name: Dependancies
       run: brew install openssl
     - name: Configure
-      run: mkdir build && cd build && cmake -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1 ..
+      run: mkdir build && cd build && cmake ${{matrix.build-opts}} -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1 ..
     - name: Build
       run: cmake --build build
 
   win:
     name: compile - windows
     runs-on: windows-latest
+
+    strategy:
+      matrix:
+        build-opts: [ "-DUSE_THREADS=ON", "-DUSE_THREADS=OFF" ]
+
     steps:
     - uses: actions/checkout@v1
     - name: Dependancies
@@ -43,6 +56,6 @@ jobs:
         Invoke-WebRequest -Uri https://mirror.firedaemon.com/OpenSSL/openssl-1.1.1e-dev.zip -OutFile openssl.zip
         Expand-Archive openssl.zip
     - name: Configure
-      run: cd build; cmake -D OPENSSL_ROOT_DIR="$pwd\openssl\openssl-1.1\x64" ..
+      run: cd build; cmake ${{matrix.build-opts}} -D OPENSSL_ROOT_DIR="$pwd\openssl\openssl-1.1\x64" ..
     - name: Build
       run: cmake --build build
