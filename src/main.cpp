@@ -53,7 +53,7 @@ bool option_l33t = false;
 
 void cmd_search(int argc, char **argv) {
 
-	int n = 100;
+	int n = 10;
 	n_thread_decl;
 	std::string input(argv[0]);
 	KeySearch ks;
