@@ -33,6 +33,8 @@ strlist_t strsplitwords(const std::string& str, const std::string& delim = ",");
 
 strlist_t strsplit(const std::string& str, const std::string& delim);
 
+std::string strjoin(const strlist_t& list, const std::string& delim);
+
 std::string& strtolower(std::string& str);
 
 std::string& rtrim(std::string& str);
@@ -41,5 +43,7 @@ std::string& trim(std::string& str);
 
 std::string& base58_strip(std::string &str);
 strlist_t& base58_strip(strlist_t& list);
+
+strlist_t l33twords(const std::string& str);
 
 #endif /* STRING_H */
