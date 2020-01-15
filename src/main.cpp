@@ -68,7 +68,7 @@ void cmd_search(int argc, char **argv) {
 	n_thread_argv;
 
 	std::cout << "Searching for " << n
-		<< " keys containing: " << search
+		<< " keys containing: " << strjoin(words, ",")
 		n_thread_outp
 		<< std::endl;
 
