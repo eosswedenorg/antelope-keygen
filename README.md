@@ -1,4 +1,6 @@
 
+![](https://github.com/eosswedenorg/eosio-keygen/workflows/CI/badge.svg)
+
 # EOSIO Keygen
 
 This program generates public and private keypair for [EOS](https://eos.io/)
