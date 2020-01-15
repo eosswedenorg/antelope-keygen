@@ -78,3 +78,9 @@ std::string& base58_strip(std::string &str) {
 	), str.end());
     return str;
 }
+
+strlist_t& base58_strip(strlist_t& list) {
+
+	std::transform(list.begin(), list.end(), list.begin(), [](std::string& str){ return base58_strip(str); });
+	return list;
+}
