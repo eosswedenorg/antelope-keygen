@@ -33,6 +33,9 @@
 #include "ec.h"
 #include "key_search.h"
 
+// Command line options.
+bool option_l33t = false;
+
 #ifdef HAVE_THREADS
 #define n_thread_decl int n_threads = std::thread::hardware_concurrency()
 #define n_thread_argv 				\
@@ -56,7 +59,18 @@ void cmd_search(int argc, char **argv) {
 	int n = 100;
 	n_thread_decl;
 	std::string search(argv[0]);
-	strlist_t words = strsplitwords(strtolower(base58_strip(search)));
+	strlist_t words;
+
+	if (option_l33t) {
+		strlist_t tmp = strsplitwords(search);
+		for(int i = 0; i < tmp.size(); i++) {
+			strlist_t list = l33twords(base58_strip(tmp[i]));
+			words.reserve(words.size() + list.size());
+			words.insert(words.end(), list.begin(), list.end());
+		}
+	} else {
+		words = strsplitwords(strtolower(base58_strip(search)));
+	}
 
 	if (argc > 1) {
 		n = atoi(argv[1]);
@@ -103,6 +117,12 @@ int main(int argc, char **argv) {
 		if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
 			usage(argv[0]);
 			return 0;
+		}
+
+		if (!strcmp(argv[1], "--l33t")) {
+			option_l33t = true;
+			argc--;
+			argv = &argv[1];
 		}
 
 		if (!strcmp(argv[1], "search")) {
