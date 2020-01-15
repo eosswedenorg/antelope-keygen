@@ -138,9 +138,13 @@ static void _l33t(strlist_t& list, const std::string& a, int pos) {
 	}
 }
 
-strlist_t l33twords(const std::string& str) {
+strlist_t l33twords(std::string str) {
 
 	strlist_t list;
+
+	// "l" is abit special and are not included in base58 so we set it to 1.
+	// All other characters in "l33t" are valid.
+	std::transform(str.begin(), str.end(), str.begin(), [](char c){ return c == 'l' ? '1' : c; });
 
 	// Store the original string as the first in list.
 	list.push_back(str);
