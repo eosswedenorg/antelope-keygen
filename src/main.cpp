@@ -44,33 +44,29 @@ bool option_l33t = false;
 		if (n_threads < 2) {		\
 			n_threads = 2;			\
 		}							\
-	}
+	}								\
+	ks.setThreadCount(n_threads);
 #define n_thread_outp << ", Using: " << n_threads << " threads"
-#define call_search key_search_mt(words, n, n_threads)
 #else
 #define n_thread_decl
 #define n_thread_argv
 #define n_thread_outp
-#define call_search key_search(words, n)
 #endif /* HAVE_THREADS */
 
 void cmd_search(int argc, char **argv) {
 
 	int n = 100;
 	n_thread_decl;
-	std::string search(argv[0]);
-	strlist_t words;
+	std::string input(argv[0]);
+	KeySearch ks;
 
 	if (option_l33t) {
-		strlist_t tmp = strsplitwords(search);
+		strlist_t tmp = strsplitwords(input);
 		for(int i = 0; i < tmp.size(); i++) {
-			strlist_t list = l33twords(base58_strip(tmp[i]));
-			words.reserve(words.size() + list.size());
-			words.insert(words.end(), list.begin(), list.end());
+			ks.addList(l33twords(tmp[i]));
 		}
 	} else {
-		words = strsplitwords(strtolower(search));
-		base58_strip(words);
+		ks.addList(strsplitwords(input));
 	}
 
 	if (argc > 1) {
@@ -83,11 +79,11 @@ void cmd_search(int argc, char **argv) {
 	n_thread_argv;
 
 	std::cout << "Searching for " << n
-		<< " keys containing: " << strjoin(words, ",")
+		<< " keys containing: " << strjoin(ks.getList(), ",")
 		n_thread_outp
 		<< std::endl;
 
-	call_search;
+	ks.find(n);
 }
 
 void usage(const char *name) {

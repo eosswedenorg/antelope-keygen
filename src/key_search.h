@@ -27,10 +27,45 @@
 #include "string.h"
 #include "ec.h"
 
-void key_search(const strlist_t& word_list, size_t n);
+class KeySearch
+{
+public :
+	// Add a word to search for.
+	void addWord(const std::string& str);
+
+	// Add a list of words to search for.
+	void addList(const strlist_t& list);
+
+	// get the list of words to search for.
+	const strlist_t& getList();
+
+	// Clears the search list.
+	void clear();
 
 #ifdef HAVE_THREADS
-void key_search_mt(const strlist_t& word_list, size_t n, size_t n_threads = 0);
+	// Set the number of threads to use while searching.
+	void setThreadCount(size_t num);
 #endif /* HAVE_THREADS */
+
+	// Perform a search.
+	void find(size_t num_results);
+
+protected :
+
+#ifdef HAVE_THREADS
+	void _search_mt(size_t n);
+#endif /* HAVE_THREADS */
+
+	void _search_linear(size_t n);
+
+protected :
+	// List of words to search for.
+	strlist_t m_words;
+
+#ifdef HAVE_THREADS
+	// Number of threads to use.
+	size_t m_threads;
+#endif /* HAVE_THREADS */
+};
 
 #endif /* KEY_SEARCH_H */
