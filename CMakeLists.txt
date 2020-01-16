@@ -16,6 +16,7 @@ include(GNUInstallDirs)
 set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 
 set (PROGRAM_SOURCE
+	src/console_ansi.cpp
 	src/string.cpp
 	src/ec.cpp
 	src/base58.cpp
