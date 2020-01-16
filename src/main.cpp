@@ -87,13 +87,20 @@ void cmd_search(int argc, char **argv) {
 void usage(const char *name) {
 
 	std::cout << name
-		<< " [ --help|-h ] [ search <word_list> [ <count:10> ]"
+		<< " [ -h | --help | search <word_list> [ <count:10> ]"
 #ifdef HAVE_THREADS
 		<< " [ <threads:2> ]"
 #endif /* HAVE_THREADS */
 		" ]" << std::endl << std::endl;
 
 	std::cout << " - Output one EOSIO key pair if no arguments are given" << std::endl << std::endl;
+
+	// Options
+	std::cout
+		<< " Options:" << std::endl
+		<< "   -h, --help     Shows this help text."
+		<< std::endl
+		<< std::endl;
 
 	std::cout << " search: " << std::endl
 			  << "  performs a search, finding <count> public keys "
@@ -106,7 +113,6 @@ void usage(const char *name) {
 
 int main(int argc, char **argv) {
 
-	// search <word_list> [ <count> ]
 	if (argc > 1) {
 
 		if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
