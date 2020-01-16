@@ -111,63 +111,63 @@ int main(int argc, char **argv) {
 
 	// current position in argv
 	// when parsing command line.
-	int p = 0;
+	int p = 1;
 
-	if (argc > 1) {
-		p = 1;
-
-		if (!strcmp(argv[p], "-h") || !strcmp(argv[p], "--help")) {
-			usage(argv[0]);
-			return 0;
-		}
-
-		if (!strcmp(argv[p], "search")) {
-			bool parse_opt;
-			p++;
-
-
-			do {
-				parse_opt = false;
-				if (p < argc && !strcmp(argv[p], "--l33t")) {
-					option_l33t = true;
-					parse_opt = true;
-					p++;
-				}
-
-				if (p < argc && !memcmp(argv[p], "--threads=", 10)) {
-#ifdef HAVE_THREADS
-					option_num_threads = atoi(argv[p] + 10);
-					if (option_num_threads < 2) {
-						option_num_threads = 2;
-					}
-#else
-					// Even if we dont have threads. we consume the flag.
-					// otherwise we might break scripts. Print a nice message instead.
-					std::cerr << "NOTICE: eosio-keygen is not compiled with"
-						<< " thread support. this option is ignored." << std::endl;
-#endif /* HAVE_THREADS */
-					p++;
-					parse_opt = true;
-				}
-			} while(parse_opt && p < argc);
-
-			if (argc <= p) {
-				std::cerr << "You must specify a word list." << std::endl;
-				usage(argv[0]);
-				return 1;
-			}
-
-			// Pass the rest of argv, argc
-			cmd_search(argc - p, &argv[p]);
-		} else {
-			std::cerr << "Unrecogniced command: " << argv[1] << std::endl;
-			usage(argv[0]);
-			return 1;
-		}
-	} else {
+	// No args, just print a key.
+	if (argc <= 1) {
 		struct ec_keypair pair;
 		ec_generate_key(&pair);
 		wif_print_key(&pair);
+		return 0;
+	}
+
+	if (!strcmp(argv[p], "-h") || !strcmp(argv[p], "--help")) {
+		usage(argv[0]);
+		return 0;
+	}
+
+	if (!strcmp(argv[p], "search")) {
+		bool parse_opt;
+		p++;
+
+		do {
+			parse_opt = false;
+
+			if (p < argc && !strcmp(argv[p], "--l33t")) {
+				option_l33t = true;
+				parse_opt = true;
+				p++;
+			}
+
+			if (p < argc && !memcmp(argv[p], "--threads=", 10)) {
+#ifdef HAVE_THREADS
+				option_num_threads = atoi(argv[p] + 10);
+				if (option_num_threads < 2) {
+					option_num_threads = 2;
+				}
+#else
+				// Even if we dont have threads. we consume the flag.
+				// otherwise we might break scripts. Print a nice message instead.
+				std::cerr << "NOTICE: eosio-keygen is not compiled with"
+					<< " thread support. this option is ignored." << std::endl;
+#endif /* HAVE_THREADS */
+				p++;
+				parse_opt = true;
+			}
+		} while(parse_opt && p < argc);
+
+		if (argc <= p) {
+			std::cerr << "You must specify a word list." << std::endl;
+			usage(argv[0]);
+			return 1;
+		}
+
+		// Pass the rest of argv, argc
+		cmd_search(argc - p, &argv[p]);
+	} else {
+		std::cerr << "Unrecogniced command: " << argv[1] << std::endl;
+		usage(argv[0]);
+		return 1;
 	}
 
 	return 0;
