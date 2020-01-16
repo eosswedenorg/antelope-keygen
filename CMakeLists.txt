@@ -5,6 +5,7 @@ project(eosio-keygen VERSION 0.1.3)
 
 # Options
 option(USE_THREADS "Compile with support for threads (if available)." ON)
+option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
 
 # Use installpath from GNUInstallDirs as default.
 include(GNUInstallDirs)
@@ -16,7 +17,6 @@ include(GNUInstallDirs)
 set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 
 set (PROGRAM_SOURCE
-	src/console_ansi.cpp
 	src/string.cpp
 	src/ec.cpp
 	src/base58.cpp
@@ -26,6 +26,13 @@ set (PROGRAM_SOURCE
 	src/key_search_helpers.cpp
 	src/main.cpp
 )
+
+if (WIN32 AND NOT FORCE_ANSI)
+	set (PROGRAM_SOURCE ${PROGRAM_SOURCE} src/console_win32.cpp)
+else()
+	# *nix should have ansi support.
+	set (PROGRAM_SOURCE ${PROGRAM_SOURCE} src/console_ansi.cpp)
+endif()
 
 # Configure the compiler options
 set( CMAKE_CXX_STANDARD 11 )
