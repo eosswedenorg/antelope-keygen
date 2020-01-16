@@ -21,10 +21,10 @@ static void _thr_proc(const strlist_t& word_list) {
 	struct ec_keypair pair;
 
 	while (g_count < g_max) {
-		std::string word;
+		struct key_result res;
 
 		ec_generate_key(&pair);
-		if (key_contains_word(&pair, word_list, word)) {
+		if (key_contains_word(&pair, word_list, &res)) {
 
 			// Guard output with mutex, so we don't get
 			// interrupted mid write and can write to g_count safely.
@@ -39,7 +39,7 @@ static void _thr_proc(const strlist_t& word_list) {
 
 			// Update count and print result.
 			g_count++;
-			key_search_result(word, &pair);
+			key_search_result(&pair, &res);
 		}
 	}
 }
