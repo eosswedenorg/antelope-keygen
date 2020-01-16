@@ -12,7 +12,8 @@ void key_search_result(const std::string& word, const struct ec_keypair* pair) {
 
 bool key_contains_word(const struct ec_keypair* key, const strlist_t& word_list, std::string& word) {
 
-	std::string pubstr = wif_pub_encode(key->pub);
+	// skip first 3 chars, as those are always "EOS"
+	std::string pubstr = wif_pub_encode(key->pub).substr(3);
 	strtolower(pubstr);
 
 	for(auto const& w: word_list) {
