@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "WIF.h"
+#include "console.h"
 #include "key_search_helpers.h"
 
 void key_search_result(const struct ec_keypair* key, const struct key_result* result) {
@@ -11,7 +12,12 @@ void key_search_result(const struct ec_keypair* key, const struct key_result* re
 	std::cout << "----" << std::endl;
 	std::cout << "Found: " << word << std::endl;
 
-    std::cout << "Public: " << pub << std::endl;
+	std::cout << "Public: "
+		<< pub.substr(0, result->pos)
+		<< console::fg(console::red, console::bold) << word << console::reset
+		<< pub.substr(result->pos + result->len)
+		<< std::endl;
+
 	std::cout << "Private: " << wif_priv_encode(key->secret) << std::endl;
 }
 
