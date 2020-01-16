@@ -129,15 +129,20 @@ int main(int argc, char **argv) {
 				p++;
 			}
 
-#ifdef HAVE_THREADS
 			if (p < argc && !memcmp(argv[p], "--threads=", 10)) {
+#ifdef HAVE_THREADS
 				option_num_threads = atoi(argv[p] + 10);
 				if (option_num_threads < 2) {
 					option_num_threads = 2;
 				}
+#else
+				// Even if we dont have threads. we consume the flag.
+				// otherwise we might break scripts. Print a nice message instead.
+				std::cerr << "NOTICE: eosio-keygen is not compiled with"
+					<< " thread support. this option is ignored." << std::endl;
+#endif /* HAVE_THREADS */
 				p++;
 			}
-#endif /* HAVE_THREADS */
 
 			if (argc <= p) {
 				std::cout << "You must specify a word list." << std::endl;
