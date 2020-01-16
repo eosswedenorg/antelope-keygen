@@ -35,26 +35,12 @@
 bool option_l33t = false;
 
 #ifdef HAVE_THREADS
-#define n_thread_decl int n_threads = std::thread::hardware_concurrency()
-#define n_thread_argv 				\
-	if (argc > 2) { 				\
-		n_threads = atoi(argv[2]);	\
-		if (n_threads < 2) {		\
-			n_threads = 2;			\
-		}							\
-	}								\
-	ks.setThreadCount(n_threads);
-#define n_thread_outp << ", Using: " << n_threads << " threads"
-#else
-#define n_thread_decl
-#define n_thread_argv
-#define n_thread_outp
+int option_num_threads = std::thread::hardware_concurrency();
 #endif /* HAVE_THREADS */
 
 void cmd_search(int argc, char **argv) {
 
 	int n = 10;
-	n_thread_decl;
 	std::string input(argv[0]);
 	KeySearch ks;
 
@@ -74,11 +60,15 @@ void cmd_search(int argc, char **argv) {
 		}
 	}
 
-	n_thread_argv;
+#ifdef HAVE_THREADS
+	ks.setThreadCount(option_num_threads);
+#endif /* HAVE_THREADS */
 
 	std::cout << "Searching for " << n
 		<< " keys containing: " << strjoin(ks.getList(), ",")
-		n_thread_outp
+#ifdef HAVE_THREADS
+		<< ", Using: " << option_num_threads << " threads"
+#endif /* HAVE_THREADS */
 		<< std::endl;
 
 	ks.find(n);
@@ -87,11 +77,12 @@ void cmd_search(int argc, char **argv) {
 void usage(const char *name) {
 
 	std::cout << name
-		<< " [ -h | --help | search <word_list> [ <count:10> ]"
+		<< " [ -h | --help | search [ --l33t"
 #ifdef HAVE_THREADS
-		<< " [ <threads:2> ]"
+		<< " | --threads=<num>"
 #endif /* HAVE_THREADS */
-		" ]" << std::endl << std::endl;
+		<< " ] <word_list> [ <count:10> ] ]"
+		<< std::endl << std::endl;
 
 	std::cout << " - Output one EOSIO key pair if no arguments are given" << std::endl << std::endl;
 
@@ -103,37 +94,59 @@ void usage(const char *name) {
 		<< std::endl;
 
 	std::cout << " search: " << std::endl
-			  << "  performs a search, finding <count> public keys "
-			  << "containing one or more words from <word_list> (separated with ',')."
+			  << "  performs a search, finding <count> public keys containing" << std::endl
+			  << "  one or more words from <word_list> (separated with ',')."
+			  << std::endl << std::endl
+			  << "  --l33t: Takes each word in <word_list> and find all l33tspeak" << std::endl
+			  << "          combinations of that word and uses the new list for the search."
 #ifdef HAVE_THREADS
-			  << std::endl << "  <threads> specify the number of parallel threads to use."
+			  << std::endl << std::endl
+			  << "  --threads=<num>: Use <num> of parallel threads for searching." << std::endl
+			  << "                   Default is what the operating system recomend."
 #endif /* HAVE_THREADS */
 			  << std::endl;
 }
 
 int main(int argc, char **argv) {
 
-	if (argc > 1) {
+	// current position in argv
+	// when parsing command line.
+	int p = 0;
 
-		if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
+	if (argc > 1) {
+		p = 1;
+
+		if (!strcmp(argv[p], "-h") || !strcmp(argv[p], "--help")) {
 			usage(argv[0]);
 			return 0;
 		}
 
-		if (!strcmp(argv[1], "--l33t")) {
-			option_l33t = true;
-			argc--;
-			argv = &argv[1];
-		}
+		if (!strcmp(argv[p], "search")) {
+			p++;
 
-		if (!strcmp(argv[1], "search")) {
-			if (argc < 3) {
+			if (p < argc && !strcmp(argv[p], "--l33t")) {
+				option_l33t = true;
+				p++;
+			}
+
+#ifdef HAVE_THREADS
+			if (p < argc && !memcmp(argv[p], "--threads=", 10)) {
+				option_num_threads = atoi(argv[p] + 10);
+				if (option_num_threads < 2) {
+					option_num_threads = 2;
+				}
+				p++;
+			}
+#endif /* HAVE_THREADS */
+
+			if (argc <= p) {
 				std::cout << "You must specify a word list." << std::endl;
 				usage(argv[0]);
 				return 1;
 			}
 
-			cmd_search(argc - 2, &argv[2]);
+			// Pass the rest of argv, argc
+			cmd_search(argc - p, &argv[p]);
 		} else {
 			std::cout << "Unrecogniced command: " << argv[1] << std::endl;
 			usage(argv[0]);
