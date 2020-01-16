@@ -122,27 +122,34 @@ int main(int argc, char **argv) {
 		}
 
 		if (!strcmp(argv[p], "search")) {
+			bool parse_opt;
 			p++;
 
-			if (p < argc && !strcmp(argv[p], "--l33t")) {
-				option_l33t = true;
-				p++;
-			}
 
-			if (p < argc && !memcmp(argv[p], "--threads=", 10)) {
-#ifdef HAVE_THREADS
-				option_num_threads = atoi(argv[p] + 10);
-				if (option_num_threads < 2) {
-					option_num_threads = 2;
+			do {
+				parse_opt = false;
+				if (p < argc && !strcmp(argv[p], "--l33t")) {
+					option_l33t = true;
+					parse_opt = true;
+					p++;
 				}
+
+				if (p < argc && !memcmp(argv[p], "--threads=", 10)) {
+#ifdef HAVE_THREADS
+					option_num_threads = atoi(argv[p] + 10);
+					if (option_num_threads < 2) {
+						option_num_threads = 2;
+					}
 #else
-				// Even if we dont have threads. we consume the flag.
-				// otherwise we might break scripts. Print a nice message instead.
-				std::cerr << "NOTICE: eosio-keygen is not compiled with"
-					<< " thread support. this option is ignored." << std::endl;
+					// Even if we dont have threads. we consume the flag.
+					// otherwise we might break scripts. Print a nice message instead.
+					std::cerr << "NOTICE: eosio-keygen is not compiled with"
+						<< " thread support. this option is ignored." << std::endl;
 #endif /* HAVE_THREADS */
-				p++;
-			}
+					p++;
+					parse_opt = true;
+				}
+			} while(parse_opt && p < argc);
 
 			if (argc <= p) {
 				std::cerr << "You must specify a word list." << std::endl;
