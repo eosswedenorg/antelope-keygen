@@ -21,21 +21,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef KEY_SEARCH_HELPSER_H
-#define KEY_SEARCH_HELPERS_H
+#ifndef CONSOLE_H
+#define CONSOLE_H
 
-#include "string.h"
-#include "ec.h"
+#include <ostream>
 
-struct key_result {
-	size_t pos; // position where the word was found.
-	size_t len; // the length of the word.
-};
+namespace console {
 
-void key_search_result(const struct ec_keypair* key, const struct key_result* result);
+	// enum for all supported colors.
+	enum Color {
+		default_fg,
+		black,
+		white,
+		red,
+		green,
+		blue,
+		yellow,
+		magenta,
+		cyan,
 
-// Check if any word in <word_list> appears in <key>'s public key.
-// returns true if a word was found (stored in <result>), false otherwise.
-bool key_contains_word(const struct ec_keypair* key, const strlist_t& word_list, struct key_result *result);
+		// Light colors.
+		light_grey,
+		light_red,
+		light_green,
+		light_blue,
+		light_yellow,
+		light_magenta,
+		light_cyan,
 
-#endif /* KEY_SEARCH_HELPERS_H */
+		// Dark colors
+		dark_grey
+	};
+
+	enum Attribute {
+		normal,
+		bold,
+		italic
+	};
+
+	// Resets all colors/attributes
+	std::ostream& reset(std::ostream& os);
+
+	// Foreground color
+	// Defined as a class with overloaded "<<" operator so you can write:
+	//   std::cout << fg(red) << "Text";
+	class fg
+	{
+	public:
+		fg(Color color, Attribute attribute = normal)
+			: _color(color), _attr(attribute) {}
+
+		friend std::ostream& operator<<(std::ostream& os, const fg& obj);
+
+	protected :
+		Color _color;
+		Attribute _attr;
+	};
+
+} // namespace console
+
+#endif /* CONSOLE_H */
