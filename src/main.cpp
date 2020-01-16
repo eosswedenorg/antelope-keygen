@@ -145,7 +145,7 @@ int main(int argc, char **argv) {
 			}
 
 			if (argc <= p) {
-				std::cout << "You must specify a word list." << std::endl;
+				std::cerr << "You must specify a word list." << std::endl;
 				usage(argv[0]);
 				return 1;
 			}
@@ -153,7 +153,7 @@ int main(int argc, char **argv) {
 			// Pass the rest of argv, argc
 			cmd_search(argc - p, &argv[p]);
 		} else {
-			std::cout << "Unrecogniced command: " << argv[1] << std::endl;
+			std::cerr << "Unrecogniced command: " << argv[1] << std::endl;
 			usage(argv[0]);
 			return 1;
 		}
