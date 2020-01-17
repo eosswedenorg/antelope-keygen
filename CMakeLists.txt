@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4)
 
 # Project name and version
-project(eosio-keygen VERSION 0.1.3)
+project(eosio-keygen VERSION 0.1.4)
 
 # Options
 option(USE_THREADS "Compile with support for threads (if available)." ON)
