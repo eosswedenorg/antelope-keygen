@@ -46,5 +46,5 @@ void benchmark(size_t num_keys, struct benchmark_result* res) {
 	}
 
 	res->sec = duration<float>(steady_clock::now() - start).count();
-	res->kps = num_keys / res->sec;
+	res->kps = static_cast<float>(num_keys) / res->sec;
 }
