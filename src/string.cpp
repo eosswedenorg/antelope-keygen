@@ -51,6 +51,9 @@ std::string strjoin(const strlist_t& list, const std::string& delim) {
 	std::string out;
 
 	for(const std::string& item : list) {
+		if (item.length() < 1) {
+			continue;
+		}
 		out += item + delim;
 	}
 
