@@ -24,6 +24,7 @@ set (PROGRAM_SOURCE
 	src/WIF.cpp
 	src/key_search.cpp
 	src/key_search_helpers.cpp
+	src/benchmark.cpp
 	src/main.cpp
 )
 

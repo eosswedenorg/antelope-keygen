@@ -30,6 +30,7 @@
 #include "WIF.h"
 #include "ec.h"
 #include "key_search.h"
+#include "benchmark.h"
 
 // Command line options.
 bool option_l33t = false;
@@ -81,7 +82,9 @@ void usage(const char *name) {
 #ifdef HAVE_THREADS
 		<< " | --threads=<num>"
 #endif /* HAVE_THREADS */
-		<< " ] <word_list> [ <count:10> ] ]"
+		<< " ] <word_list> [ <count:10> ]"
+		<< " | benchmark [ <num:1000> ]"
+		<< " ]"
 		<< std::endl << std::endl;
 
 	std::cout << " - Output one EOSIO key pair if no arguments are given" << std::endl << std::endl;
@@ -105,6 +108,23 @@ void usage(const char *name) {
 			  << "                   Default is what the operating system recomend."
 #endif /* HAVE_THREADS */
 			  << std::endl;
+
+	std::cout << " Benchmark: " << std::endl
+			  << "  performs a benchmark test, generating <num> keys and measuring the time." << std::endl
+			  << std::endl;
+}
+
+void cmd_benchmark(size_t num_keys) {
+
+	struct benchmark_result res;
+
+	std::cout << "Benchmark: Generating "
+		<< num_keys << " keys" << std::endl;
+
+	benchmark(num_keys, &res);
+
+	std::cout << "Result: Took " << res.sec << " seconds, "
+		<< res.kps << " keys per second." << std::endl;
 }
 
 int main(int argc, char **argv) {
@@ -164,6 +184,19 @@ int main(int argc, char **argv) {
 
 		// Pass the rest of argv, argc
 		cmd_search(argc - p, &argv[p]);
+	}
+	// Benchmark
+	else if (!strcmp(argv[p], "benchmark")) {
+		int num_keys = 1000;
+
+		if (++p < argc) {
+			num_keys = atoi(argv[p]);
+			if (num_keys < 1) {
+				num_keys = 1;
+			}
+		}
+
+		cmd_benchmark(num_keys);
 	} else {
 		std::cerr << "Unrecogniced command: " << argv[1] << std::endl;
 		usage(argv[0]);
