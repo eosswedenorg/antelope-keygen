@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <algorithm>
+#include <cstddef>
 #include <cctype>
+#include <algorithm>
 #include "string.h"
 
 strlist_t strsplitwords(const std::string& str, const std::string& delim) {
@@ -108,20 +109,20 @@ static bool is_l33t(char ch, char& r) {
 	//                          '1', '2', '3', '4', '5', '6', '7', '8', '9'
 	static char alphabet[9] = { 'l', 'z', 'e', 'a', 's', 'G', 't', 'B', 'g' };
 
-	for(int i = 0; i < sizeof(alphabet) / sizeof(char); i++) {
+	for(std::size_t i = 0; i < sizeof(alphabet) / sizeof(char); i++) {
 
 		if (ch == alphabet[i]) {
-			r = '1' + i;
+			r = static_cast<char>('1' + i);
 			return true;
 		}
 	}
 	return false;
 }
 
-static void _l33t(strlist_t& list, const std::string& a, int pos) {
+static void _l33t(strlist_t& list, const std::string& a, std::size_t pos) {
 
 	// Find the next character to be replaced.
-	for(int i = pos; i < a.length(); i++) {
+	for(std::size_t i = pos; i < a.length(); i++) {
 
 		char ch;
 		if (is_l33t(a[i], ch)) {

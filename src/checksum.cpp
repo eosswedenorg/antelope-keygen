@@ -26,13 +26,13 @@
 #include <cstring>
 #include "checksum.h"
 
-inline void sha256d(const unsigned char *data, unsigned int len, unsigned char *out) {
+inline void sha256d(const unsigned char *data, std::size_t len, unsigned char *out) {
 	SHA256(data, len, out);
 	SHA256(out, 32, out);
 }
 
 #define checksum_impl(name, func) \
-	checksum_t checksum_##name(const unsigned char *data, unsigned int len) { 	\
+	checksum_t checksum_##name(const unsigned char *data, std::size_t len) { 	\
 																				\
 		checksum_t crc;															\
 		unsigned char hash[32];													\

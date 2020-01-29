@@ -24,12 +24,13 @@
 #ifndef CHECKSUM_H
 #define CHECKSUM_H
 
+#include <cstddef>
 #include <array>
 
 typedef std::array<unsigned char, 4> checksum_t;
 
-checksum_t checksum_sha256d(const unsigned char *data, unsigned int len);
+checksum_t checksum_sha256d(const unsigned char *data, std::size_t len);
 
-checksum_t checksum_ripemd160(const unsigned char *data, unsigned int len);
+checksum_t checksum_ripemd160(const unsigned char *data, std::size_t len);
 
 #endif /* CHECKSUM_H */

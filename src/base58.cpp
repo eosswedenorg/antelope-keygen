@@ -24,6 +24,7 @@
  *
  * Based on code from https://github.com/bitcoin/bitcoin/blob/f1e2f2a85962c1664e4e55471061af0eaa798d40/src/base58.cpp
  */
+#include <cstddef>
 #include <cassert>
 #include "base58.h"
 
@@ -39,7 +40,7 @@ std::string base58_encode(const unsigned char* pbegin, const unsigned char* pend
         zeroes++;
     }
     // Allocate enough space in big-endian base58 representation.
-    int size = (pend - pbegin) * 138 / 100 + 1; // log(256) / log(58), rounded up.
+    std::size_t size = (pend - pbegin) * 138 / 100 + 1; // log(256) / log(58), rounded up.
     std::vector<unsigned char> b58(size);
     // Process the bytes.
     while (pbegin != pend) {
@@ -48,7 +49,7 @@ std::string base58_encode(const unsigned char* pbegin, const unsigned char* pend
         // Apply "b58 = b58 * 256 + ch".
         for (std::vector<unsigned char>::reverse_iterator it = b58.rbegin(); (carry != 0 || i < length) && (it != b58.rend()); it++, i++) {
             carry += 256 * (*it);
-            *it = carry % 58;
+            *it = static_cast<unsigned char>(carry % 58);
             carry /= 58;
         }
 

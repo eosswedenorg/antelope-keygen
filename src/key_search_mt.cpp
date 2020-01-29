@@ -1,4 +1,5 @@
 
+#include <cstddef>
 #include <thread>
 #include <mutex>
 #include <vector>
@@ -7,10 +8,10 @@
 #include "key_search.h"
 
 // Max keys to search for,
-unsigned int g_max;
+std::size_t g_max;
 
 // How many keys we have found so far.
-unsigned int g_count;
+std::size_t g_count;
 
 // Mutex guard for g_count.
 std::mutex g_count_mtx;
@@ -60,7 +61,7 @@ void KeySearch::_search_mt(size_t n)
 	g_count = 0;
 
 	// Launch them.
-	for(int i = 0; i < t.size(); i++) {
+	for(std::size_t i = 0; i < t.size(); i++) {
 		t[i] = std::thread(_thr_proc, m_words);
 	}
 
@@ -68,7 +69,7 @@ void KeySearch::_search_mt(size_t n)
 	_thr_proc(m_words);
 
 	// Wait for all threads to compelete.
-	for(int i = 0; i < t.size(); i++) {
+	for(std::size_t i = 0; i < t.size(); i++) {
 		t[i].join();
 	}
 }

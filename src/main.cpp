@@ -46,7 +46,7 @@ void cmd_search(int argc, char **argv) {
 
 	if (option_l33t) {
 		strlist_t tmp = strsplitwords(input);
-		for(int i = 0; i < tmp.size(); i++) {
+		for(std::size_t i = 0; i < tmp.size(); i++) {
 			ks.addList(l33twords(tmp[i]));
 		}
 	} else {
