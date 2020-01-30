@@ -38,7 +38,7 @@ while true; do
 	shift
 done
 
-echo cmake $ARGS ..
+cmake $ARGS ..
 make -B
 
 popd > /dev/null
