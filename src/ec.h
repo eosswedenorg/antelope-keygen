@@ -35,6 +35,10 @@ struct ec_keypair {
 	ec_pubkey_t pub;
 };
 
+/**
+ * Generates a keypair using the secp256k1 curve.
+ * public key is in compressed format.
+ */
 int ec_generate_key(struct ec_keypair *pair);
 
 #endif /* EC_H */
