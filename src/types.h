@@ -25,6 +25,12 @@
 #define TYPES_H
 
 #define EC_PRIVKEY_SIZE 32
-#define EC_PUBKEY_SIZE 33 /* Compressed: 32 bytes + 1 prefix */
+
+/*
+ * Compressed format!
+ * z||x, where byte z specifies which (of the 2) solutions of the quadratic equation y is.
+ * Each cordinate is 32 bytes.
+ */
+#define EC_PUBKEY_SIZE (32 + 1)
 
 #endif /* TYPES_H */
