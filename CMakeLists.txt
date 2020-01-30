@@ -100,6 +100,9 @@ endif (WIN32)
 install(FILES README.md LICENSE LICENSE.bitcoin
 		DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME})
 
+configure_file( docs/eosio-keygen.1.in
+				${PROJECT_BINARY_DIR}/man1/eosio-keygen.1 )
+
 # --------------------------------
 #  Debian package script
 # --------------------------------
