@@ -24,16 +24,7 @@
 #ifndef EC_H
 #define EC_H
 
-#include <array>
 #include "types.h"
-
-typedef std::array<unsigned char, EC_PRIVKEY_SIZE> ec_privkey_t;
-typedef std::array<unsigned char, EC_PUBKEY_SIZE> ec_pubkey_t;
-
-struct ec_keypair {
-	ec_privkey_t secret;
-	ec_pubkey_t pub;
-};
 
 /**
  * Generates a keypair using the secp256k1 curve.

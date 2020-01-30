@@ -24,6 +24,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <array>
+
 #define EC_PRIVKEY_SIZE 32
 
 /*
@@ -32,5 +34,14 @@
  * Each cordinate is 32 bytes.
  */
 #define EC_PUBKEY_SIZE (32 + 1)
+
+
+typedef std::array<unsigned char, EC_PRIVKEY_SIZE> ec_privkey_t;
+typedef std::array<unsigned char, EC_PUBKEY_SIZE> ec_pubkey_t;
+
+struct ec_keypair {
+	ec_privkey_t secret;
+	ec_pubkey_t pub;
+};
 
 #endif /* TYPES_H */
