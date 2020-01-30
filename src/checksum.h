@@ -27,7 +27,9 @@
 #include <cstddef>
 #include <array>
 
-typedef std::array<unsigned char, 4> checksum_t;
+#define CHECKSUM_SIZE 4
+
+typedef std::array<unsigned char, CHECKSUM_SIZE> checksum_t;
 
 checksum_t checksum_sha256d(const unsigned char *data, std::size_t len);
 
