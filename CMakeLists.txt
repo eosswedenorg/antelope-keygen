@@ -18,7 +18,7 @@ set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 
 set (PROGRAM_SOURCE
 	src/string.cpp
-	src/ec.cpp
+	src/ec/openssl.cpp
 	src/base58.cpp
 	src/checksum.cpp
 	src/WIF.cpp

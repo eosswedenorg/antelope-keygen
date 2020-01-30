@@ -25,7 +25,7 @@
 #define WIF_H
 
 #include <string>
-#include "types.h"
+#include "ec/types.h"
 
 std::string wif_priv_encode(ec_privkey_t priv);
 

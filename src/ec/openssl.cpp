@@ -21,15 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EC_H
-#define EC_H
+#include <openssl/ec.h>
+#include <openssl/bn.h>
+#include <openssl/hmac.h>
+#include "generate.h"
 
-#include "types.h"
+static int ec_generate_pair(unsigned char *priv, unsigned char *pub) {
 
-/**
- * Generates a keypair using the secp256k1 curve.
- * public key is in compressed format.
- */
-int ec_generate_key(struct ec_keypair *pair);
+	int ret = -1;
+	EC_KEY *k;
+	BN_CTX *ctx;
 
-#endif /* EC_H */
+	// Create BIGNUM context.
+	ctx = BN_CTX_new();
+	if (ctx == NULL) {
+		return -1;
+	}
+
+	// Construct curve.
+	k = EC_KEY_new_by_curve_name(NID_secp256k1);
+	if (k == NULL) {
+		goto fail1;
+	}
+
+	// Generate new key pair.
+	if (EC_KEY_generate_key(k) != 1)  {
+		goto fail2;
+	}
+
+	// Copy private key to binary format.
+	EC_KEY_priv2oct(k, priv, EC_PRIVKEY_SIZE);
+
+	// Copy public key key
+	EC_POINT_point2oct(EC_KEY_get0_group(k),
+		EC_KEY_get0_public_key(k), POINT_CONVERSION_COMPRESSED,
+	   	pub, EC_PUBKEY_SIZE, ctx);
+
+	ret = 0;
+fail2:
+	EC_KEY_free(k);
+fail1:
+	BN_CTX_free(ctx);
+	return ret;
+}
+
+int ec_generate_key(struct ec_keypair *pair) {
+
+	return ec_generate_pair(pair->secret.data(), pair->pub.data());
+}

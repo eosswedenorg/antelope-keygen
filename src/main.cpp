@@ -28,7 +28,7 @@
 #include <cstring>
 #include "string.h"
 #include "WIF.h"
-#include "ec.h"
+#include "ec/generate.h"
 #include "key_search.h"
 #include "benchmark.h"
 
