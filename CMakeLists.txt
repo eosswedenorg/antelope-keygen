@@ -103,6 +103,9 @@ install(FILES README.md LICENSE LICENSE.bitcoin
 configure_file( docs/eosio-keygen.1.in
 				${PROJECT_BINARY_DIR}/man1/eosio-keygen.1 )
 
+install(DIRECTORY ${PROJECT_BINARY_DIR}/man1
+		DESTINATION ${CMAKE_INSTALL_MANDIR})
+
 # --------------------------------
 #  Debian package script
 # --------------------------------
