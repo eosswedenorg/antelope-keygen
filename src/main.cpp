@@ -163,6 +163,8 @@ int main(int argc, char **argv) {
 #ifdef HAVE_THREADS
 				option_num_threads = atoi(argv[p] + 10);
 				if (option_num_threads < 2) {
+					std::cerr << "NOTICE: Number of threads less than 2 does not make sense."
+						<< " So eosio-keygen will use 2." << std::endl;
 					option_num_threads = 2;
 				}
 #else
