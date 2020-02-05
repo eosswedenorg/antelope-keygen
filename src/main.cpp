@@ -166,6 +166,12 @@ int main(int argc, char **argv) {
 					<< " thread support. this option is ignored." << std::endl;
 #endif /* HAVE_THREADS */
 			}
+			// Error out on any flag we don't support.
+			else if (argv[p][0] == '-') {
+				std::cerr << "Unrecognized flag: " << argv[p] << std::endl;
+				usage(argv[0]);
+				return 0;
+			}
 			// Nothing to parse
 			else {
 				break;
