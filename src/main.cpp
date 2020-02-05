@@ -39,40 +39,30 @@ bool option_l33t = false;
 int option_num_threads = std::thread::hardware_concurrency();
 #endif /* HAVE_THREADS */
 
-void cmd_search(int argc, char **argv) {
+void cmd_search(const strlist_t& words, int count) {
 
-	int n = 10;
-	std::string input(argv[0]);
 	KeySearch ks;
 
 	if (option_l33t) {
-		strlist_t tmp = strsplitwords(input);
-		for(std::size_t i = 0; i < tmp.size(); i++) {
-			ks.addList(l33twords(tmp[i]));
+		for(std::size_t i = 0; i < words.size(); i++) {
+			ks.addList(l33twords(words[i]));
 		}
 	} else {
-		ks.addList(strsplitwords(input));
-	}
-
-	if (argc > 1) {
-		n = atoi(argv[1]);
-		if (n < 1) {
-			n = 1;
-		}
+		ks.addList(words);
 	}
 
 #ifdef HAVE_THREADS
 	ks.setThreadCount(option_num_threads);
 #endif /* HAVE_THREADS */
 
-	std::cout << "Searching for " << n
+	std::cout << "Searching for " << count
 		<< " keys containing: " << strjoin(ks.getList(), ",")
 #ifdef HAVE_THREADS
 		<< ", Using: " << option_num_threads << " threads"
 #endif /* HAVE_THREADS */
 		<< std::endl;
 
-	ks.find(n);
+	ks.find(count);
 }
 
 void usage(const char *name) {
@@ -182,10 +172,19 @@ int main(int argc, char **argv) {
 			std::cerr << "You must specify a word list." << std::endl;
 			usage(argv[0]);
 			return 1;
-		}
+		} else {
+			int count = 10;
+			strlist_t words = strsplitwords(std::string(argv[p]));
 
-		// Pass the rest of argv, argc
-		cmd_search(argc - p, &argv[p]);
+			if (p + 1 < argc) {
+				count = atoi(argv[p+1]);
+				if (count < 1) {
+					count = 1;
+				}
+			}
+
+			cmd_search(words, count);
+		}
 	}
 	// Benchmark
 	else if (!strcmp(argv[p], "benchmark")) {
