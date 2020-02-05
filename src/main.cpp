@@ -138,6 +138,9 @@ int main(int argc, char **argv) {
 
 	if (!strcmp(argv[p], "search")) {
 
+		int count = 10;
+		strlist_t words;
+
 		while(p++ < argc - 1) {
 			if (!strcmp(argv[p], "--l33t")) {
 				option_l33t = true;
@@ -162,29 +165,26 @@ int main(int argc, char **argv) {
 				usage(argv[0]);
 				return 0;
 			}
-			// Nothing to parse
-			else {
-				break;
+			// wordlist and count
+			else if (words.size() < 1) {
+			 	words = strsplitwords(std::string(argv[p]));
+
+				if (p + 1 < argc) {
+					count = atoi(argv[++p]);
+					if (count < 1) {
+						count = 1;
+					}
+				}
 			}
 		}
 
-		if (argc <= p) {
+		if (words.size() < 1) {
 			std::cerr << "You must specify a word list." << std::endl;
 			usage(argv[0]);
 			return 1;
-		} else {
-			int count = 10;
-			strlist_t words = strsplitwords(std::string(argv[p]));
-
-			if (p + 1 < argc) {
-				count = atoi(argv[p+1]);
-				if (count < 1) {
-					count = 1;
-				}
-			}
-
-			cmd_search(words, count);
 		}
+
+		cmd_search(words, count);
 	}
 	// Benchmark
 	else if (!strcmp(argv[p], "benchmark")) {
