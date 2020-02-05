@@ -138,7 +138,7 @@ int main(int argc, char **argv) {
 
 	if (!strcmp(argv[p], "search")) {
 
-		while(p++ < argc) {
+		while(p++ < argc - 1) {
 			if (!strcmp(argv[p], "--l33t")) {
 				option_l33t = true;
 			} else if (!memcmp(argv[p], "--threads=", 10)) {
