@@ -27,16 +27,19 @@
 #include "checksum.h"
 #include "WIF.h"
 
+#define PRIV_KEY_PREFIX 0x80 /* 0x80 for "Bitcoin mainnet". Always used by EOS. */
+
 std::string wif_priv_encode(ec_privkey_t priv) {
 
 	checksum_t check;
-	unsigned char buf[37] = { 0x80 };
+	// 1 byte extra for prefix.
+	unsigned char buf[1 + EC_PRIVKEY_SIZE + CHECKSUM_SIZE] = { PRIV_KEY_PREFIX };
 
 	memcpy(buf + 1, priv.data(), priv.size());
 
 	// Checksum
-	check = checksum_sha256d(buf, 33);
-	memcpy(buf + 33, check.data(), check.size());
+	check = checksum_sha256d(buf, 1 + EC_PRIVKEY_SIZE);
+	memcpy(buf + 1 + EC_PRIVKEY_SIZE, check.data(), check.size());
 
 	return base58_encode(buf, buf + sizeof(buf));
 }
@@ -44,10 +47,10 @@ std::string wif_priv_encode(ec_privkey_t priv) {
 std::string wif_pub_encode(ec_pubkey_t pub) {
 
 	checksum_t check = checksum_ripemd160(pub.data(), pub.size());
-	unsigned char buf[37];
+	unsigned char buf[EC_PUBKEY_SIZE + CHECKSUM_SIZE];
 
 	memcpy(buf, pub.data(), pub.size());
-	memcpy(buf + 33, check.data(), check.size());
+	memcpy(buf + EC_PUBKEY_SIZE, check.data(), check.size());
 
 	return "EOS" + base58_encode(buf, buf + sizeof(buf));
 }

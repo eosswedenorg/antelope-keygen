@@ -25,7 +25,7 @@
 #define KEY_SEARCH_HELPERS_H
 
 #include "string.h"
-#include "ec.h"
+#include "ec/types.h"
 
 struct key_result {
 	size_t pos; // position where the word was found.

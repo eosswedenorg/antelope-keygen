@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 #include <string>
-#include "ec.h"
+#include "ec/generate.h"
 #include "key_search_helpers.h"
 #include "key_search.h"
 

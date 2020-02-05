@@ -21,11 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EC_H
-#define EC_H
+#ifndef EC_TYPES_H
+#define EC_TYPES_H
 
 #include <array>
-#include "types.h"
+
+#define EC_PRIVKEY_SIZE 32
+
+/*
+ * Compressed format!
+ * z||x, where byte z specifies which (of the 2) solutions of the quadratic equation y is.
+ * Each cordinate is 32 bytes.
+ */
+#define EC_PUBKEY_SIZE (32 + 1)
 
 typedef std::array<unsigned char, EC_PRIVKEY_SIZE> ec_privkey_t;
 typedef std::array<unsigned char, EC_PUBKEY_SIZE> ec_pubkey_t;
@@ -35,6 +43,4 @@ struct ec_keypair {
 	ec_pubkey_t pub;
 };
 
-int ec_generate_key(struct ec_keypair *pair);
-
-#endif /* EC_H */
+#endif /* EC_TYPES_H */

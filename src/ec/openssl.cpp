@@ -24,7 +24,7 @@
 #include <openssl/ec.h>
 #include <openssl/bn.h>
 #include <openssl/hmac.h>
-#include "ec.h"
+#include "generate.h"
 
 static int ec_generate_pair(unsigned char *priv, unsigned char *pub) {
 

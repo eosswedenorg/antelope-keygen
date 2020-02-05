@@ -21,10 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef EC_GENERATE_H
+#define EC_GENERATE_H
 
-#define EC_PRIVKEY_SIZE 32
-#define EC_PUBKEY_SIZE 33 /* Compressed: 32 bytes + 1 prefix */
+#include "types.h"
 
-#endif /* TYPES_H */
+/**
+ * Generates a keypair using the secp256k1 curve.
+ * public key is in compressed format.
+ */
+int ec_generate_key(struct ec_keypair *pair);
+
+#endif /* EC_GENERATE_H */
