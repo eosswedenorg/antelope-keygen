@@ -29,7 +29,7 @@ $ brew install openssl cmake
 
 #### Build
 
-After  you just need to run `./build.sh` to trigger the whole build.
+Run `./build.sh` to trigger cmake.
 
 If you dont want to use the script. you can build with cmake using the following commands:
 
