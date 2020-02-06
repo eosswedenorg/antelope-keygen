@@ -68,6 +68,18 @@ C:\repo\build> cmake -D OPENSSL_ROOT_DIR="C:/path/to/openssl-1.1/x86" ..
 C:\repo\build> cmake --build . --config Release
 ```
 
+## Compile options
+
+These compile options are available:
+
+| Cmake                      | build.sh          | Description                               |
+|--------------------------- | ----------------- | ------------------------------------------|
+| -DCMAKE_BUILD_TYPE=`value` | -t `value`        | Type of build 							 |
+| -DUSE_THREADS=`OFF`        | --disable-threads | Disable thread support                    |
+| -DFORCE_ANSI=`ON`          | --force-ansi      | Force ANSI console colors even on windows |
+
+For more details about options run `./build.sh -l` or `mkdir build && cmake build -LA`
+
 ## Install
 
 After the project has been compiled. run `sudo ./install.sh` or the following code if you dont want to use that:
