@@ -8,12 +8,13 @@ function usage() {
 	exit 1
 }
 
-options=$(getopt -n "${0##*/}" -o ht: --long disable-threads --long force-ansi -- "$@")
+options=$(getopt -n "${0##*/}" -o lht: --long disable-threads --long force-ansi -- "$@")
 
 [ $? -eq 0 ] || usage
 
 eval set -- "$options"
 
+ONLY_CONFIG=0
 ARGS=""
 while true; do
 
@@ -30,6 +31,9 @@ while true; do
 			ARGS="${ARGS} -DUSE_THREADS=OFF" ;;
 		--force-ansi)
 			ARGS="${ARGS} -DFORCE_ANSI=ON" ;;
+		-l)
+			ARGS="${ARGS} -LH"
+			ONLY_CONFIG=1 ;;
 		-h) usage ;;
 		--) shift
 			break
@@ -39,6 +43,8 @@ while true; do
 done
 
 cmake $ARGS ..
-make -B
+if [ ${ONLY_CONFIG} -eq 0 ]; then
+	make -B
+fi
 
 popd > /dev/null
