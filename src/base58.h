@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef BASE58_H
-#define BASE58_H
+#ifndef EOSIOKEYGEN_BASE58_H
+#define EOSIOKEYGEN_BASE58_H
 
 #include <string>
 #include <vector>
@@ -35,4 +35,4 @@ std::string base58_encode(const unsigned char* pbegin, const unsigned char* pend
 
 } //namespace eoskeygen
 
-#endif /* BASE58_H */
+#endif /* EOSIOKEYGEN_BASE58_H */

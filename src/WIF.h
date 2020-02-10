@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef WIF_H
-#define WIF_H
+#ifndef EOSIOKEYGEN_WIF_H
+#define EOSIOKEYGEN_WIF_H
 
 #include <string>
 #include "ec/types.h"
@@ -37,4 +37,4 @@ void wif_print_key(const struct ec_keypair *key);
 
 } // namespace eoskeygen
 
-#endif /* WIF_H */
+#endif /* EOSIOKEYGEN_WIF_H */

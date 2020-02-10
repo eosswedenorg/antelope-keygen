@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EC_TYPES_H
-#define EC_TYPES_H
+#ifndef EOSIOKEYGEN_EC_TYPES_H
+#define EOSIOKEYGEN_EC_TYPES_H
 
 #include <array>
 
@@ -47,4 +47,4 @@ struct ec_keypair {
 
 } // namespace eoskeygen
 
-#endif /* EC_TYPES_H */
+#endif /* EOSIOKEYGEN_EC_TYPES_H */

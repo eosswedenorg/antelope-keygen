@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef BENCHMARK_H
-#define BENCHMARK_H
+#ifndef EOSIOKEYGEN_BENCHMARK_H
+#define EOSIOKEYGEN_BENCHMARK_H
 
 #include <ctime>
 
@@ -37,4 +37,4 @@ void benchmark(size_t num_keys, struct benchmark_result* res);
 
 } // namespace eoskeygen
 
-#endif /* BENCHMARK_H */
+#endif /* EOSIOKEYGEN_BENCHMARK_H */
