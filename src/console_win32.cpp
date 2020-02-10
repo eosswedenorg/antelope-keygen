@@ -25,6 +25,8 @@
 #include <iostream>
 #include "console.h"
 
+namespace eoskeygen {
+
 // WinAPI colors
 #define FG_BLACK		0
 #define FG_BLUE			FOREGROUND_BLUE
@@ -88,3 +90,5 @@ std::ostream& operator<<(std::ostream& os, const fg& obj) {
 }
 
 } // namespace console
+
+} // namespace eoskeygen

@@ -29,6 +29,8 @@ using std::chrono::steady_clock;
 using std::chrono::duration;
 using std::chrono::time_point;
 
+namespace eoskeygen {
+
 void benchmark(size_t num_keys, struct benchmark_result* res) {
 
 	time_point<steady_clock> start;
@@ -48,3 +50,5 @@ void benchmark(size_t num_keys, struct benchmark_result* res) {
 	res->sec = duration<float>(steady_clock::now() - start).count();
 	res->kps = static_cast<float>(num_keys) / res->sec;
 }
+
+} // namespace eoskeygen

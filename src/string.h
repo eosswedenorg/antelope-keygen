@@ -27,6 +27,8 @@
 #include <vector>
 #include <string>
 
+namespace eoskeygen {
+
 typedef std::vector<std::string> strlist_t;
 
 strlist_t strsplitwords(const std::string& str, const std::string& delim = ",");
@@ -45,5 +47,7 @@ std::string& base58_strip(std::string &str);
 strlist_t& base58_strip(strlist_t& list);
 
 strlist_t l33twords(std::string str);
+
+} // namespace eoskeygen
 
 #endif /* STRING_H */

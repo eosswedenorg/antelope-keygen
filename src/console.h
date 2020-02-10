@@ -26,6 +26,8 @@
 
 #include <ostream>
 
+namespace eoskeygen {
+
 namespace console {
 
 	// enum for all supported colors.
@@ -79,5 +81,7 @@ namespace console {
 	};
 
 } // namespace console
+
+} // namespace eoskeygen
 
 #endif /* CONSOLE_H */

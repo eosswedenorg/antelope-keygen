@@ -26,6 +26,8 @@
 #include <cstring>
 #include "checksum.h"
 
+namespace eoskeygen {
+
 inline void sha256d(const unsigned char *data, std::size_t len, unsigned char *out) {
 	SHA256(data, len, out);
 	SHA256(out, 32, out);
@@ -46,3 +48,5 @@ inline void sha256d(const unsigned char *data, std::size_t len, unsigned char *o
 
 checksum_impl(sha256d, sha256d)
 checksum_impl(ripemd160, RIPEMD160)
+
+} // namespace eosio-keygen

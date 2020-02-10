@@ -26,6 +26,8 @@
 
 #include "string.h"
 
+namespace eoskeygen {
+
 class KeySearch
 {
 public :
@@ -66,5 +68,7 @@ protected :
 	size_t m_threads;
 #endif /* HAVE_THREADS */
 };
+
+} // namespace eoskeygen
 
 #endif /* KEY_SEARCH_H */

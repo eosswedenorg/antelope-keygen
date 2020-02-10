@@ -24,6 +24,8 @@
 #include <iostream>
 #include "console.h"
 
+namespace eoskeygen {
+
 namespace console {
 
 std::ostream& reset(std::ostream& os) {
@@ -69,3 +71,5 @@ std::ostream& operator<<(std::ostream& os, const fg& obj) {
 }
 
 } // namespace console
+
+} // namespace eoskeygen

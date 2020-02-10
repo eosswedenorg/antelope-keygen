@@ -27,8 +27,12 @@
 #include <string>
 #include <vector>
 
+namespace eoskeygen {
+
 std::string base58_encode(const std::string& str);
 std::string base58_encode(const std::vector<unsigned char>& vch);
 std::string base58_encode(const unsigned char* pbegin, const unsigned char* pend);
+
+} //namespace eoskeygen
 
 #endif /* BASE58_H */

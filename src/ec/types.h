@@ -26,6 +26,8 @@
 
 #include <array>
 
+namespace eoskeygen {
+
 #define EC_PRIVKEY_SIZE 32
 
 /*
@@ -42,5 +44,7 @@ struct ec_keypair {
 	ec_privkey_t secret;
 	ec_pubkey_t pub;
 };
+
+} // namespace eoskeygen
 
 #endif /* EC_TYPES_H */

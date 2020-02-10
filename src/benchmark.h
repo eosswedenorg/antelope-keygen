@@ -26,11 +26,15 @@
 
 #include <ctime>
 
+namespace eoskeygen {
+
 struct benchmark_result {
 	float sec; // elapsed seconds.
 	float kps; // keys per second.
 };
 
 void benchmark(size_t num_keys, struct benchmark_result* res);
+
+} // namespace eoskeygen
 
 #endif /* BENCHMARK_H */

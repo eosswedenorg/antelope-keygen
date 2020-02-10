@@ -26,6 +26,8 @@
 #include "key_search_helpers.h"
 #include "key_search.h"
 
+namespace eoskeygen {
+
 void KeySearch::addWord(const std::string& str)
 {
 	std::string tmp = str;
@@ -78,3 +80,5 @@ void KeySearch::find(size_t num_results) {
 
 	_search_linear(num_results);
 }
+
+} // namespace eoskeygen

@@ -27,6 +27,8 @@
 #include <cstddef>
 #include <array>
 
+namespace eoskeygen {
+
 #define CHECKSUM_SIZE 4
 
 typedef std::array<unsigned char, CHECKSUM_SIZE> checksum_t;
@@ -34,5 +36,7 @@ typedef std::array<unsigned char, CHECKSUM_SIZE> checksum_t;
 checksum_t checksum_sha256d(const unsigned char *data, std::size_t len);
 
 checksum_t checksum_ripemd160(const unsigned char *data, std::size_t len);
+
+} // namespace eoskeygen
 
 #endif /* CHECKSUM_H */

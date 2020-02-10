@@ -26,6 +26,8 @@
 #include <openssl/hmac.h>
 #include "generate.h"
 
+namespace eoskeygen {
+
 static int ec_generate_pair(unsigned char *priv, unsigned char *pub) {
 
 	int ret = -1;
@@ -69,3 +71,5 @@ int ec_generate_key(struct ec_keypair *pair) {
 
 	return ec_generate_pair(pair->secret.data(), pair->pub.data());
 }
+
+} // namespace eoskeygen

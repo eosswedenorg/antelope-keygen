@@ -29,6 +29,8 @@
 #include "key_search_helpers.h"
 #include "key_search.h"
 
+namespace eoskeygen {
+
 // Max keys to search for,
 std::size_t g_max;
 
@@ -95,3 +97,5 @@ void KeySearch::_search_mt(size_t n)
 		t[i].join();
 	}
 }
+
+} // namespace eoskeygen

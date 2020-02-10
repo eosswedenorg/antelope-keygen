@@ -28,6 +28,8 @@
 #include <cassert>
 #include "base58.h"
 
+namespace eoskeygen {
+
 static const char charmap[59] = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
 std::string base58_encode(const unsigned char* pbegin, const unsigned char* pend) {
@@ -80,3 +82,5 @@ std::string base58_encode(const std::vector<unsigned char>& vch) {
 
     return base58_encode(vch.data(), vch.data() + vch.size());
 }
+
+} // namespace eoskeygen

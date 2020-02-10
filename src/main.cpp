@@ -39,13 +39,13 @@ bool option_l33t = false;
 int option_num_threads = std::thread::hardware_concurrency();
 #endif /* HAVE_THREADS */
 
-void cmd_search(const strlist_t& words, int count) {
+void cmd_search(const eoskeygen::strlist_t& words, int count) {
 
-	KeySearch ks;
+	eoskeygen::KeySearch ks;
 
 	if (option_l33t) {
 		for(std::size_t i = 0; i < words.size(); i++) {
-			ks.addList(l33twords(words[i]));
+			ks.addList(eoskeygen::l33twords(words[i]));
 		}
 	} else {
 		ks.addList(words);
@@ -56,7 +56,7 @@ void cmd_search(const strlist_t& words, int count) {
 #endif /* HAVE_THREADS */
 
 	std::cout << "Searching for " << count
-		<< " keys containing: " << strjoin(ks.getList(), ",")
+		<< " keys containing: " << eoskeygen::strjoin(ks.getList(), ",")
 #ifdef HAVE_THREADS
 		<< ", Using: " << option_num_threads << " threads"
 #endif /* HAVE_THREADS */
@@ -106,12 +106,12 @@ void usage(const char *name) {
 
 void cmd_benchmark(size_t num_keys) {
 
-	struct benchmark_result res;
+	struct eoskeygen::benchmark_result res;
 
 	std::cout << "Benchmark: Generating "
 		<< num_keys << " keys" << std::endl;
 
-	benchmark(num_keys, &res);
+	eoskeygen::benchmark(num_keys, &res);
 
 	std::cout << "Result: Took " << res.sec << " seconds, "
 		<< res.kps << " keys per second." << std::endl;
@@ -125,9 +125,9 @@ int main(int argc, char **argv) {
 
 	// No args, just print a key.
 	if (argc <= 1) {
-		struct ec_keypair pair;
-		ec_generate_key(&pair);
-		wif_print_key(&pair);
+		struct eoskeygen::ec_keypair pair;
+		eoskeygen::ec_generate_key(&pair);
+		eoskeygen::wif_print_key(&pair);
 		return 0;
 	}
 
@@ -139,7 +139,7 @@ int main(int argc, char **argv) {
 	if (!strcmp(argv[p], "search")) {
 
 		int count = 10;
-		strlist_t words;
+		eoskeygen::strlist_t words;
 
 		while(p++ < argc - 1) {
 			if (!strcmp(argv[p], "--l33t")) {
@@ -167,7 +167,7 @@ int main(int argc, char **argv) {
 			}
 			// wordlist and count
 			else if (words.size() < 1) {
-			 	words = strsplitwords(std::string(argv[p]));
+			 	words = eoskeygen::strsplitwords(std::string(argv[p]));
 
 				if (p + 1 < argc) {
 					count = atoi(argv[++p]);

@@ -26,6 +26,8 @@
 #include <algorithm>
 #include "string.h"
 
+namespace eoskeygen {
+
 strlist_t strsplitwords(const std::string& str, const std::string& delim) {
 
 	strlist_t words = strsplit(str, delim);
@@ -156,3 +158,5 @@ strlist_t l33twords(std::string str) {
 	_l33t(list, str, 0);
 	return list;
 }
+
+} // namespace eoskeygen

@@ -26,10 +26,14 @@
 
 #include "types.h"
 
+namespace eoskeygen {
+
 /**
  * Generates a keypair using the secp256k1 curve.
  * public key is in compressed format.
  */
 int ec_generate_key(struct ec_keypair *pair);
+
+} // namespace eoskeygen
 
 #endif /* EC_GENERATE_H */
