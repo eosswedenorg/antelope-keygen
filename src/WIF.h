@@ -25,7 +25,7 @@
 #define EOSIOKEYGEN_WIF_H
 
 #include <string>
-#include "ec/types.h"
+#include "crypto/types.h"
 
 namespace eoskeygen {
 

@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_EC_GENERATE_H
-#define EOSIOKEYGEN_EC_GENERATE_H
+#ifndef EOSIOKEYGEN_CRYPTO_EC_H
+#define EOSIOKEYGEN_CRYPTO_EC_H
 
 #include "types.h"
 
@@ -36,4 +36,4 @@ int ec_generate_key(struct ec_keypair *pair);
 
 } // namespace eoskeygen
 
-#endif /* EOSIOKEYGEN_EC_GENERATE_H */
+#endif /* EOSIOKEYGEN_CRYPTO_EC_H */
