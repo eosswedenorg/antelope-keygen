@@ -21,11 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef CHECKSUM_H
-#define CHECKSUM_H
+#ifndef EOSIOKEYGEN_CHECKSUM_H
+#define EOSIOKEYGEN_CHECKSUM_H
 
 #include <cstddef>
 #include <array>
+
+namespace eoskeygen {
 
 #define CHECKSUM_SIZE 4
 
@@ -35,4 +37,6 @@ checksum_t checksum_sha256d(const unsigned char *data, std::size_t len);
 
 checksum_t checksum_ripemd160(const unsigned char *data, std::size_t len);
 
-#endif /* CHECKSUM_H */
+} // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_CHECKSUM_H */

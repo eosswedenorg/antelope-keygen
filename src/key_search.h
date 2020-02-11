@@ -21,10 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef KEY_SEARCH_H
-#define KEY_SEARCH_H
+#ifndef EOSIOKEYGEN_KEY_SEARCH_H
+#define EOSIOKEYGEN_KEY_SEARCH_H
 
 #include "string.h"
+
+namespace eoskeygen {
 
 class KeySearch
 {
@@ -67,4 +69,6 @@ protected :
 #endif /* HAVE_THREADS */
 };
 
-#endif /* KEY_SEARCH_H */
+} // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_KEY_SEARCH_H */

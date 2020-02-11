@@ -18,7 +18,6 @@ set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 
 set (PROGRAM_SOURCE
 	src/string.cpp
-	src/ec/openssl.cpp
 	src/base58.cpp
 	src/checksum.cpp
 	src/WIF.cpp
@@ -46,6 +45,10 @@ endif()
 
 # Libraries
 find_package(OpenSSL 1.1 REQUIRED)
+set (PROGRAM_SOURCE ${PROGRAM_SOURCE}
+	src/crypto/openssl/ec.cpp
+	src/crypto/openssl/hash.cpp
+)
 
 if (USE_THREADS)
 	find_package(Threads)

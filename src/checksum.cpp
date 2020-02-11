@@ -21,28 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <openssl/sha.h>
-#include <openssl/ripemd.h>
 #include <cstring>
+#include "crypto/hash.h"
 #include "checksum.h"
 
-inline void sha256d(const unsigned char *data, std::size_t len, unsigned char *out) {
-	SHA256(data, len, out);
-	SHA256(out, 32, out);
+namespace eoskeygen {
+
+inline void sha256d(const unsigned char *data, std::size_t len, sha256_t *out) {
+	sha256(data, len, out);
+	sha256(out->data, 32, out);
 }
 
-#define checksum_impl(name, func) \
-	checksum_t checksum_##name(const unsigned char *data, std::size_t len) { 	\
+#define checksum_impl(func, type) \
+	checksum_t checksum_##func(const unsigned char *data, std::size_t len) { 	\
 																				\
 		checksum_t crc;															\
-		unsigned char hash[32];													\
+		type hash;																\
 																				\
-		func(data, len, hash);													\
+		func(data, len, &hash);													\
 																				\
-		std::memcpy(crc.data(), hash, crc.size());								\
+		std::memcpy(crc.data(), &hash, crc.size());								\
 		return crc;																\
 	}
 
 
-checksum_impl(sha256d, sha256d)
-checksum_impl(ripemd160, RIPEMD160)
+checksum_impl(sha256d, sha256_t)
+checksum_impl(ripemd160, ripemd160_t)
+
+} // namespace eosio-keygen

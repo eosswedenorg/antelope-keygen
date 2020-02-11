@@ -27,6 +27,8 @@
 #include "checksum.h"
 #include "WIF.h"
 
+namespace eoskeygen {
+
 #define PRIV_KEY_PREFIX 0x80 /* 0x80 for "Bitcoin mainnet". Always used by EOS. */
 
 std::string wif_priv_encode(ec_privkey_t priv) {
@@ -60,3 +62,5 @@ void wif_print_key(const struct ec_keypair *key) {
 	std::cout << "Public: " << wif_pub_encode(key->pub) << std::endl;
 	std::cout << "Private: " << wif_priv_encode(key->secret) << std::endl;
 }
+
+} // namespace eoskeygen

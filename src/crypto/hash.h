@@ -21,51 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <openssl/ec.h>
-#include <openssl/bn.h>
-#include <openssl/hmac.h>
-#include "generate.h"
+#ifndef EOSIOKEYGEN_CRYPTO_HASH_H
+#define EOSIOKEYGEN_CRYPTO_HASH_H
 
-static int ec_generate_pair(unsigned char *priv, unsigned char *pub) {
+#include <cstddef>
+#include "types.h"
 
-	int ret = -1;
-	EC_KEY *k;
-	BN_CTX *ctx;
+namespace eoskeygen {
 
-	// Create BIGNUM context.
-	ctx = BN_CTX_new();
-	if (ctx == NULL) {
-		return -1;
-	}
+sha256_t* sha256(const unsigned char *data, std::size_t len, sha256_t* out);
 
-	// Construct curve.
-	k = EC_KEY_new_by_curve_name(NID_secp256k1);
-	if (k == NULL) {
-		goto fail1;
-	}
+ripemd160_t* ripemd160(const unsigned char *data, std::size_t len, ripemd160_t* out);
 
-	// Generate new key pair.
-	if (EC_KEY_generate_key(k) != 1)  {
-		goto fail2;
-	}
+} // namespace eoskeygen
 
-	// Copy private key to binary format.
-	EC_KEY_priv2oct(k, priv, EC_PRIVKEY_SIZE);
-
-	// Copy public key key
-	EC_POINT_point2oct(EC_KEY_get0_group(k),
-		EC_KEY_get0_public_key(k), POINT_CONVERSION_COMPRESSED,
-	   	pub, EC_PUBKEY_SIZE, ctx);
-
-	ret = 0;
-fail2:
-	EC_KEY_free(k);
-fail1:
-	BN_CTX_free(ctx);
-	return ret;
-}
-
-int ec_generate_key(struct ec_keypair *pair) {
-
-	return ec_generate_pair(pair->secret.data(), pair->pub.data());
-}
+#endif /* EOSIOKEYGEN_CRYPTO_HASH_H */

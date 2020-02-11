@@ -21,10 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef BENCHMARK_H
-#define BENCHMARK_H
+#ifndef EOSIOKEYGEN_BENCHMARK_H
+#define EOSIOKEYGEN_BENCHMARK_H
 
 #include <ctime>
+
+namespace eoskeygen {
 
 struct benchmark_result {
 	float sec; // elapsed seconds.
@@ -33,4 +35,6 @@ struct benchmark_result {
 
 void benchmark(size_t num_keys, struct benchmark_result* res);
 
-#endif /* BENCHMARK_H */
+} // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_BENCHMARK_H */

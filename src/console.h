@@ -21,10 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef CONSOLE_H
-#define CONSOLE_H
+#ifndef EOSIOKEYGEN_CONSOLE_H
+#define EOSIOKEYGEN_CONSOLE_H
 
 #include <ostream>
+
+namespace eoskeygen {
 
 namespace console {
 
@@ -80,4 +82,6 @@ namespace console {
 
 } // namespace console
 
-#endif /* CONSOLE_H */
+} // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_CONSOLE_H */

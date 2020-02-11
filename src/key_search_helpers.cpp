@@ -26,6 +26,8 @@
 #include "console.h"
 #include "key_search_helpers.h"
 
+namespace eoskeygen {
+
 void key_search_result(const struct ec_keypair* key, const struct key_result* result) {
 
 	std::string pub = wif_pub_encode(key->pub);
@@ -59,3 +61,5 @@ bool key_contains_word(const struct ec_keypair* key, const strlist_t& word_list,
 	}
 	return false;
 }
+
+} // namespace eoskeygen

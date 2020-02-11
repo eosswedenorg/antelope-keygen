@@ -21,11 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef STRING_H
-#define STRING_H
+#ifndef EOSIOKEYGEN_STRING_H
+#define EOSIOKEYGEN_STRING_H
 
 #include <vector>
 #include <string>
+
+namespace eoskeygen {
 
 typedef std::vector<std::string> strlist_t;
 
@@ -46,4 +48,6 @@ strlist_t& base58_strip(strlist_t& list);
 
 strlist_t l33twords(std::string str);
 
-#endif /* STRING_H */
+} // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_STRING_H */

@@ -21,11 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef WIF_H
-#define WIF_H
+#ifndef EOSIOKEYGEN_WIF_H
+#define EOSIOKEYGEN_WIF_H
 
 #include <string>
-#include "ec/types.h"
+#include "crypto/types.h"
+
+namespace eoskeygen {
 
 std::string wif_priv_encode(ec_privkey_t priv);
 
@@ -33,4 +35,6 @@ std::string wif_pub_encode(ec_pubkey_t pub);
 
 void wif_print_key(const struct ec_keypair *key);
 
-#endif /* WIF_H */
+} // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_WIF_H */

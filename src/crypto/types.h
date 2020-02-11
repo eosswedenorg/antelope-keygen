@@ -21,15 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EC_GENERATE_H
-#define EC_GENERATE_H
+#ifndef EOSIOKEYGEN_CRYPTO_TYPES_H
+#define EOSIOKEYGEN_CRYPTO_TYPES_H
 
-#include "types.h"
+#include <array>
 
-/**
- * Generates a keypair using the secp256k1 curve.
- * public key is in compressed format.
+namespace eoskeygen {
+
+#define EC_PRIVKEY_SIZE 32
+
+/*
+ * Compressed format!
+ * z||x, where byte z specifies which (of the 2) solutions of the quadratic equation y is.
+ * Each cordinate is 32 bytes.
  */
-int ec_generate_key(struct ec_keypair *pair);
+#define EC_PUBKEY_SIZE (32 + 1)
 
-#endif /* EC_GENERATE_H */
+typedef std::array<unsigned char, EC_PRIVKEY_SIZE> ec_privkey_t;
+typedef std::array<unsigned char, EC_PUBKEY_SIZE> ec_pubkey_t;
+
+struct ec_keypair {
+	ec_privkey_t secret;
+	ec_pubkey_t pub;
+};
+
+// Hashes.
+
+typedef struct { unsigned char data[20]; } ripemd160_t;
+typedef struct { unsigned char data[32]; } sha256_t;
+
+} // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_CRYPTO_TYPES_H */

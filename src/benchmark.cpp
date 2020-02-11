@@ -22,12 +22,14 @@
  * SOFTWARE.
  */
 #include <chrono>
-#include "ec/generate.h"
+#include "crypto/ec.h"
 #include "benchmark.h"
 
 using std::chrono::steady_clock;
 using std::chrono::duration;
 using std::chrono::time_point;
+
+namespace eoskeygen {
 
 void benchmark(size_t num_keys, struct benchmark_result* res) {
 
@@ -48,3 +50,5 @@ void benchmark(size_t num_keys, struct benchmark_result* res) {
 	res->sec = duration<float>(steady_clock::now() - start).count();
 	res->kps = static_cast<float>(num_keys) / res->sec;
 }
+
+} // namespace eoskeygen

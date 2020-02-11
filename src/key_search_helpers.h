@@ -21,11 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef KEY_SEARCH_HELPSER_H
-#define KEY_SEARCH_HELPERS_H
+#ifndef EOSIOKEYGEN_KEY_SEARCH_HELPSER_H
+#define EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 
 #include "string.h"
-#include "ec/types.h"
+#include "crypto/types.h"
+
+namespace eoskeygen {
 
 struct key_result {
 	size_t pos; // position where the word was found.
@@ -38,4 +40,6 @@ void key_search_result(const struct ec_keypair* key, const struct key_result* re
 // returns true if a word was found (stored in <result>), false otherwise.
 bool key_contains_word(const struct ec_keypair* key, const strlist_t& word_list, struct key_result *result);
 
-#endif /* KEY_SEARCH_HELPERS_H */
+} // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_KEY_SEARCH_HELPERS_H */
