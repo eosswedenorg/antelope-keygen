@@ -54,7 +54,7 @@ int ec_generate_key(struct ec_keypair *pair) {
 	// Copy private key to binary format.
 	EC_KEY_priv2oct(k, pair->secret.data(), EC_PRIVKEY_SIZE);
 
-	// Copy public key key
+	// Copy public key
 	EC_POINT_point2oct(EC_KEY_get0_group(k),
 		EC_KEY_get0_public_key(k), POINT_CONVERSION_COMPRESSED,
 	   	pair->pub.data(), EC_PUBKEY_SIZE, ctx);
