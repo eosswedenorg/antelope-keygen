@@ -21,35 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_CRYPTO_TYPES_H
-#define EOSIOKEYGEN_CRYPTO_TYPES_H
-
-#include <array>
+#include <openssl/sha.h>
+#include <openssl/ripemd.h>
+#include "../hash.h"
 
 namespace eoskeygen {
 
-#define EC_PRIVKEY_SIZE 32
+sha256_t* sha256(const unsigned char *data, std::size_t len, sha256_t* out) {
+	return (sha256_t *) SHA256(data, len, out->data);
+}
 
-/*
- * Compressed format!
- * z||x, where byte z specifies which (of the 2) solutions of the quadratic equation y is.
- * Each cordinate is 32 bytes.
- */
-#define EC_PUBKEY_SIZE (32 + 1)
-
-typedef std::array<unsigned char, EC_PRIVKEY_SIZE> ec_privkey_t;
-typedef std::array<unsigned char, EC_PUBKEY_SIZE> ec_pubkey_t;
-
-struct ec_keypair {
-	ec_privkey_t secret;
-	ec_pubkey_t pub;
-};
-
-// Hashes.
-
-typedef struct { unsigned char data[20]; } ripemd160_t;
-typedef struct { unsigned char data[32]; } sha256_t;
+ripemd160_t* ripemd160(const unsigned char *data, std::size_t len, ripemd160_t* out) {
+	return (ripemd160_t *) RIPEMD160(data, len, out->data);
+}
 
 } // namespace eoskeygen
-
-#endif /* EOSIOKEYGEN_CRYPTO_TYPES_H */
