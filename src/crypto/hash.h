@@ -31,6 +31,9 @@ namespace eoskeygen {
 
 sha256_t* sha256(const unsigned char *data, std::size_t len, sha256_t* out);
 
+// sha256 double.
+sha256_t* sha256d(const unsigned char *data, std::size_t len, sha256_t* out);
+
 ripemd160_t* ripemd160(const unsigned char *data, std::size_t len, ripemd160_t* out);
 
 } // namespace eoskeygen
