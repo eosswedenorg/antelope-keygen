@@ -28,7 +28,7 @@
 
 namespace eoskeygen {
 
-static int ec_generate_pair(unsigned char *priv, unsigned char *pub) {
+int ec_generate_key(struct ec_keypair *pair) {
 
 	int ret = -1;
 	EC_KEY *k;
@@ -52,12 +52,12 @@ static int ec_generate_pair(unsigned char *priv, unsigned char *pub) {
 	}
 
 	// Copy private key to binary format.
-	EC_KEY_priv2oct(k, priv, EC_PRIVKEY_SIZE);
+	EC_KEY_priv2oct(k, pair->secret.data(), EC_PRIVKEY_SIZE);
 
 	// Copy public key key
 	EC_POINT_point2oct(EC_KEY_get0_group(k),
 		EC_KEY_get0_public_key(k), POINT_CONVERSION_COMPRESSED,
-	   	pub, EC_PUBKEY_SIZE, ctx);
+	   	pair->pub.data(), EC_PUBKEY_SIZE, ctx);
 
 	ret = 0;
 fail2:
@@ -65,11 +65,6 @@ fail2:
 fail1:
 	BN_CTX_free(ctx);
 	return ret;
-}
-
-int ec_generate_key(struct ec_keypair *pair) {
-
-	return ec_generate_pair(pair->secret.data(), pair->pub.data());
 }
 
 } // namespace eoskeygen
