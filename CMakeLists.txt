@@ -19,7 +19,6 @@ set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 set (PROGRAM_SOURCE
 	src/string.cpp
 	src/base58.cpp
-	src/checksum.cpp
 	src/WIF.cpp
 	src/key_search.cpp
 	src/key_search_helpers.cpp

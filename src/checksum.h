@@ -25,7 +25,9 @@
 #define EOSIOKEYGEN_CHECKSUM_H
 
 #include <cstddef>
+#include <cstring>
 #include <array>
+#include "crypto/hash.h"
 
 namespace eoskeygen {
 
@@ -33,9 +35,19 @@ namespace eoskeygen {
 
 typedef std::array<unsigned char, CHECKSUM_SIZE> checksum_t;
 
-checksum_t checksum_sha256d(const unsigned char *data, std::size_t len);
+template <typename T, T* (*F)(const unsigned char *, std::size_t, T*)>
+inline checksum_t checksum(const unsigned char* data, std::size_t len) {
+	checksum_t crc;
+	T hash;
 
-checksum_t checksum_ripemd160(const unsigned char *data, std::size_t len);
+	F(data, len, &hash);
+	std::memcpy(crc.data(), &hash, crc.size());
+	return crc;
+}
+
+#define checksum_sha256 checksum<sha256_t, sha256>
+#define checksum_sha256d checksum<sha256_t, sha256d>
+#define checksum_ripemd160 checksum<ripemd160_t, ripemd160>
 
 } // namespace eoskeygen
 
