@@ -1,0 +1,7 @@
+{
+	"english": [
+		"/usr/share/dict/american-english",
+		"/usr/share/dict/british-english"
+	],
+	"swedish": "/usr/share/dict/swedish"
+}
