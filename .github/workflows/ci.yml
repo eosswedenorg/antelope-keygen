@@ -49,3 +49,9 @@ jobs:
     - name: Build
       shell: bash
       run: cmake --build build
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{matrix.os}}_${{matrix.build-opts}}-build
+        path: build
