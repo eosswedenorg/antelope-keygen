@@ -6,6 +6,7 @@ project(eosio-keygen VERSION 0.1.6)
 # Options
 option(USE_THREADS "Compile with support for threads (if available)." ON)
 option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
+option(EXTRAS "Include non essential (extra) files in the build. (only for *nix)" OFF)
 
 # Use installpath from GNUInstallDirs as default.
 include(GNUInstallDirs)
@@ -119,3 +120,11 @@ if (UNIX) # Only include in bash environments.
 	    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 	)
 endif (UNIX)
+
+# --------------------------------
+#  Extras
+# --------------------------------
+
+if (UNIX AND EXTRAS)
+	add_subdirectory(extras)
+endif()
