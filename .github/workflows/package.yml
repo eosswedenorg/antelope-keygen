@@ -1,0 +1,37 @@
+name: Package
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  # Debian package for ubuntu.
+  ubuntu:
+    strategy:
+      matrix:
+        os: [ ubuntu-16.04, ubuntu-18.04 ]
+    name: ${{matrix.os}}
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build
+        run: ./build.sh
+
+      - name: Package
+        id: package
+        run: |
+            ./build/generate_deb.sh
+            FILE=$(ls build/*.deb | head -1)
+            echo "::set-output name=filename::$FILE"
+            echo "::set-output name=name::$(basename $FILE)"
+
+      - name: Upload
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_name: ${{ steps.package.outputs.name }}
+          asset_path: ${{ steps.package.outputs.filename }}
+          asset_content_type: application/x-deb
