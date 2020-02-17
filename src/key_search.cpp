@@ -43,6 +43,11 @@ void KeySearch::addList(const strlist_t& list)
 	}
 }
 
+void KeySearch::addDictionary(const Dictionary& dictionary)
+{
+	m_dict = dictionary;
+}
+
 const strlist_t& KeySearch::getList()
 {
 	return m_words;
