@@ -67,7 +67,7 @@ void KeySearch::_search_linear(size_t n) {
 		struct key_result res;
 		ec_generate_key(&pair);
 		if (key_contains_word(&pair, m_words, &res)) {
-			key_search_result(&pair, &res);
+			key_search_result(&pair, &res, m_dict);
 			count++;
 		}
 	}
