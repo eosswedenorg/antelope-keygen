@@ -5,11 +5,11 @@
 
 BASE58_ALPHABET=123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
 
-# 1. Remove any line that contains non base58 characters
-# 2. Remove lines that are 2 or less characters long
-# 3. Convert to lowercase
+# 1. Remove lines that are 2 or less characters long
+# 2. Convert to lowercase
+# 3. Remove any line that contains non base58 characters
 # 4. Sort and remove duplicate lines.
-LC_CTYPE=C awk "! /[^${BASE58_ALPHABET}]/" < /dev/stdin 2> /dev/null \
-	| sed -r '/^.{,2}$/d' \
+LC_CTYPE=C sed -r '/^.{,2}$/d' < /dev/stdin 2> /dev/null \
 	| tr '[:upper:]' '[:lower:]' \
+	| awk "! /[^${BASE58_ALPHABET}]/" \
 	| sort | uniq
