@@ -22,27 +22,48 @@
  * SOFTWARE.
  */
 #include <iostream>
+#include "core/dictionary.h"
 #include "WIF.h"
 #include "console.h"
 #include "key_search_helpers.h"
 
 namespace eoskeygen {
 
-void key_search_result(const struct ec_keypair* key, const struct key_result* result) {
+static size_t highlight(console::Color color, const std::string& str, size_t pos, size_t len) {
+
+	std::cout << console::fg(color, console::bold)
+		<< str.substr(pos, len)
+		<< console::reset;
+	return len;
+}
+
+void key_search_result(const struct ec_keypair* key, const struct key_result* result, const Dictionary& dict) {
 
 	std::string pub = wif_pub_encode(key->pub);
-	std::string word = pub.substr(result->pos, result->len);
+	Dictionary::search_result_t dict_res = dict.search(pub);
 
 	std::cout << "----" << std::endl;
-	std::cout << "Found: " << word << std::endl;
+	std::cout << "Found: " << pub.substr(result->pos, result->len) << std::endl;
 
-	std::cout << "Public: "
-		<< pub.substr(0, result->pos)
-		<< console::fg(console::red, console::bold) << word << console::reset
-		<< pub.substr(result->pos + result->len)
-		<< std::endl;
+	std::cout << "Public: EOS";
+	for(size_t i = 3; i < pub.length(); ) {
 
-	std::cout << "Private: " << wif_priv_encode(key->secret) << std::endl;
+		if (i == result->pos) {
+			i += highlight(console::red, pub, result->pos, result->len);
+			continue;
+		}
+
+		auto p = dict_res.find(i);
+		if (p != dict_res.end()) {
+			i += highlight(console::blue, pub, p->first, p->second);
+			continue;
+		}
+
+		std::cout << pub[i++];
+	}
+
+	std::cout << std::endl
+		<< "Private: " << wif_priv_encode(key->secret) << std::endl;
 }
 
 bool key_contains_word(const struct ec_keypair* key, const strlist_t& word_list, struct key_result *result) {
