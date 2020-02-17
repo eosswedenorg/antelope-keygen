@@ -42,6 +42,8 @@ set( CMAKE_CXX_EXTENSIONS OFF )
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -Wconversion -Wno-sign-conversion -Wextra" )
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+	add_definitions( "-D_CRT_SECURE_NO_WARNINGS=1" )
 endif()
 
 # Libraries
