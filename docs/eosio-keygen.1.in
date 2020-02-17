@@ -16,6 +16,8 @@ EOS
 search
 .OP \--l33t
 .OP \--threads=<num>
+.OP \--dict=<file1> ...
+.OP \--lang=<value> ...
 .B word_list
 .OP count
 .YS
@@ -55,6 +57,25 @@ and find all l33tspeak combinations of that word and uses the new list for the s
 Use
 .I <num>
 of parallel threads for searching. Default is what the operating system recomends.
+.TP 20
+.B --dict=<file>
+Use words found in
+.I <file>
+(separated by newline) to highlight words in the keys found (note that the words in this
+ file are not used for search. only for highlight output). There can be more then one
+.B --dict
+flag. In that case contents of all files are merged into one dictionary.
+.TP 20
+.B --lang=<value>
+Same as
+.B --dict
+but will use
+.I <value>
+to find a file in
+.B @CMAKE_INSTALL_FULL_DATADIR@/@CMAKE_PROJECT_NAME@/dict.
+There can be more then one
+.B --lang
+flag. In that case contents of all files are merged into one dictionary.
 .TP 20
 .B count
 Number of keys to search for (default is 10)
