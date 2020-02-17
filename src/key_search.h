@@ -54,6 +54,8 @@ public :
 protected :
 
 #ifdef HAVE_THREADS
+	void _thr_proc();
+
 	void _search_mt(size_t n);
 #endif /* HAVE_THREADS */
 

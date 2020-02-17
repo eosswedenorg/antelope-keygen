@@ -41,7 +41,7 @@ std::size_t g_count;
 std::mutex g_count_mtx;
 
 // Thread process.
-static void _thr_proc(const strlist_t& word_list) {
+void KeySearch::_thr_proc() {
 
 	struct ec_keypair pair;
 
@@ -49,7 +49,7 @@ static void _thr_proc(const strlist_t& word_list) {
 		struct key_result res;
 
 		ec_generate_key(&pair);
-		if (key_contains_word(&pair, word_list, &res)) {
+		if (key_contains_word(&pair, m_words, &res)) {
 
 			// Guard output with mutex, so we don't get
 			// interrupted mid write and can write to g_count safely.
@@ -86,11 +86,11 @@ void KeySearch::_search_mt(size_t n)
 
 	// Launch them.
 	for(std::size_t i = 0; i < t.size(); i++) {
-		t[i] = std::thread(_thr_proc, m_words);
+		t[i] = std::thread(&KeySearch::_thr_proc, this);
 	}
 
 	// Use main thread for 1 search
-	_thr_proc(m_words);
+	_thr_proc();
 
 	// Wait for all threads to compelete.
 	for(std::size_t i = 0; i < t.size(); i++) {
