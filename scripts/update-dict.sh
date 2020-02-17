@@ -10,8 +10,16 @@ for lang in $(jq -r 'keys[]' $CONFIG); do
 
 	echo "- Generating: $lang"
 
-	files=$(jq -r ".$lang | if type==\"array\" then .[] else . end" $CONFIG)
-	dict=$(grep -hs ^ $files | $BASE_DIR/generate-dict.sh > $EXTRAS_DIR/dict/$lang)
+	files=()
+	for f in $(jq -r ".$lang | if type==\"array\" then .[] else . end" $CONFIG); do
+
+		if [ "${f:0:1}" != "/" ]; then
+			f="$EXTRAS_DIR/$f"
+		fi
+		files+=( "$f" )
+	done
+
+	grep -hs ^ ${files[@]} | $BASE_DIR/generate-dict.sh > $EXTRAS_DIR/dict/$lang
 done
 
 echo "Done"
