@@ -18,6 +18,7 @@ include(GNUInstallDirs)
 set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 
 set (PROGRAM_SOURCE
+	src/core/dictionary.cpp
 	src/string.cpp
 	src/base58.cpp
 	src/WIF.cpp
