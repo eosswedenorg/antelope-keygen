@@ -15,7 +15,7 @@ You will need `openssl` development files (version 1.1 or later) to compile and 
 
 **Ubuntu:**
 ```sh
-$ apt-get install libssl-dev cmake
+$ apt-get install gcc g++ cmake libssl-dev
 ```
 **For other linux distributions:**
 
