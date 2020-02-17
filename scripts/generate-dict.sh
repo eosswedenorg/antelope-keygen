@@ -12,4 +12,4 @@ BASE58_ALPHABET=123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
 LC_CTYPE=C awk "! /[^${BASE58_ALPHABET}]/" < /dev/stdin 2> /dev/null \
 	| sed -r '/^.{,2}$/d' \
 	| tr '[:upper:]' '[:lower:]' \
-	| sort | uniq -d
+	| sort | uniq
