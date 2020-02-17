@@ -23,6 +23,9 @@ Consult the manual for how to get these installed.
 
 **MacOS:**
 
+You must have a compiler installed. This project is known to build with `Xcode 11.0` but other versions should work.
+
+You need to have opessl and cmake installed also, this can be done with this `brew` command:
 ```sh
 $ brew install openssl cmake
 ```
