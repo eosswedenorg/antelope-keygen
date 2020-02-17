@@ -60,6 +60,10 @@ if (USE_THREADS)
 	endif (Threads_FOUND)
 endif (USE_THREADS)
 
+# Project config file
+configure_file(src/config.h.in "${CMAKE_CURRENT_BINARY_DIR}/config.h" @ONLY)
+include_directories(${PROJECT_BINARY_DIR})
+
 # Include OpenSSL headers
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 
