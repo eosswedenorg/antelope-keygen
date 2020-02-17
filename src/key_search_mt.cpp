@@ -64,7 +64,7 @@ void KeySearch::_thr_proc() {
 
 			// Update count and print result.
 			g_count++;
-			key_search_result(&pair, &res);
+			key_search_result(&pair, &res, m_dict);
 		}
 	}
 }
