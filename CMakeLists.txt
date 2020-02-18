@@ -19,6 +19,7 @@ set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 
 set (PROGRAM_SOURCE
 	src/console.cpp
+	src/core/file.cpp
 	src/core/dictionary.cpp
 	src/string.cpp
 	src/base58.cpp
