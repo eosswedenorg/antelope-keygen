@@ -14,6 +14,7 @@ EOS
 
 .SY @PROJECT_NAME@
 search
+.OP -m
 .OP \--l33t
 .OP \--threads=<num>
 .B word_list
@@ -45,6 +46,9 @@ public keys containing one or more words from
 .RS 16
 Search specific options:
 .RS 2
+.TP 20
+.B -m
+Monochrome, disables all color output.
 .TP 20
 .B --l33t
 Takes each word in
