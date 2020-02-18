@@ -26,6 +26,7 @@
 #endif /* HAVE_THREADS */
 #include <iostream>
 #include <cstring>
+#include "console.h"
 #include "string.h"
 #include "WIF.h"
 #include "crypto/ec.h"
@@ -68,7 +69,7 @@ void cmd_search(const eoskeygen::strlist_t& words, int count) {
 void usage(const char *name) {
 
 	std::cout << name
-		<< " [ -h | --help | search [ --l33t"
+		<< " [ -h | --help | search [ -m | --l33t"
 #ifdef HAVE_THREADS
 		<< " | --threads=<num>"
 #endif /* HAVE_THREADS */
@@ -89,6 +90,8 @@ void usage(const char *name) {
 	std::cout << " search: " << std::endl
 			  << "  performs a search, finding <count> public keys containing" << std::endl
 			  << "  one or more words from <word_list> (separated with ',')."
+			  << std::endl << std::endl
+			  << "  -m: Monochrome, disables all color output."
 			  << std::endl << std::endl
 			  << "  --l33t: Takes each word in <word_list> and find all l33tspeak" << std::endl
 			  << "          combinations of that word and uses the new list for the search."
@@ -142,7 +145,9 @@ int main(int argc, char **argv) {
 		eoskeygen::strlist_t words;
 
 		while(p++ < argc - 1) {
-			if (!strcmp(argv[p], "--l33t")) {
+			if (!strcmp(argv[p], "-m")) {
+				eoskeygen::console::disable_color = true;
+			} else if (!strcmp(argv[p], "--l33t")) {
 				option_l33t = true;
 			} else if (!memcmp(argv[p], "--threads=", 10)) {
 #ifdef HAVE_THREADS
