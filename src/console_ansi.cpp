@@ -29,6 +29,10 @@ namespace eoskeygen {
 namespace console {
 
 std::ostream& reset(std::ostream& os) {
+
+	if (disable_color) {
+		return os;
+	}
 	return os << "\033[0m";
 }
 
@@ -37,6 +41,10 @@ std::ostream& operator<<(std::ostream& os, const fg& obj) {
 
 	int attr;
 	int code;
+
+	if (disable_color) {
+		return os;
+	}
 
 	switch(obj._color) {
 		case black : code = 30; break;
