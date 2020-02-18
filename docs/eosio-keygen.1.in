@@ -44,7 +44,8 @@ performs a search, finding
 public keys containing one or more words from
 .I <word_list>
 (separated with ',').
-.PP
+Instead of a list it is possible to specify a file with words (separated with newline '\\n') using
+.I file:<filename>
 .RS 16
 Search specific options:
 .RS 2

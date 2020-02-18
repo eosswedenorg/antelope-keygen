@@ -28,6 +28,7 @@
 #include <cstring>
 #include "console.h"
 #include "config.h"
+#include "core/file.h"
 #include "core/dictionary.h"
 #include "string.h"
 #include "WIF.h"
@@ -78,7 +79,7 @@ void usage(const char *name) {
 		<< " | --threads=<num>"
 #endif /* HAVE_THREADS */
 		<< " | --dict=<file> ... "
-		<< " | --lang=<value> ... ] <word_list> [ <count:10> ]"
+		<< " | --lang=<value> ... ] <word_list>|file:<filename> [ <count:10> ]"
 		<< " | benchmark [ <num:1000> ]"
 		<< " ]"
 		<< std::endl << std::endl;
@@ -94,7 +95,10 @@ void usage(const char *name) {
 
 	std::cout << " search: " << std::endl
 			  << "  performs a search, finding <count> public keys containing" << std::endl
-			  << "  one or more words from <word_list> (separated with ',')."
+			  << "  one or more words from <word_list> (separated with ',')." << std::endl
+			  << std::endl
+			  << "  Instead of a list it is possible to specify a file with words" << std::endl
+			  << "  (separated with newline '\\n') using file:<filename>"
 			  << std::endl << std::endl
 			  << "  -m: Monochrome, disables all color output."
 			  << std::endl << std::endl
@@ -212,7 +216,23 @@ int main(int argc, char **argv) {
 			}
 			// wordlist and count
 			else if (words.size() < 1) {
-			 	words = eoskeygen::strsplitwords(std::string(argv[p]));
+				std::string arg = std::string(argv[p]);
+				if (arg.rfind("file:", 0) == 0) {
+					std::string filename = arg.substr(5);
+					if (!eoskeygen::readLines(filename, words)) {
+						std::cerr << "Could not read file: " << filename << std::endl;
+						return 0;
+					}
+
+					if (words.size() < 1) {
+						std::cerr << filename << " did not contain any words" << std::endl;
+						return 0;
+					}
+				}
+				// List
+				else {
+					words = eoskeygen::strsplitwords(arg);
+				}
 
 				if (p + 1 < argc) {
 					count = atoi(argv[++p]);
