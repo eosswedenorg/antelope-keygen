@@ -27,6 +27,8 @@
 #include <iostream>
 #include <cstring>
 #include "console.h"
+#include "config.h"
+#include "core/dictionary.h"
 #include "string.h"
 #include "WIF.h"
 #include "crypto/ec.h"
@@ -40,9 +42,11 @@ bool option_l33t = false;
 int option_num_threads = std::thread::hardware_concurrency();
 #endif /* HAVE_THREADS */
 
-void cmd_search(const eoskeygen::strlist_t& words, int count) {
+void cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
 
 	eoskeygen::KeySearch ks;
+
+	ks.addDictionary(dict);
 
 	if (option_l33t) {
 		for(std::size_t i = 0; i < words.size(); i++) {
@@ -73,7 +77,8 @@ void usage(const char *name) {
 #ifdef HAVE_THREADS
 		<< " | --threads=<num>"
 #endif /* HAVE_THREADS */
-		<< " ] <word_list> [ <count:10> ]"
+		<< " | --dict=<file> ... "
+		<< " | --lang=<value> ... ] <word_list> [ <count:10> ]"
 		<< " | benchmark [ <num:1000> ]"
 		<< " ]"
 		<< std::endl << std::endl;
@@ -100,6 +105,17 @@ void usage(const char *name) {
 			  << "  --threads=<num>: Use <num> of parallel threads for searching." << std::endl
 			  << "                   Default is what the operating system recomend."
 #endif /* HAVE_THREADS */
+			  << std::endl << std::endl
+			  << "  --dict=<file>: Use words found in <file> (separated by newline) to" << std::endl
+			  << "                 highlight words in the keys found (note that the words in this" << std::endl
+			  << "                 file are not used for search. only for highlight output)." << std::endl
+			  << "                 There can be more then one --dict flag. In that case contents" << std::endl
+			  << "                 of all files are merged into one dictionary." << std::endl
+			  << std::endl << std::endl
+			  << "  --lang=<value>: Same as --dict but will use <value>" << std::endl
+			  << "                  to find a file in " << CONFIG_SHARE_FULL_PATH << "/dict." << std::endl
+			  << "                  There can be more then one --lang flag. In that case contents" << std::endl
+			  << "                  of all files are merged into one dictionary." << std::endl
 			  << std::endl;
 
 	std::cout << " Benchmark: " << std::endl
@@ -143,6 +159,7 @@ int main(int argc, char **argv) {
 
 		int count = 10;
 		eoskeygen::strlist_t words;
+		eoskeygen::Dictionary dict;
 
 		while(p++ < argc - 1) {
 			if (!strcmp(argv[p], "-m")) {
@@ -163,6 +180,29 @@ int main(int argc, char **argv) {
 				std::cerr << "NOTICE: eosio-keygen is not compiled with"
 					<< " thread support. this option is ignored." << std::endl;
 #endif /* HAVE_THREADS */
+			}
+			// Dictionary.
+			else if (!memcmp(argv[p], "--dict=", 7)) {
+				eoskeygen::Dictionary d;
+				std::string filename(argv[p] + 7);
+
+				if (d.loadFromFile(filename)) {
+					dict.add(d);
+				} else {
+					std::cerr << "Could not load dictionary from file: " << filename << std::endl;
+				}
+			}
+			// Language (dictionary, but we find the file in <CONFIG_SHARE_FULL_PATH>/dict/<lang>)
+			else if (!memcmp(argv[p], "--lang=", 7)) {
+				eoskeygen::Dictionary d;
+				std::string lang(argv[p] + 7);
+				std::string filename(std::string(CONFIG_SHARE_FULL_PATH) + "/dict" + lang);
+
+				if (d.loadFromFile(filename)) {
+					dict.add(d);
+				} else {
+					std::cerr << "Could not load language " << lang << " (" << filename << ")" << std::endl;
+				}
 			}
 			// Error out on any flag we don't support.
 			else if (argv[p][0] == '-') {
@@ -189,7 +229,7 @@ int main(int argc, char **argv) {
 			return 1;
 		}
 
-		cmd_search(words, count);
+		cmd_search(words, dict, count);
 	}
 	// Benchmark
 	else if (!strcmp(argv[p], "benchmark")) {

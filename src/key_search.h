@@ -24,6 +24,7 @@
 #ifndef EOSIOKEYGEN_KEY_SEARCH_H
 #define EOSIOKEYGEN_KEY_SEARCH_H
 
+#include "core/dictionary.h"
 #include "string.h"
 
 namespace eoskeygen {
@@ -36,6 +37,8 @@ public :
 
 	// Add a list of words to search for.
 	void addList(const strlist_t& list);
+
+	void addDictionary(const Dictionary& dictionary);
 
 	// get the list of words to search for.
 	const strlist_t& getList();
@@ -54,6 +57,8 @@ public :
 protected :
 
 #ifdef HAVE_THREADS
+	void _thr_proc();
+
 	void _search_mt(size_t n);
 #endif /* HAVE_THREADS */
 
@@ -62,6 +67,9 @@ protected :
 protected :
 	// List of words to search for.
 	strlist_t m_words;
+
+	// Dictionary to use when we find a search result.
+	Dictionary m_dict;
 
 #ifdef HAVE_THREADS
 	// Number of threads to use.

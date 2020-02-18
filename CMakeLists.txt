@@ -6,6 +6,7 @@ project(eosio-keygen VERSION 0.1.6)
 # Options
 option(USE_THREADS "Compile with support for threads (if available)." ON)
 option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
+option(EXTRAS "Include non essential (extra) files in the build. (only for *nix)" OFF)
 
 # Use installpath from GNUInstallDirs as default.
 include(GNUInstallDirs)
@@ -18,6 +19,7 @@ set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 
 set (PROGRAM_SOURCE
 	src/console.cpp
+	src/core/dictionary.cpp
 	src/string.cpp
 	src/base58.cpp
 	src/WIF.cpp
@@ -41,6 +43,8 @@ set( CMAKE_CXX_EXTENSIONS OFF )
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -Wconversion -Wno-sign-conversion -Wextra" )
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+	add_definitions( "-D_CRT_SECURE_NO_WARNINGS=1" )
 endif()
 
 # Libraries
@@ -58,6 +62,10 @@ if (USE_THREADS)
 		set (PROGRAM_SOURCE ${PROGRAM_SOURCE} src/key_search_mt.cpp)
 	endif (Threads_FOUND)
 endif (USE_THREADS)
+
+# Project config file
+configure_file(src/config.h.in "${CMAKE_CURRENT_BINARY_DIR}/config.h" @ONLY)
+include_directories(${PROJECT_BINARY_DIR})
 
 # Include OpenSSL headers
 include_directories( ${OPENSSL_INCLUDE_DIR} )
@@ -120,3 +128,11 @@ if (UNIX) # Only include in bash environments.
 	    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 	)
 endif (UNIX)
+
+# --------------------------------
+#  Extras
+# --------------------------------
+
+if (UNIX AND EXTRAS)
+	add_subdirectory(extras)
+endif()
