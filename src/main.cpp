@@ -200,7 +200,7 @@ int main(int argc, char **argv) {
 			else if (!memcmp(argv[p], "--lang=", 7)) {
 				eoskeygen::Dictionary d;
 				std::string lang(argv[p] + 7);
-				std::string filename(std::string(CONFIG_SHARE_FULL_PATH) + "/dict" + lang);
+				std::string filename(std::string(CONFIG_SHARE_FULL_PATH) + "/dict/" + lang);
 
 				if (d.loadFromFile(filename)) {
 					dict.add(d);
