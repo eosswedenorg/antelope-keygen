@@ -13,6 +13,10 @@ EOS
 .YS
 
 .SY @PROJECT_NAME@
+.OP \-v
+.YS
+
+.SY @PROJECT_NAME@
 search
 .OP -m
 .OP \--l33t
@@ -37,6 +41,9 @@ Options and subcommands are as follows:
 .TP 15
 .B -h, --help
 Shows this help text.
+.TP 15
+.B -v
+Shows version.
 .TP 15
 .B search
 performs a search, finding

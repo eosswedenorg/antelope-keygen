@@ -74,7 +74,7 @@ void cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& 
 void usage(const char *name) {
 
 	std::cout << name
-		<< " [ -h | --help | search [ -m | --l33t"
+		<< " [ -h | --help | -v | search [ -m | --l33t"
 #ifdef HAVE_THREADS
 		<< " | --threads=<num>"
 #endif /* HAVE_THREADS */
@@ -90,8 +90,9 @@ void usage(const char *name) {
 	std::cout
 		<< " Options:" << std::endl
 		<< "   -h, --help     Shows this help text."
-		<< std::endl
-		<< std::endl;
+		<< std::endl << std::endl
+		<< "   -v             Shows version."
+		<< std::endl << std::endl;
 
 	std::cout << " search: " << std::endl
 			  << "  performs a search, finding <count> public keys containing" << std::endl
@@ -156,6 +157,11 @@ int main(int argc, char **argv) {
 
 	if (!strcmp(argv[p], "-h") || !strcmp(argv[p], "--help")) {
 		usage(argv[0]);
+		return 0;
+	}
+
+	if (!strcmp(argv[p], "-v")) {
+		std::cout << PROGRAM_NAME << " v" << PROGRAM_VERSION << std::endl;
 		return 0;
 	}
 
