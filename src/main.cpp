@@ -26,13 +26,13 @@
 #endif /* HAVE_THREADS */
 #include <iostream>
 #include <cstring>
-#include "console.h"
 #include "config.h"
 #include "core/file.h"
 #include "core/dictionary.h"
-#include "string.h"
-#include "WIF.h"
+#include "core/string.h"
 #include "crypto/ec.h"
+#include "crypto/WIF.h"
+#include "console.h"
 #include "key_search.h"
 #include "benchmark.h"
 

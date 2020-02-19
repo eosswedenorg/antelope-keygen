@@ -24,7 +24,7 @@
 #ifndef EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 #define EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 
-#include "string.h"
+#include "core/string.h"
 #include "crypto/types.h"
 
 namespace eoskeygen {

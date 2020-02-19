@@ -21,18 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_BASE58_H
-#define EOSIOKEYGEN_BASE58_H
+#ifndef EOSIOKEYGEN_CRYPTO_WIF_H
+#define EOSIOKEYGEN_CRYPTO_WIF_H
 
 #include <string>
-#include <vector>
+#include "types.h"
 
 namespace eoskeygen {
 
-std::string base58_encode(const std::string& str);
-std::string base58_encode(const std::vector<unsigned char>& vch);
-std::string base58_encode(const unsigned char* pbegin, const unsigned char* pend);
+std::string wif_priv_encode(ec_privkey_t priv);
 
-} //namespace eoskeygen
+std::string wif_pub_encode(ec_pubkey_t pub);
 
-#endif /* EOSIOKEYGEN_BASE58_H */
+void wif_print_key(const struct ec_keypair *key);
+
+} // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_CRYPTO_WIF_H */

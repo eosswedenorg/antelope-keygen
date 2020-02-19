@@ -21,34 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_CHECKSUM_H
-#define EOSIOKEYGEN_CHECKSUM_H
+#ifndef EOSIOKEYGEN_CRYPTO_BASE58_H
+#define EOSIOKEYGEN_CRYPTO_BASE58_H
 
-#include <cstddef>
-#include <cstring>
-#include <array>
-#include "crypto/hash.h"
+#include <string>
+#include <vector>
 
 namespace eoskeygen {
 
-#define CHECKSUM_SIZE 4
+std::string base58_encode(const std::string& str);
+std::string base58_encode(const std::vector<unsigned char>& vch);
+std::string base58_encode(const unsigned char* pbegin, const unsigned char* pend);
 
-typedef std::array<unsigned char, CHECKSUM_SIZE> checksum_t;
+} //namespace eoskeygen
 
-template <typename T, T* (*F)(const unsigned char *, std::size_t, T*)>
-inline checksum_t checksum(const unsigned char* data, std::size_t len) {
-	checksum_t crc;
-	T hash;
-
-	F(data, len, &hash);
-	std::memcpy(crc.data(), &hash, crc.size());
-	return crc;
-}
-
-#define checksum_sha256 checksum<sha256_t, sha256>
-#define checksum_sha256d checksum<sha256_t, sha256d>
-#define checksum_ripemd160 checksum<ripemd160_t, ripemd160>
-
-} // namespace eoskeygen
-
-#endif /* EOSIOKEYGEN_CHECKSUM_H */
+#endif /* EOSIOKEYGEN_CRYPTO_BASE58_H */

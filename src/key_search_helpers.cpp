@@ -23,7 +23,7 @@
  */
 #include <iostream>
 #include "core/dictionary.h"
-#include "WIF.h"
+#include "crypto/WIF.h"
 #include "console.h"
 #include "key_search_helpers.h"
 

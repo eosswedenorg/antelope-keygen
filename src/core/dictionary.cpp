@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <iterator>
 #include <algorithm>
-#include "../string.h"
+#include "string.h"
 #include "dictionary.h"
 
 namespace eoskeygen {
