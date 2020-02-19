@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <iterator>
 #include <algorithm>
+#include "file.h"
 #include "string.h"
 #include "dictionary.h"
 
@@ -22,25 +23,20 @@ struct StringContains {
 
 bool Dictionary::loadFromFile(const std::string& filename)
 {
-	FILE *fd;
-	char buf[1024];
-
-	fd = fopen(filename.c_str(), "r");
-	if (!fd) {
-		return false;
-	}
+	strlist_t lines;
 
 	// Clear before adding.
 	clear();
 
-	// Read each line and add to the dictionary.
-	while(fgets(buf, sizeof(buf), fd) != NULL) {
-		std::string word(buf);
-		add(trim(word));
-	}
+	if (readLines(filename, lines)) {
 
-	fclose(fd);
-	return true;
+		// Read each line and add to the dictionary.
+		for(auto it = lines.begin(); it != lines.end(); it++) {
+			add(*it);
+		}
+		return true;
+	}
+	return false;
 }
 
 void Dictionary::add(const std::string& word)
