@@ -38,7 +38,10 @@ jobs:
 
   # Windows zip file
   windows:
-    name: Windows
+    strategy:
+      matrix:
+        arch: [ x86, x64 ]
+    name: Windows (${{matrix.arch}})
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
@@ -52,7 +55,13 @@ jobs:
           7z x openssl-1.1.1e-dev.zip
 
       - name: Configure
-        run: cmake -D OPENSSL_ROOT_DIR="$pwd/build/openssl-1.1/x64" -S . -B build
+        run: |
+          if ("${{matrix.arch}}" -eq "x86") {
+              $PLATFORM="Win32"
+          } else {
+              $PLATFORM="${{matrix.arch}}"
+          }
+          cmake -A $PLATFORM -D OPENSSL_ROOT_DIR="$pwd/build/openssl-1.1/${{matrix.arch}}" -S . -B build
 
       - name: Build
         run: cmake --build build --config Release
