@@ -20,6 +20,12 @@ include(GNUInstallDirs)
 
 set( CMAKE_INSTALL_SHAREDIR ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME} )
 
+if (WIN32)
+	# "Flat" install on windows.
+	set( CMAKE_INSTALL_BINDIR "." )
+	set( CMAKE_INSTALL_DATADIR "." )
+endif (WIN32)
+
 # --------------------------------
 #  Program
 # --------------------------------
@@ -105,10 +111,6 @@ if (WIN32)
 		${OPENSSL_LIBCRYPTO_DLL}
 		${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR}
 	)
-
-	# "Flat" install on windows.
-	set( CMAKE_INSTALL_BINDIR "." )
-	set( CMAKE_INSTALL_DATADIR "." )
 
 	# We also need to copy libcrypto dll during install
 	install(FILES ${OPENSSL_LIBCRYPTO_DLL} DESTINATION ${CMAKE_INSTALL_BINDIR})
