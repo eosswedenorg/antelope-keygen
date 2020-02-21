@@ -29,9 +29,12 @@ endif (UNIX)
 #  Windows
 # --------------------------------
 if (WIN32)
+
+	set ( PACKAGE_FILENAME "${PACKAGE_NAME}-${PACKAGE_VERSION}-windows-${PACKAGE_PLATFORM}" )
+
 	add_custom_target(package
-		COMMAND ${CMAKE_COMMAND} --install . --prefix "${PACKAGE_NAME}-${PACKAGE_VERSION}"
-		COMMAND ${CMAKE_COMMAND} -E tar c "${PACKAGE_NAME}-${PACKAGE_VERSION}.zip" --format=zip "${PACKAGE_NAME}-${PACKAGE_VERSION}"
+		COMMAND ${CMAKE_COMMAND} --install . --prefix "${PACKAGE_FILENAME}"
+		COMMAND ${CMAKE_COMMAND} -E tar c "${PACKAGE_FILENAME}.zip" --format=zip "${PACKAGE_FILENAME}"
 		WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
 	)
 
