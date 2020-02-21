@@ -24,6 +24,8 @@ if (WIN32)
 	# "Flat" install on windows.
 	set( CMAKE_INSTALL_BINDIR "." )
 	set( CMAKE_INSTALL_DATADIR "." )
+	set( CMAKE_INSTALL_SHAREDIR "." )
+	set( CMAKE_INSTALL_MANDIR "." )
 endif (WIN32)
 
 # --------------------------------
