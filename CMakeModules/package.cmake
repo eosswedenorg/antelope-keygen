@@ -19,3 +19,16 @@ if (UNIX) # Only include in bash environments.
 	    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 	)
 endif (UNIX)
+
+# --------------------------------
+#  Windows
+# --------------------------------
+if (WIN32)
+	add_custom_target(package
+		COMMAND ${CMAKE_COMMAND} --install . --prefix "${PACKAGE_NAME}-${PACKAGE_VERSION}"
+		COMMAND ${CMAKE_COMMAND} -E tar c "${PACKAGE_NAME}-${PACKAGE_VERSION}.zip" --format=zip "${PACKAGE_NAME}-${PACKAGE_VERSION}"
+		WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+	)
+
+	add_dependencies(package ${PROGRAM_EXE})
+endif (WIN32)
