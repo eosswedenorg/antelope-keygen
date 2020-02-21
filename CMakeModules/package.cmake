@@ -8,6 +8,11 @@ set( PACKAGE_VERSION "${PROJECT_VERSION}" )
 set( PACKAGE_HOMEPAGE_URL ${PROJECT_HOMEPAGE_URL} )
 set( PACKAGE_MAINTAINER ${PROJECT_MAINTAINER})
 
+set( PACKAGE_PLATFORM "x86" )
+if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+	set( PACKAGE_PLATFORM "${PACKAGE_PLATFORM}_64" )
+endif()
+
 # --------------------------------
 #  Debian script
 # --------------------------------
