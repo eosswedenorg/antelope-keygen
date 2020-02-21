@@ -35,3 +35,42 @@ jobs:
           asset_name: ${{ steps.package.outputs.name }}
           asset_path: ${{ steps.package.outputs.filename }}
           asset_content_type: application/x-deb
+
+  # Windows zip file
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Dependancies
+        shell: bash
+        run: |
+          mkdir -p build
+          cd build
+          curl https://mirror.firedaemon.com/OpenSSL/openssl-1.1.1e-dev.zip -O
+          7z x openssl-1.1.1e-dev.zip
+
+      - name: Configure
+        run: cmake -D OPENSSL_ROOT_DIR="$pwd/build/openssl-1.1/x64" -S . -B build
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Package
+        id: package
+        run: |
+          cmake --build build --config Release --target package
+          $FILE=(ls build/eosio-keygen*.zip)
+          echo "::set-output name=filename::$FILE"
+          echo "::set-output name=name::$(([io.fileinfo]"$FILE").basename).zip"
+
+      - name: Upload
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_name: ${{ steps.package.outputs.name }}
+          asset_path: ${{ steps.package.outputs.filename }}
+          asset_content_type: application/zip
