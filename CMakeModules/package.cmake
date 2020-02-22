@@ -30,7 +30,7 @@ endif (UNIX)
 # --------------------------------
 if (WIN32)
 
-	set ( PACKAGE_FILENAME "${PACKAGE_NAME}-${PACKAGE_VERSION}-windows-${PACKAGE_PLATFORM}" )
+	set ( PACKAGE_FILENAME "${PACKAGE_NAME}_${PACKAGE_VERSION}-windows-${PACKAGE_PLATFORM}" )
 
 	add_custom_target(package
 		COMMAND ${CMAKE_COMMAND} --install . --prefix "${PACKAGE_FILENAME}"
