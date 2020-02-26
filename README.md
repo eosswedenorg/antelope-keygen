@@ -1,5 +1,7 @@
 
 ![](https://github.com/eosswedenorg/eosio-keygen/workflows/CI/badge.svg)
+[![GitHub release](https://img.shields.io/github/v/release/eosswedenorg/eosio-keygen?include_prereleases)](https://github.com/eosswedenorg/eosio-keygen/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # EOSIO Keygen
 
