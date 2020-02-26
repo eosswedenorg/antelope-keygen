@@ -15,10 +15,22 @@ You will need `openssl` development files (version 1.1 or later) to compile and 
 
 #### Dependencies
 
+This project uses CMake version 3.15 to build the source code.
+
 **Ubuntu:**
 ```sh
 $ apt-get install gcc g++ cmake libssl-dev
 ```
+
+On ubuntu 16.04 and 18.04 you most likley will get `CMake 3.15 or higher is required. You are running version <xxx>`
+You can obtain a newer version from [kitware](https://apt.kitware.com):
+
+```sh
+$ wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
+$ sudo apt-add-repository "deb https://apt.kitware.com/ubuntu/ `lsb_release -cs` main"
+$ sudo apt-get install cmake
+```
+
 **For other linux distributions:**
 
 Consult the manual for how to get these installed.
@@ -50,7 +62,7 @@ $ cmake .. && make
 
 #### Dependencies
 
-Download and install `cmake` from [cmake.org](https://cmake.org) and download
+Download and install `cmake` version `3.15` or newer from [cmake.org](https://cmake.org) and download
 [openssl](https://mirror.firedaemon.com/OpenSSL/openssl-1.1.1e-dev.zip)
 
 unpack `openssl-1.1.1e-dev.zip` somewhere on the filesystem.
