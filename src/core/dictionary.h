@@ -34,7 +34,9 @@ namespace eoskeygen {
 class Dictionary
 {
 public :
-	// index = position in the search string.
+    // Map that contains position and length for substrings.
+	//
+	// key   = position in the search string.
 	// value = length of the word from this position.
 	typedef std::map< size_t, size_t > search_result_t;
 
@@ -55,8 +57,8 @@ public :
 	bool contains(const std::string& word) const;
 
 	// Searches the subject for words defined in the dictionary.
-	// Returns a map with the word as key and a vector<int>
-	// of each position the word was found.
+	// Returns a search_result_t with the words found in subject.
+	// See search_result_t for more details.
 	search_result_t search(const std::string& subject) const;
 
 protected :
