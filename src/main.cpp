@@ -30,6 +30,7 @@
 #include "core/file.h"
 #include "core/dictionary.h"
 #include "core/string.h"
+#include "crypto/base58.h"
 #include "crypto/ec.h"
 #include "crypto/WIF.h"
 #include "console.h"
@@ -43,11 +44,22 @@ bool option_l33t = false;
 int option_num_threads = std::thread::hardware_concurrency();
 #endif /* HAVE_THREADS */
 
-void cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
+int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
 
 	eoskeygen::KeySearch ks;
 
 	ks.addDictionary(dict);
+
+	for(auto it = words.begin(); it != words.end(); it++) {
+		size_t p = eoskeygen::is_base58(*it);
+		std::cout << *it << std::endl;
+		if (p != std::string::npos) {
+			std::cerr << "The word '"
+				<< *it << "' contains an invalid non-base58 character '"
+				<< (*it)[p] << "'" << std::endl;
+			return 1;
+		}
+	}
 
 	if (option_l33t) {
 		for(std::size_t i = 0; i < words.size(); i++) {
@@ -69,6 +81,8 @@ void cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& 
 		<< std::endl;
 
 	ks.find(count);
+
+	return 0;
 }
 
 void usage(const char *name) {
@@ -255,7 +269,7 @@ int main(int argc, char **argv) {
 			return 1;
 		}
 
-		cmd_search(words, dict, count);
+		return cmd_search(words, dict, count);
 	}
 	// Benchmark
 	else if (!strcmp(argv[p], "benchmark")) {
