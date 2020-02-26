@@ -23,7 +23,6 @@
  */
 #include <string>
 #include "crypto/ec.h"
-#include "crypto/base58.h"
 #include "key_search_helpers.h"
 #include "key_search.h"
 
@@ -32,7 +31,6 @@ namespace eoskeygen {
 void KeySearch::addWord(const std::string& str)
 {
 	std::string tmp = str;
-	base58_strip(tmp);
 	strtolower(tmp);
 	m_words.push_back(tmp);
 }
