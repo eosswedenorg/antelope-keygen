@@ -18,11 +18,34 @@ endif()
 # --------------------------------
 
 if (UNIX) # Only include in bash environments.
-	# Hack to set the right permissions :)
-	configure_file(scripts/generate_deb.sh.in ${PROJECT_BINARY_DIR}/tmp/generate_deb.sh @ONLY)
-	file(COPY ${PROJECT_BINARY_DIR}/tmp/generate_deb.sh DESTINATION ${PROJECT_BINARY_DIR}
-	    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+
+	execute_process(
+		COMMAND lsb_release -rs
+		OUTPUT_VARIABLE UBUNTU_VERSION
+	 	OUTPUT_STRIP_TRAILING_WHITESPACE
 	)
+
+	# Debian uses different names for 32 and 64 bit.
+	if (PACKAGE_PLATFORM EQUAL "x86")
+		set( PACKAGE_DEB_PLATFORM "i386" )
+	else()
+		set( PACKAGE_DEB_PLATFORM "amd64" )
+	endif()
+
+	set( PACKAGE_DEB_RELEASE 1 CACHE STRING "Debian package release number")
+	set( PACKAGE_DEB_VERSION ${PACKAGE_VERSION}-${PACKAGE_DEB_RELEASE} )
+	set( PACKAGE_DEB_FILENAME ${PACKAGE_NAME}_${PACKAGE_DEB_VERSION}-ubuntu-${UBUNTU_VERSION}_${PACKAGE_DEB_PLATFORM}.deb )
+	set( DEB_ROOT "debroot" )
+
+	configure_file(debian_control.in ${DEB_ROOT}/DEBIAN/control @ONLY)
+
+	add_custom_target(package_deb
+		COMMAND ${CMAKE_COMMAND} --install . --prefix "${DEB_ROOT}${CMAKE_INSTALL_PREFIX}"
+		COMMAND fakeroot dpkg-deb --build ${DEB_ROOT} ${PACKAGE_DEB_FILENAME} > /dev/null
+		WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+	)
+
+	add_dependencies(package_deb ${PROGRAM_EXE})
 endif (UNIX)
 
 # --------------------------------
