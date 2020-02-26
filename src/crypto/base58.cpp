@@ -24,6 +24,7 @@
  *
  * Based on code from https://github.com/bitcoin/bitcoin/blob/f1e2f2a85962c1664e4e55471061af0eaa798d40/src/base58.cpp
  */
+#include <algorithm>
 #include <cstddef>
 #include <cassert>
 #include "base58.h"
@@ -81,6 +82,22 @@ std::string base58_encode(const std::string& str) {
 std::string base58_encode(const std::vector<unsigned char>& vch) {
 
     return base58_encode(vch.data(), vch.data() + vch.size());
+}
+
+bool is_base58(char ch) {
+	for(unsigned int i=0; i < sizeof(charmap); i++) {
+		if (ch == charmap[i]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+std::string& base58_strip(std::string &str) {
+	str.erase(std::remove_if(str.begin(), str.end(), [] (std::string::value_type ch)
+		{ return is_base58(ch) == false; }
+	), str.end());
+    return str;
 }
 
 } // namespace eoskeygen

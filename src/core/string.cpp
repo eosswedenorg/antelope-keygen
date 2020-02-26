@@ -24,6 +24,7 @@
 #include <cstddef>
 #include <cctype>
 #include <algorithm>
+#include "../crypto/base58.h"
 #include "string.h"
 
 namespace eoskeygen {
@@ -86,18 +87,6 @@ std::string& rtrim(std::string& str) {
 
 std::string& trim(std::string& str) {
 	return ltrim(rtrim(str));
-}
-
-static bool _is_base58(char ch) {
-	static std::string alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-	return alphabet.find(ch) != std::string::npos;
-}
-
-std::string& base58_strip(std::string &str) {
-	str.erase(std::remove_if(str.begin(), str.end(), [] (std::string::value_type ch)
-		{ return !_is_base58(ch); }
-	), str.end());
-    return str;
 }
 
 strlist_t& base58_strip(strlist_t& list) {

@@ -43,7 +43,6 @@ std::string& rtrim(std::string& str);
 std::string& ltrim(std::string& str);
 std::string& trim(std::string& str);
 
-std::string& base58_strip(std::string &str);
 strlist_t& base58_strip(strlist_t& list);
 
 strlist_t l33twords(std::string str);

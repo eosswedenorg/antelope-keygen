@@ -33,6 +33,10 @@ std::string base58_encode(const std::string& str);
 std::string base58_encode(const std::vector<unsigned char>& vch);
 std::string base58_encode(const unsigned char* pbegin, const unsigned char* pend);
 
+bool is_base58(char ch);
+
+std::string& base58_strip(std::string& str);
+
 } //namespace eoskeygen
 
 #endif /* EOSIOKEYGEN_CRYPTO_BASE58_H */

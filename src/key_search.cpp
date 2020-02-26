@@ -23,6 +23,7 @@
  */
 #include <string>
 #include "crypto/ec.h"
+#include "crypto/base58.h"
 #include "key_search_helpers.h"
 #include "key_search.h"
 
