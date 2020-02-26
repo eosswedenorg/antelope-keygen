@@ -93,6 +93,16 @@ bool is_base58(char ch) {
 	return false;
 }
 
+size_t is_base58(const std::string& str) {
+
+	auto p = std::find_if_not(str.begin(), str.end(), static_cast<bool (*)(char)>(is_base58));
+
+	if (p == str.end()) {
+		return std::string::npos;
+	}
+	return p - str.begin();
+}
+
 std::string& base58_strip(std::string &str) {
 	str.erase(std::remove_if(str.begin(), str.end(), [] (std::string::value_type ch)
 		{ return is_base58(ch) == false; }

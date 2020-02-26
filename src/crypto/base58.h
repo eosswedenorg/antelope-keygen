@@ -35,6 +35,10 @@ std::string base58_encode(const unsigned char* pbegin, const unsigned char* pend
 
 bool is_base58(char ch);
 
+// Returns std::string::npos if the string contains only base58 characters
+// Otherwise the position of the first non base58 character is returned.
+size_t is_base58(const std::string& str);
+
 std::string& base58_strip(std::string& str);
 
 } //namespace eoskeygen
