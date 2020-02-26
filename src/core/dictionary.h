@@ -34,8 +34,6 @@ namespace eoskeygen {
 class Dictionary
 {
 public :
-	//typedef std::map< std::string, std::vector<size_t> > search_result_t;
-
 	// index = position in the search string.
 	// value = length of the word from this position.
 	typedef std::map< size_t, size_t > search_result_t;
