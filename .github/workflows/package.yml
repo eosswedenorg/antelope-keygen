@@ -21,7 +21,7 @@ jobs:
       - name: Package
         id: package
         run: |
-            cmake --build . --config Release --target package_deb
+            cmake --build build --config Release --target package_deb
             FILE=$(ls build/*.deb | head -1)
             echo "::set-output name=filename::$FILE"
             echo "::set-output name=name::$(basename $FILE)"
