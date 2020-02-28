@@ -9,15 +9,13 @@ This program generates public and private keypair for [EOS](https://eos.io/)
 
 ## Compile
 
-You will need `openssl` development files (version 1.1 or later) to compile and `cmake` to compile this project.
+You will need `openssl` development files (version 1.1 or later) to compile and `cmake 3.15` or later to compile this project.
 
 ### Linux/MacOS
 
 #### Dependencies
 
-This project uses CMake version 3.15 to build the source code.
-
-**Linux: Ubuntu**
+**Linux: Ubuntu 16.04/18.04**
 ```sh
 $ apt-get install gcc g++ cmake libssl-dev
 ```
