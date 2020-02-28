@@ -35,7 +35,17 @@ $ sudo apt-get install cmake
 
 Consult the manual for how to get these installed.
 
-**MacOS:**
+**Linux: CMake manual install:**
+
+If your package manager don't provide a sufficiently new version of cmake, you can install it manually with this command:
+
+```sh
+$ wget -O cmake.sh https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5-Linux-x86_64.sh && sh ./cmake.sh --prefix=/usr/local --skip-license
+```
+
+Other methods is documanted at https://cmake.org/download
+
+**MacOS**
 
 You must have a compiler installed. This project is known to build with `Xcode 11.0` but other versions should work.
 
