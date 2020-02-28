@@ -15,13 +15,20 @@ You will need `openssl` development files (version 1.1 or later) to compile and 
 
 #### Dependencies
 
-**Linux: Ubuntu 16.04/18.04**
+#### Linux
+
+**Ubuntu:**
 ```sh
-$ apt-get install gcc g++ cmake libssl-dev
+$ apt-get install gcc g++ libssl-dev
 ```
 
-On ubuntu 16.04 and 18.04 you most likley will get `CMake 3.15 or higher is required. You are running version <xxx>`
-You can obtain a newer version from [kitware](https://apt.kitware.com):
+**Other**: Consult the manual for you package manager.
+
+**CMake**
+
+If your package manager don't provide a sufficiently new version of cmake, you can install it with these commands:
+
+Ubuntu 16.04/18.04 - [kitware](https://apt.kitware.com) ppa:
 
 ```sh
 $ wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
@@ -29,21 +36,15 @@ $ sudo apt-add-repository "deb https://apt.kitware.com/ubuntu/ `lsb_release -cs`
 $ sudo apt-get install cmake
 ```
 
-**Linux: Other**
-
-Consult the manual for how to get these installed.
-
-**Linux: CMake manual install**
-
-If your package manager don't provide a sufficiently new version of cmake, you can install it manually with this command:
+shell script:
 
 ```sh
-$ wget -O cmake.sh https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5-Linux-x86_64.sh && sh ./cmake.sh --prefix=/usr/local --skip-license
+$ wget -O cmake.sh https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5-Linux-x86_64.sh && sudo sh ./cmake.sh --prefix=/usr/local --skip-license
 ```
 
 Other methods is documanted at https://cmake.org/download
 
-**MacOS**
+#### MacOS
 
 You must have a compiler installed. This project is known to build with `Xcode 11.0` but other versions should work.
 
