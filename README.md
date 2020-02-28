@@ -17,7 +17,7 @@ You will need `openssl` development files (version 1.1 or later) to compile and 
 
 This project uses CMake version 3.15 to build the source code.
 
-**Ubuntu:**
+**Linux: Ubuntu**
 ```sh
 $ apt-get install gcc g++ cmake libssl-dev
 ```
@@ -31,11 +31,11 @@ $ sudo apt-add-repository "deb https://apt.kitware.com/ubuntu/ `lsb_release -cs`
 $ sudo apt-get install cmake
 ```
 
-**For other linux distributions:**
+**Linux: Other**
 
 Consult the manual for how to get these installed.
 
-**Linux: CMake manual install:**
+**Linux: CMake manual install**
 
 If your package manager don't provide a sufficiently new version of cmake, you can install it manually with this command:
 
