@@ -54,6 +54,8 @@ You need to have opessl and cmake installed also, this can be done with this `br
 $ brew install openssl cmake
 ```
 
+If you need a newer version of cmake, you can download the official `.dmg` file: [cmake-3.15.7-Darwin-x86_64.dmg](https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Darwin-x86_64.dmg). or see https://cmake.org/download for other versions.
+
 #### Build
 
 Run `./build.sh` to trigger cmake.
