@@ -48,10 +48,20 @@ namespace eoskeygen {
 
 namespace console {
 
+HANDLE _getNativeHandle(const std::ostream& os) {
+
+	if (&os == &std::cout) {
+    	return ::GetStdHandle(STD_OUTPUT_HANDLE);
+	} else if (&os == &std::cerr) {
+        return ::GetStdHandle(STD_ERROR_HANDLE);
+	}
+	return NULL;
+}
+
 std::ostream& reset(std::ostream& os) {
 
-	if (disable_color == false) {
-		::SetConsoleTextAttribute(::GetStdHandle(STD_OUTPUT_HANDLE), FG_DEFAULT);
+	if (isColorsSupported(os)) {
+		::SetConsoleTextAttribute(_getNativeHandle(os), FG_DEFAULT);
 	}
 	return os;
 }
@@ -61,7 +71,7 @@ std::ostream& operator<<(std::ostream& os, const fg& obj) {
 
 	int code;
 
-	if (disable_color == false) {
+	if (isColorsSupported(os)) {
 
 		switch(obj._color) {
 			case black : code = FG_BLACK; break;
@@ -84,7 +94,7 @@ std::ostream& operator<<(std::ostream& os, const fg& obj) {
 				code = FG_DEFAULT;
 		}
 
-		::SetConsoleTextAttribute(::GetStdHandle(STD_OUTPUT_HANDLE), code);
+		::SetConsoleTextAttribute(_getNativeHandle(os), code);
 	}
 
 	// WinAPI does not support text attributes in the console.

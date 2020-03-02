@@ -21,71 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_CONSOLE_H
-#define EOSIOKEYGEN_CONSOLE_H
+#ifndef EOSIOKEYGEN_CORE_ISATTY_H
+#define EOSIOKEYGEN_CORE_ISATTY_H
 
-#include <ostream>
+#include <stdio.h>
 
 namespace eoskeygen {
 
-namespace console {
+bool isatty(int fd);
 
-	extern bool disable_color;
-
-	// enum for all supported colors.
-	enum Color {
-		default_fg,
-		black,
-		white,
-		red,
-		green,
-		blue,
-		yellow,
-		magenta,
-		cyan,
-
-		// Light colors.
-		light_grey,
-		light_red,
-		light_green,
-		light_blue,
-		light_yellow,
-		light_magenta,
-		light_cyan,
-
-		// Dark colors
-		dark_grey
-	};
-
-	enum Attribute {
-		normal,
-		bold,
-		italic
-	};
-
-	bool isColorsSupported(const std::ostream& os);
-
-	// Resets all colors/attributes
-	std::ostream& reset(std::ostream& os);
-
-	// Foreground color
-	// Defined as a class with overloaded "<<" operator so you can write:
-	//   std::cout << fg(red) << "Text";
-	class fg
-	{
-	public:
-		fg(Color color, Attribute attribute = normal)
-			: _color(color), _attr(attribute) {}
-
-		friend std::ostream& operator<<(std::ostream& os, const fg& obj);
-
-	protected :
-		Color _color;
-		Attribute _attr;
-	};
-
-} // namespace console
+bool isatty(FILE* fd);
 
 } // namespace eoskeygen
 
-#endif /* EOSIOKEYGEN_CONSOLE_H */
+#endif /* EOSIOKEYGEN_CORE_ISATTY_H */

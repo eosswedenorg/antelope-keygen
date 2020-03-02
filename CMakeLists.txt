@@ -38,6 +38,7 @@ set (PROGRAM_SOURCE
 	src/core/file.cpp
 	src/core/dictionary.cpp
 	src/core/string.cpp
+	src/core/isatty.cpp
 	src/crypto/base58.cpp
 	src/crypto/WIF.cpp
 	src/console.cpp
