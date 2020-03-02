@@ -50,7 +50,7 @@ namespace console {
 
 std::ostream& reset(std::ostream& os) {
 
-	if (disable_color == false) {
+	if (isColorsSupported(os)) {
 		::SetConsoleTextAttribute(::GetStdHandle(STD_OUTPUT_HANDLE), FG_DEFAULT);
 	}
 	return os;
@@ -61,7 +61,7 @@ std::ostream& operator<<(std::ostream& os, const fg& obj) {
 
 	int code;
 
-	if (disable_color == false) {
+	if (isColorsSupported(os)) {
 
 		switch(obj._color) {
 			case black : code = FG_BLACK; break;
