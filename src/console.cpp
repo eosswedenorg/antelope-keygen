@@ -21,10 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include <iostream>
+#include "core/isatty.h"
 #include "console.h"
 
 namespace eoskeygen { namespace console {
 
 bool disable_color = false;
+
+FILE* _getFileFromStream(const std::ostream& os) {
+
+	if (&os == &std::cout) {
+    	return stdout;
+	} else if (&os == &std::cerr) {
+        return stderr;
+	}
+	return NULL;
+}
+
+bool isColorsSupported(const std::ostream& os) {
+
+	FILE* fd = _getFileFromStream(os);
+	return disable_color == false && isatty(fd);
+}
 
 } } // namespace eoskeygen::console

@@ -63,6 +63,8 @@ namespace console {
 		italic
 	};
 
+	bool isColorsSupported(const std::ostream& os);
+
 	// Resets all colors/attributes
 	std::ostream& reset(std::ostream& os);
 
