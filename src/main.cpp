@@ -52,7 +52,6 @@ int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& d
 
 	for(auto it = words.begin(); it != words.end(); it++) {
 		size_t p = eoskeygen::is_base58(*it);
-		std::cout << *it << std::endl;
 		if (p != std::string::npos) {
 			std::cerr << "The word '"
 				<< *it << "' contains an invalid non-base58 character '"
