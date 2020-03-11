@@ -35,14 +35,14 @@ if (UNIX) # Only include in bash environments.
 	set( PACKAGE_DEB_RELEASE 1 CACHE STRING "Debian package release number")
 	set( PACKAGE_DEB_VERSION ${PACKAGE_VERSION}-${PACKAGE_DEB_RELEASE} )
 	set( PACKAGE_DEB_FILENAME ${PACKAGE_NAME}_${PACKAGE_DEB_VERSION}-ubuntu-${UBUNTU_VERSION}_${PACKAGE_DEB_PLATFORM}.deb )
-	set( DEB_ROOT "debroot" )
+	set( DEB_ROOT "${CMAKE_CURRENT_BINARY_DIR}/debroot" )
 
 	configure_file(debian_control.in ${DEB_ROOT}/DEBIAN/control @ONLY)
 
 	add_custom_target(package_deb
 		COMMAND ${CMAKE_COMMAND} --install . --prefix "${DEB_ROOT}${CMAKE_INSTALL_PREFIX}"
 		COMMAND fakeroot dpkg-deb --build ${DEB_ROOT} ${PACKAGE_DEB_FILENAME} > /dev/null
-		WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	)
 
 	add_dependencies(package_deb ${PROGRAM_EXE})
@@ -58,7 +58,7 @@ if (WIN32)
 	add_custom_target(package
 		COMMAND ${CMAKE_COMMAND} --install . --prefix "${PACKAGE_FILENAME}"
 		COMMAND ${CMAKE_COMMAND} -E tar c "${PACKAGE_FILENAME}.zip" --format=zip "${PACKAGE_FILENAME}"
-		WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	)
 
 	add_dependencies(package ${PROGRAM_EXE})
