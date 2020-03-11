@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Project name and version
-project(eosio-keygen VERSION 1.0.2)
+project(eosio-keygen
+	VERSION 1.0.2
+	DESCRIPTION "Keygenerator for EOSIO"
+	HOMEPAGE_URL "https://github.com/eosswedenorg/eosio-keygen" )
 
-set( PROJECT_DESCRIPTION "Keygenerator for EOSIO" )
-set( PROJECT_HOMEPAGE_URL "https://github.com/eosswedenorg/eosio-keygen" )
 set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
 
 # Options
