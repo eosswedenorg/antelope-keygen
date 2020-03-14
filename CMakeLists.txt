@@ -51,3 +51,13 @@ add_subdirectory( docs )
 
 install(FILES README.md LICENSE LICENSE.bitcoin
 		DESTINATION ${CMAKE_INSTALL_SHAREDIR})
+
+# --------------------------------
+#  Package
+# --------------------------------
+
+set( CPACK_DEBIAN_PACKAGE_PRIORITY "optional" )
+set( CPACK_DEBIAN_PACKAGE_SECTION "misc" )
+set( CPACK_DEBIAN_PACKAGE_DEPENDS "libssl1.1, libc6" )
+
+include( cpack_custom )

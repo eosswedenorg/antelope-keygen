@@ -1,9 +1,0 @@
-Package: @PACKAGE_NAME@
-Version: @PACKAGE_DEB_VERSION@
-Description: @PACKAGE_DESCRIPTION@
-Section: misc
-Priority: optional
-Architecture: @PACKAGE_DEB_PLATFORM@
-Homepage: @PACKAGE_HOMEPAGE_URL@
-Maintainer: @PACKAGE_MAINTAINER@
-Depends: libssl1.1, libc6

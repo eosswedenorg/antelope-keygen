@@ -79,5 +79,3 @@ if (WIN32)
 	# We also need to copy libcrypto dll during install
 	install(FILES ${OPENSSL_LIBCRYPTO_DLL} DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif (WIN32)
-
-include( package )
