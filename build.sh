@@ -1,8 +1,5 @@
 #!/bin/bash
 
-mkdir build 2> /dev/null
-pushd build > /dev/null
-
 function usage() {
 	echo "Usage: ${0##*/} [ -h|--help ] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [ --disable-threads ] [ --force-ansi ]"
 	exit 1
@@ -42,9 +39,7 @@ while true; do
 	shift
 done
 
-cmake $ARGS ..
+cmake -B build $ARGS .
 if [ ${ONLY_CONFIG} -eq 0 ]; then
-	make -B
+	cmake --build build --clean-first --target
 fi
-
-popd > /dev/null
