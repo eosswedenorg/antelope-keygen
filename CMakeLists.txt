@@ -11,8 +11,6 @@ set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
 # Options
 option(USE_THREADS "Compile with support for threads (if available)." ON)
 option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
-option(EXTRAS "Include non essential (extra) files in the build. (only for *nix)" OFF)
-
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
@@ -46,10 +44,6 @@ endif()
 
 add_subdirectory( cli )
 add_subdirectory( docs )
-
-if (UNIX AND EXTRAS)
-	add_subdirectory( extras )
-endif()
 
 # --------------------------------
 #  Additional install files

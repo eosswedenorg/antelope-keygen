@@ -1,8 +1,0 @@
-Package: @PACKAGE_NAME@
-Version: @PACKAGE_DEB_VERSION@
-Description: @PACKAGE_DESCRIPTION@
-Section: misc
-Priority: optional
-Architecture: all
-Homepage: @PACKAGE_URL@
-Maintainer: @PACKAGE_MAINTAINER@
