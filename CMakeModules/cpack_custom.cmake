@@ -4,6 +4,12 @@
 #  System variables
 # --------------------------------
 
+# check CMAKE_SIZEOF_VOID_P to know if we are 32 or 64 bit.
+set( CPACK_SYSTEM_ARCH "x86" )
+if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+	set( CPACK_SYSTEM_ARCH "${CPACK_SYSTEM_ARCH}_64" )
+endif()
+
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
 	# Set CPACK_SYSTEM_NAME, CPACK_SYSTEM_VERSION
@@ -36,11 +42,11 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 	# set CPACK_DEBIAN_PACKAGE_ARCHITECTURE to somthing sane by default.
 	if (NOT CPACK_DEBIAN_PACKAGE_ARCHITECTURE)
 
-		# check CMAKE_SIZEOF_VOID_P to know if we are 32 or 64 bit.
-		if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-			set( ARCH "amd64" )
-		else()
+		# debian uses different names for 32/64 bit.
+		if (CPACK_SYSTEM_ARCH STREQUAL "x86")
 			set( ARCH "i386" )
+		else()
+			set( ARCH "amd64" )
 		endif()
 
 		set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${ARCH})
@@ -71,7 +77,7 @@ endif()
 
 # Set "correct" filename that also include system version.
 if (CPACK_SYSTEM_VERSION)
-	set( CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}_${CPACK_SYSTEM_NAME}-${CPACK_SYSTEM_VERSION}" )
+	set( CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}_${CPACK_SYSTEM_NAME}-${CPACK_SYSTEM_VERSION}_${CPACK_SYSTEM_ARCH}" )
 endif()
 
 
