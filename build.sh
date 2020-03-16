@@ -1,11 +1,11 @@
 #!/bin/bash
 
 function usage() {
-	echo "Usage: ${0##*/} [ -h|--help ] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [ --disable-threads ] [ --force-ansi ]"
+	echo "Usage: ${0##*/} [ -h|--help ] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [--pkg-type deb|zip|tgz] [ --disable-threads ] [ --force-ansi ]"
 	exit 1
 }
 
-options=$(getopt -n "${0##*/}" -o "lht:" -l "help,type:,disable-threads,force-ansi" -- "$@")
+options=$(getopt -n "${0##*/}" -o "lht:" -l "help,type:,pkg-type:,disable-threads,force-ansi" -- "$@")
 
 [ $? -eq 0 ] || usage
 
@@ -24,6 +24,15 @@ while true; do
 		}
 		ARGS="${ARGS} -DCMAKE_BUILD_TYPE=${1}"
 		;;
+	--pkg-type)
+		shift
+		[[ ! "$1" =~ ^(deb|zip|tgz)$ ]] && {
+		    echo "Incorrect package type '$1' provided"
+		    usage
+		}
+		TARGET="package"
+		ARGS="${ARGS} -DCPACK_GENERATOR=${1^^}"
+		;;
 	--disable-threads)
 		ARGS="${ARGS} -DUSE_THREADS=OFF" ;;
 	--force-ansi)
@@ -41,5 +50,5 @@ done
 
 cmake -B build $ARGS .
 if [ ${ONLY_CONFIG} -eq 0 ]; then
-	cmake --build build --clean-first --target
+	cmake --build build --clean-first --target ${TARGET}
 fi
