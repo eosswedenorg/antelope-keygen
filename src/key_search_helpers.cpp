@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 #include <iostream>
-#include "core/dictionary.h"
-#include "crypto/WIF.h"
+#include <eoskeygen/core/dictionary.h>
+#include <eoskeygen/crypto/WIF.h>
 #include "console.h"
 #include "key_search_helpers.h"
 

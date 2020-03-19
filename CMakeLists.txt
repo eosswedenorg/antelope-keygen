@@ -88,6 +88,8 @@ include_directories(${PROJECT_BINARY_DIR})
 # Include OpenSSL headers
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 
+include_directories( include )
+
 add_executable( ${PROGRAM_EXE} ${PROGRAM_SOURCE} )
 
 target_link_libraries( ${PROGRAM_EXE}

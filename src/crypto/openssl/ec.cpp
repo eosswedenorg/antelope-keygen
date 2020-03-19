@@ -24,7 +24,7 @@
 #include <openssl/ec.h>
 #include <openssl/bn.h>
 #include <openssl/hmac.h>
-#include "../ec.h"
+#include <eoskeygen/crypto/ec.h>
 
 namespace eoskeygen {
 

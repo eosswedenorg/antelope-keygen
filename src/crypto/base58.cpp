@@ -27,7 +27,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cassert>
-#include "base58.h"
+#include <eoskeygen/crypto/base58.h>
 
 namespace eoskeygen {
 

@@ -3,9 +3,9 @@
 #include <cstdio>
 #include <iterator>
 #include <algorithm>
+#include <eoskeygen/core/string.h>
+#include <eoskeygen/core/dictionary.h>
 #include "file.h"
-#include "string.h"
-#include "dictionary.h"
 
 namespace eoskeygen {
 

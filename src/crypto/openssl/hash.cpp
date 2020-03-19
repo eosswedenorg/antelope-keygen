@@ -23,7 +23,7 @@
  */
 #include <openssl/sha.h>
 #include <openssl/ripemd.h>
-#include "../hash.h"
+#include <eoskeygen/crypto/hash.h>
 
 namespace eoskeygen {
 

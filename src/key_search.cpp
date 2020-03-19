@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 #include <string>
-#include "crypto/ec.h"
+#include <eoskeygen/crypto/ec.h>
+#include <eoskeygen/key_search.h>
 #include "key_search_helpers.h"
-#include "key_search.h"
 
 namespace eoskeygen {
 

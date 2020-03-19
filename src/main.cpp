@@ -26,16 +26,16 @@
 #endif /* HAVE_THREADS */
 #include <iostream>
 #include <cstring>
-#include "config.h"
+#include <eoskeygen/core/dictionary.h>
+#include <eoskeygen/core/string.h>
+#include <eoskeygen/crypto/base58.h>
+#include <eoskeygen/crypto/ec.h>
+#include <eoskeygen/crypto/WIF.h>
+#include <eoskeygen/key_search.h>
 #include "core/file.h"
-#include "core/dictionary.h"
-#include "core/string.h"
-#include "crypto/base58.h"
-#include "crypto/ec.h"
-#include "crypto/WIF.h"
 #include "console.h"
-#include "key_search.h"
 #include "benchmark.h"
+#include "config.h"
 
 // Command line options.
 bool option_l33t = false;

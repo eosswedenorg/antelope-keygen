@@ -21,19 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_CRYPTO_EC_H
-#define EOSIOKEYGEN_CRYPTO_EC_H
+#ifndef EOSIOKEYGEN_CRYPTO_EOS_CHECKSUM_H
+#define EOSIOKEYGEN_CRYPTO_EOS_CHECKSUM_H
 
-#include "types.h"
+#include <cstddef>
+#include <cstring>
+#include <array>
+#include <eoskeygen/crypto/hash.h>
 
 namespace eoskeygen {
 
-/**
- * Generates a keypair using the secp256k1 curve.
- * public key is in compressed format.
- */
-int ec_generate_key(struct ec_keypair *pair);
+#define CHECKSUM_SIZE 4
+
+typedef std::array<unsigned char, CHECKSUM_SIZE> checksum_t;
+
+template <typename T, T* (*F)(const unsigned char *, std::size_t, T*)>
+inline checksum_t checksum(const unsigned char* data, std::size_t len) {
+	checksum_t crc;
+	T hash;
+
+	F(data, len, &hash);
+	std::memcpy(crc.data(), &hash, crc.size());
+	return crc;
+}
+
+#define checksum_sha256 checksum<sha256_t, sha256>
+#define checksum_sha256d checksum<sha256_t, sha256d>
+#define checksum_ripemd160 checksum<ripemd160_t, ripemd160>
 
 } // namespace eoskeygen
 
-#endif /* EOSIOKEYGEN_CRYPTO_EC_H */
+#endif /* EOSIOKEYGEN_CHECKSUM_H */

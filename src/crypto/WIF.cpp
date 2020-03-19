@@ -23,9 +23,9 @@
  */
 #include <iostream>
 #include <string.h>
-#include "base58.h"
-#include "checksum.h"
-#include "WIF.h"
+#include <eoskeygen/crypto/base58.h>
+#include <eoskeygen/crypto/checksum.h>
+#include <eoskeygen/crypto/WIF.h>
 
 namespace eoskeygen {
 

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 #include <chrono>
-#include "crypto/ec.h"
+#include <eoskeygen/crypto/ec.h>
 #include "benchmark.h"
 
 using std::chrono::steady_clock;

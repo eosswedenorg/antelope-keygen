@@ -24,8 +24,8 @@
 #include <cstddef>
 #include <cctype>
 #include <algorithm>
-#include "../crypto/base58.h"
-#include "string.h"
+#include <eoskeygen/crypto/base58.h>
+#include <eoskeygen/core/string.h>
 
 namespace eoskeygen {
 

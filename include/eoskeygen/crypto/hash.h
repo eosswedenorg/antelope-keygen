@@ -21,62 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_KEY_SEARCH_H
-#define EOSIOKEYGEN_KEY_SEARCH_H
+#ifndef EOSIOKEYGEN_CRYPTO_HASH_H
+#define EOSIOKEYGEN_CRYPTO_HASH_H
 
-#include "core/dictionary.h"
-#include "core/string.h"
+#include <cstddef>
+#include <eoskeygen/crypto/types.h>
 
 namespace eoskeygen {
 
-class KeySearch
-{
-public :
-	// Add a word to search for.
-	void addWord(const std::string& str);
+sha256_t* sha256(const unsigned char *data, std::size_t len, sha256_t* out);
 
-	// Add a list of words to search for.
-	void addList(const strlist_t& list);
+// sha256 double.
+sha256_t* sha256d(const unsigned char *data, std::size_t len, sha256_t* out);
 
-	void addDictionary(const Dictionary& dictionary);
-
-	// get the list of words to search for.
-	const strlist_t& getList();
-
-	// Clears the search list.
-	void clear();
-
-#ifdef HAVE_THREADS
-	// Set the number of threads to use while searching.
-	void setThreadCount(size_t num);
-#endif /* HAVE_THREADS */
-
-	// Perform a search.
-	void find(size_t num_results);
-
-protected :
-
-#ifdef HAVE_THREADS
-	void _thr_proc();
-
-	void _search_mt(size_t n);
-#endif /* HAVE_THREADS */
-
-	void _search_linear(size_t n);
-
-protected :
-	// List of words to search for.
-	strlist_t m_words;
-
-	// Dictionary to use when we find a search result.
-	Dictionary m_dict;
-
-#ifdef HAVE_THREADS
-	// Number of threads to use.
-	size_t m_threads;
-#endif /* HAVE_THREADS */
-};
+ripemd160_t* ripemd160(const unsigned char *data, std::size_t len, ripemd160_t* out);
 
 } // namespace eoskeygen
 
-#endif /* EOSIOKEYGEN_KEY_SEARCH_H */
+#endif /* EOSIOKEYGEN_CRYPTO_HASH_H */
