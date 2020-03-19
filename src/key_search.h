@@ -25,7 +25,7 @@
 #define EOSIOKEYGEN_KEY_SEARCH_H
 
 #include "core/dictionary.h"
-#include "string.h"
+#include "core/string.h"
 
 namespace eoskeygen {
 
