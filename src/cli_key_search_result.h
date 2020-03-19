@@ -21,49 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <iostream>
-#include <eoskeygen/core/dictionary.h>
-#include <eoskeygen/crypto/WIF.h>
-#include "console.h"
-#include "key_search_helpers.h"
+#ifndef EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
+#define EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
+
+#include <eoskeygen/core/string.h>
+#include <eoskeygen/crypto/types.h>
+#include <eoskeygen/key_search.h>
+#include <eoskeygen/key_search_result.h>
 
 namespace eoskeygen {
 
-static size_t highlight(console::Color color, const std::string& str, size_t pos, size_t len) {
+class Dictionary;
 
-	std::cout << console::fg(color, console::bold)
-		<< str.substr(pos, len)
-		<< console::reset;
-	return len;
-}
+class CliKeySearchResult : public IKeySearchResult
+{
+public:
+	CliKeySearchResult(const Dictionary& dict);
 
-void key_search_result(const struct ec_keypair* key, const struct KeySearch::result* result, const Dictionary& dict) {
+	virtual void onResult(const struct ec_keypair* key, const struct KeySearch::result& result);
 
-	std::string pub = wif_pub_encode(key->pub);
-	Dictionary::search_result_t dict_res = dict.search(pub);
+protected :
 
-	std::cout << "----" << std::endl;
-	std::cout << "Found: " << pub.substr(result->pos, result->len) << std::endl;
-
-	std::cout << "Public: EOS";
-	for(size_t i = 3; i < pub.length(); ) {
-
-		if (i == result->pos) {
-			i += highlight(console::red, pub, result->pos, result->len);
-			continue;
-		}
-
-		auto p = dict_res.find(i);
-		if (p != dict_res.end()) {
-			i += highlight(console::blue, pub, p->first, p->second);
-			continue;
-		}
-
-		std::cout << pub[i++];
-	}
-
-	std::cout << std::endl
-		<< "Private: " << wif_priv_encode(key->secret) << std::endl;
-}
+	const Dictionary& m_dict;
+};
 
 } // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_KEY_SEARCH_HELPERS_H */

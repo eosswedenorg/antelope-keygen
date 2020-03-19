@@ -26,8 +26,8 @@
 #include <mutex>
 #include <vector>
 #include <eoskeygen/crypto/ec.h>
+#include <eoskeygen/key_search_result.h>
 #include <eoskeygen/key_search.h>
-#include "key_search_helpers.h"
 
 namespace eoskeygen {
 
@@ -52,7 +52,7 @@ void KeySearch::_thr_proc() {
 		if (_contains_word(&pair, res)) {
 
 			// Guard output with mutex, so we don't get
-			// interrupted mid write and can write to g_count safely.
+			// interrupted mid write and can write to g_count and res safely.
 			const std::lock_guard<std::mutex> lock(g_count_mtx);
 
 			// It is possible g_count was updated by another thread
@@ -62,9 +62,9 @@ void KeySearch::_thr_proc() {
 				return;
 			}
 
-			// Update count and print result.
+			// Update count and call result function.
 			g_count++;
-			key_search_result(&pair, &res, m_dict);
+			m_callback->onResult(&pair, res);
 		}
 	}
 }

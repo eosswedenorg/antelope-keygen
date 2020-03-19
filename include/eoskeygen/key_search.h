@@ -29,6 +29,8 @@
 
 namespace eoskeygen {
 
+class IKeySearchResult;
+
 class KeySearch
 {
 public :
@@ -45,13 +47,13 @@ public :
 	// Add a list of words to search for.
 	void addList(const strlist_t& list);
 
-	void addDictionary(const Dictionary& dictionary);
-
 	// get the list of words to search for.
 	const strlist_t& getList();
 
 	// Clears the search list.
 	void clear();
+
+	void setCallback(IKeySearchResult* callback);
 
 #ifdef HAVE_THREADS
 	// Set the number of threads to use while searching.
@@ -79,13 +81,12 @@ protected :
 	// List of words to search for.
 	strlist_t m_words;
 
-	// Dictionary to use when we find a search result.
-	Dictionary m_dict;
-
 #ifdef HAVE_THREADS
 	// Number of threads to use.
 	size_t m_threads;
 #endif /* HAVE_THREADS */
+
+	IKeySearchResult* m_callback;
 };
 
 } // namespace eoskeygen

@@ -51,9 +51,9 @@ set (PROGRAM_SOURCE
 	src/core/isatty.cpp
 	src/crypto/base58.cpp
 	src/crypto/WIF.cpp
+	src/cli_key_search_result.cpp
 	src/console.cpp
 	src/key_search.cpp
-	src/key_search_helpers.cpp
 	src/benchmark.cpp
 	src/main.cpp
 )

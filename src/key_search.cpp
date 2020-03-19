@@ -24,8 +24,8 @@
 #include <string>
 #include <eoskeygen/crypto/ec.h>
 #include <eoskeygen/crypto/WIF.h>
+#include <eoskeygen/key_search_result.h>
 #include <eoskeygen/key_search.h>
-#include "key_search_helpers.h"
 
 namespace eoskeygen {
 
@@ -43,11 +43,6 @@ void KeySearch::addList(const strlist_t& list)
 	}
 }
 
-void KeySearch::addDictionary(const Dictionary& dictionary)
-{
-	m_dict = dictionary;
-}
-
 const strlist_t& KeySearch::getList()
 {
 	return m_words;
@@ -56,6 +51,11 @@ const strlist_t& KeySearch::getList()
 void KeySearch::clear()
 {
 	m_words.clear();
+}
+
+void KeySearch::setCallback(IKeySearchResult* callback)
+{
+	m_callback = callback;
 }
 
 void KeySearch::_search_linear(size_t n) {
@@ -67,7 +67,7 @@ void KeySearch::_search_linear(size_t n) {
 		struct result res;
 		ec_generate_key(&pair);
 		if (_contains_word(&pair, res)) {
-			key_search_result(&pair, &res, m_dict);
+			m_callback->onResult(&pair, res);
 			count++;
 		}
 	}

@@ -21,19 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
-#define EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
+#ifndef EOSIOKEYGEN_KEY_SEARCH_RESULT_H
+#define EOSIOKEYGEN_KEY_SEARCH_RESULT_H
 
-#include <eoskeygen/core/string.h>
-#include <eoskeygen/crypto/types.h>
 #include <eoskeygen/key_search.h>
 
 namespace eoskeygen {
 
-class Dictionary;
+class IKeySearchResult
+{
+public :
 
-void key_search_result(const struct ec_keypair* key, const struct KeySearch::result* result, const Dictionary& dict);
+	virtual void onResult(const struct ec_keypair* key, const struct KeySearch::result& result) = 0;
+};
 
 } // namespace eoskeygen
 
-#endif /* EOSIOKEYGEN_KEY_SEARCH_HELPERS_H */
+#endif /* EOSIOKEYGEN_KEY_SEARCH_RESULT_H */
