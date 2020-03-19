@@ -32,6 +32,13 @@ namespace eoskeygen {
 class KeySearch
 {
 public :
+
+	struct result {
+		size_t pos; // position where the word was found.
+		size_t len; // the length of the word.
+	};
+
+public :
 	// Add a word to search for.
 	void addWord(const std::string& str);
 
@@ -55,6 +62,10 @@ public :
 	void find(size_t num_results);
 
 protected :
+
+	// Check if any word in <word_list> appears in <key>'s public key.
+	// returns true if a word was found (stored in <result>), false otherwise.
+	bool _contains_word(const struct ec_keypair* key, struct result& result);
 
 #ifdef HAVE_THREADS
 	void _thr_proc();

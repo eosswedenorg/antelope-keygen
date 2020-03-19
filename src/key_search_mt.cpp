@@ -46,10 +46,10 @@ void KeySearch::_thr_proc() {
 	struct ec_keypair pair;
 
 	while (g_count < g_max) {
-		struct key_result res;
+		struct result res;
 
 		ec_generate_key(&pair);
-		if (key_contains_word(&pair, m_words, &res)) {
+		if (_contains_word(&pair, res)) {
 
 			// Guard output with mutex, so we don't get
 			// interrupted mid write and can write to g_count safely.

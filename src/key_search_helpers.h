@@ -26,21 +26,13 @@
 
 #include <eoskeygen/core/string.h>
 #include <eoskeygen/crypto/types.h>
+#include <eoskeygen/key_search.h>
 
 namespace eoskeygen {
 
 class Dictionary;
 
-struct key_result {
-	size_t pos; // position where the word was found.
-	size_t len; // the length of the word.
-};
-
-void key_search_result(const struct ec_keypair* key, const struct key_result* result, const Dictionary& dict);
-
-// Check if any word in <word_list> appears in <key>'s public key.
-// returns true if a word was found (stored in <result>), false otherwise.
-bool key_contains_word(const struct ec_keypair* key, const strlist_t& word_list, struct key_result *result);
+void key_search_result(const struct ec_keypair* key, const struct KeySearch::result* result, const Dictionary& dict);
 
 } // namespace eoskeygen
 

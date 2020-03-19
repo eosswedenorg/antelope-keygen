@@ -23,6 +23,7 @@
  */
 #include <string>
 #include <eoskeygen/crypto/ec.h>
+#include <eoskeygen/crypto/WIF.h>
 #include <eoskeygen/key_search.h>
 #include "key_search_helpers.h"
 
@@ -63,9 +64,9 @@ void KeySearch::_search_linear(size_t n) {
 	struct ec_keypair pair;
 
 	while (count < n) {
-		struct key_result res;
+		struct result res;
 		ec_generate_key(&pair);
-		if (key_contains_word(&pair, m_words, &res)) {
+		if (_contains_word(&pair, res)) {
 			key_search_result(&pair, &res, m_dict);
 			count++;
 		}
@@ -83,6 +84,23 @@ void KeySearch::find(size_t num_results) {
 #endif /* HAVE_THREADS */
 
 	_search_linear(num_results);
+}
+
+bool KeySearch::_contains_word(const struct ec_keypair* key, struct result& result) {
+
+	// skip first 3 chars, as those are always "EOS"
+	std::string pubstr = wif_pub_encode(key->pub).substr(3);
+	strtolower(pubstr);
+
+	for(auto const& w: m_words) {
+		size_t p = pubstr.find(w);
+		if (p != std::string::npos) {
+			result.pos = p + 3;
+			result.len = w.length();
+			return true;
+		}
+	}
+	return false;
 }
 
 } // namespace eoskeygen

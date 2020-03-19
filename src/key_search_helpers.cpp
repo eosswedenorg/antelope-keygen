@@ -37,7 +37,7 @@ static size_t highlight(console::Color color, const std::string& str, size_t pos
 	return len;
 }
 
-void key_search_result(const struct ec_keypair* key, const struct key_result* result, const Dictionary& dict) {
+void key_search_result(const struct ec_keypair* key, const struct KeySearch::result* result, const Dictionary& dict) {
 
 	std::string pub = wif_pub_encode(key->pub);
 	Dictionary::search_result_t dict_res = dict.search(pub);
@@ -64,23 +64,6 @@ void key_search_result(const struct ec_keypair* key, const struct key_result* re
 
 	std::cout << std::endl
 		<< "Private: " << wif_priv_encode(key->secret) << std::endl;
-}
-
-bool key_contains_word(const struct ec_keypair* key, const strlist_t& word_list, struct key_result *result) {
-
-	// skip first 3 chars, as those are always "EOS"
-	std::string pubstr = wif_pub_encode(key->pub).substr(3);
-	strtolower(pubstr);
-
-	for(auto const& w: word_list) {
-		size_t p = pubstr.find(w);
-		if (p != std::string::npos) {
-			result->pos = p + 3;
-			result->len = w.length();
-			return true;
-		}
-	}
-	return false;
 }
 
 } // namespace eoskeygen
