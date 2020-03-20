@@ -26,14 +26,14 @@
 #endif /* HAVE_THREADS */
 #include <iostream>
 #include <cstring>
-#include <eoskeygen/core/dictionary.h>
+#include <eoskeygen/core/file.h>
 #include <eoskeygen/core/string.h>
+#include <eoskeygen/core/dictionary.h>
 #include <eoskeygen/crypto/base58.h>
 #include <eoskeygen/crypto/ec.h>
 #include <eoskeygen/crypto/WIF.h>
 #include <eoskeygen/key_search.h>
 #include "cli_key_search_result.h"
-#include "core/file.h"
 #include "console.h"
 #include "benchmark.h"
 #include "config.h"

@@ -1,6 +1,6 @@
 
 #include <cstdio>
-#include "file.h"
+#include <eoskeygen/core/file.h>
 
 namespace eoskeygen {
 

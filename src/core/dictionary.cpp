@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <eoskeygen/core/string.h>
 #include <eoskeygen/core/dictionary.h>
-#include "file.h"
+#include <eoskeygen/core/file.h>
 
 namespace eoskeygen {
 
