@@ -24,7 +24,7 @@
 #ifndef EOSIOKEYGEN_CRYPTO_EOS_CHECKSUM_H
 #define EOSIOKEYGEN_CRYPTO_EOS_CHECKSUM_H
 
-#include <cstddef>
+#include <cstdint>
 #include <cstring>
 #include <array>
 #include <eoskeygen/crypto/hash.h>

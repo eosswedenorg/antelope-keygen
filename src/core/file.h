@@ -25,7 +25,6 @@
 #define EOSIOKEYGEN_CORE_FILE_H
 
 #include <eoskeygen/core/string.h>
-#include <vector>
 
 namespace eoskeygen {
 

@@ -24,7 +24,6 @@
 #ifndef EOSIOKEYGEN_CORE_DICTIONARY_H
 #define EOSIOKEYGEN_CORE_DICTIONARY_H
 
-#include <vector>
 #include <string>
 #include <map>
 #include <set>

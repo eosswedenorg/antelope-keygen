@@ -24,7 +24,7 @@
 #ifndef EOSIOKEYGEN_CRYPTO_HASH_H
 #define EOSIOKEYGEN_CRYPTO_HASH_H
 
-#include <cstddef>
+#include <cstdint>
 #include <eoskeygen/crypto/types.h>
 
 namespace eoskeygen {
