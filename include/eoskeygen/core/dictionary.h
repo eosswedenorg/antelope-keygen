@@ -45,12 +45,13 @@ public :
 	// Load words from file.
 	bool loadFromFile(const std::string& filename);
 
-	// Add a word
+	// Add a word to the dictionary.
 	void add(const std::string& word);
 
 	// Add words from another dictionary.
 	void add(const Dictionary& dictionary);
 
+	// Clear all words from the dictionary.
 	void clear();
 
 	// Returns true if word exists in the dictionary.
