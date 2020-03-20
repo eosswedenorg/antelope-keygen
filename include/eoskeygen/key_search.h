@@ -53,6 +53,7 @@ public :
 	// Clears the search list.
 	void clear();
 
+	// Set callback for search result.
 	void setCallback(IKeySearchResult* callback);
 
 #ifdef HAVE_THREADS
