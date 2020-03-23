@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 #include <iostream>
-#include "core/isatty.h"
+#include "isatty.h"
 #include "console.h"
 
 namespace eoskeygen { namespace console {

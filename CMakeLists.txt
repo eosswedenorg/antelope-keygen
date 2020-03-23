@@ -47,7 +47,7 @@ endif()
 set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 
 set (PROGRAM_SOURCE
-	src/core/isatty.cpp
+	src/isatty.cpp
 	src/cli_key_search_result.cpp
 	src/console.cpp
 	src/benchmark.cpp
