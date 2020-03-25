@@ -21,15 +21,15 @@ macro(fromGit tag)
 	FetchContent_MakeAvailable(libeoskeygen)
 endmacro()
 
-# If we have a custom libeoskeygen
-if(CUSTOM_LIBEOSKEYGEN)
+macro(buildLocal src)
+	message ("Using local libeoskeygen at: ${src}")
+	add_subdirectory(${src} ${src}/build)
+endmacro()
 
-	message ("Using libeoskeygen in: ${CUSTOM_LIBEOSKEYGEN}")
-
-	# Include targets.
-	include(${CUSTOM_LIBEOSKEYGEN}/libeoskeygenTargets.cmake)
+# If we have a local libeoskeygen
+if (LIBEOSKEYGEN_SOURCE_DIR)
+	buildLocal( ${LIBEOSKEYGEN_SOURCE_DIR} )
 else()
-
 	# Try finding the package on the system.
 	find_package(libeoskeygen ${LIBEOSKEYGEN_WANTED_VERSION} QUIET)
 	if (libeoskeygen_FOUND)
@@ -38,5 +38,4 @@ else()
 	else()
 		fromGit( v${LIBEOSKEYGEN_WANTED_VERSION} )
 	endif()
-
 endif()
