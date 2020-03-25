@@ -8,18 +8,24 @@ if(CUSTOM_LIBEOSKEYGEN)
 	include(${CUSTOM_LIBEOSKEYGEN}/libeoskeygenTargets.cmake)
 else()
 
-	# TODO: find_package() here if libeoskeygen is installed on the system.
-	# otherwise we will download with FetchContent.
+	set( LIBEOSKEYGEN_WANTED_VERSION 0.1.0 )
 
-	message ("Using libeoskeygen from: https://github.com/eosswedenorg/libeoskeygen.git")
+	# Try finding the package on the system.
+	find_package(libeoskeygen ${LIBEOSKEYGEN_WANTED_VERSION} QUIET)
+	if (libeoskeygen_FOUND)
+		message ("Using libeoskeygen in: ${libeoskeygen_DIR}")
+	# Not found, download from git.
+	else()
+		message ("Using libeoskeygen from: https://github.com/eosswedenorg/libeoskeygen.git@v${LIBEOSKEYGEN_WANTED_VERSION}")
 
-	include(FetchContent)
-	FetchContent_Declare(
-		libeoskeygen
-		GIT_REPOSITORY https://github.com/eosswedenorg/libeoskeygen.git
-		GIT_TAG        master
-	)
+		include(FetchContent)
+		FetchContent_Declare(
+			libeoskeygen
+			GIT_REPOSITORY https://github.com/eosswedenorg/libeoskeygen.git
+			GIT_TAG        v${LIBEOSKEYGEN_WANTED_VERSION}
+		)
 
-	FetchContent_MakeAvailable(libeoskeygen)
+		FetchContent_MakeAvailable(libeoskeygen)
+	endif()
 
 endif()
