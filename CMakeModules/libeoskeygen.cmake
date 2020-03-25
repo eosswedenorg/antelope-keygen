@@ -30,12 +30,19 @@ endmacro()
 if (LIBEOSKEYGEN_SOURCE_DIR)
 	buildLocal( ${LIBEOSKEYGEN_SOURCE_DIR} )
 else()
-	# Try finding the package on the system.
-	find_package(libeoskeygen ${LIBEOSKEYGEN_WANTED_VERSION} QUIET)
-	if (libeoskeygen_FOUND)
-		message ("Using libeoskeygen in: ${libeoskeygen_DIR}")
-	# Not found, download from git.
+
+	# Check if version is in fact a version.
+	if (LIBEOSKEYGEN_WANTED_VERSION MATCHES "^[0-9]+(.[0-9]+)?(.[0-9]+)(-[a-zA-Z0-9]+)?$")
+		# Try finding the package on the system.
+		find_package(libeoskeygen ${LIBEOSKEYGEN_WANTED_VERSION} QUIET)
+		if (libeoskeygen_FOUND)
+			message ("Using libeoskeygen in: ${libeoskeygen_DIR}")
+		# Not found, download from git.
+		else()
+			fromGit( v${LIBEOSKEYGEN_WANTED_VERSION} )
+		endif()
+	# Assume version contains a git branch.
 	else()
-		fromGit( v${LIBEOSKEYGEN_WANTED_VERSION} )
+		fromGit( ${LIBEOSKEYGEN_WANTED_VERSION} )
 	endif()
 endif()
