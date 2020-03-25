@@ -65,9 +65,6 @@ endif()
 configure_file(src/config.h.in "${PROJECT_BINARY_DIR}/config.h" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
 
-# Include OpenSSL headers
-#include_directories( ${OPENSSL_INCLUDE_DIR} )
-
 add_executable( ${PROGRAM_EXE} ${PROGRAM_SOURCE} )
 
 target_link_libraries( ${PROGRAM_EXE} PUBLIC eoskeygen )
