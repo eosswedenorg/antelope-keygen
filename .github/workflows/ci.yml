@@ -11,7 +11,7 @@ jobs:
   compile:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        os: [ ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest ]
         build-opts: [ "-DUSE_THREADS=ON", "-DUSE_THREADS=OFF" ]
 
     name: ${{matrix.os}} (${{matrix.build-opts}})
