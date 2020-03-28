@@ -94,6 +94,6 @@ endif (UNIX)
 
 set( CPACK_DEBIAN_PACKAGE_PRIORITY "optional" )
 set( CPACK_DEBIAN_PACKAGE_SECTION "misc" )
-set( CPACK_DEBIAN_PACKAGE_DEPENDS "libssl1.1, libc6" )
+set( CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON )
 
 include( cpack_custom )
