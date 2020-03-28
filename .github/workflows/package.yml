@@ -33,7 +33,7 @@ jobs:
           asset_path: ${{ steps.package.outputs.filename }}
           asset_content_type: application/x-deb
 
-  # Windows zip file
+  # Windows installer
   windows:
     strategy:
       matrix:
@@ -50,7 +50,7 @@ jobs:
           } else {
               $PLATFORM="${{matrix.arch}}"
           }
-          cmake -A $PLATFORM -D OPENSSL_ROOT_DIR="$pwd/build/openssl-1.1/${{matrix.arch}}" -S . -B build
+          cmake -A $PLATFORM -D CPACK_GENERATOR=NSIS -S . -B build
 
       - name: Build
         run: cmake --build build --config Release
@@ -58,10 +58,10 @@ jobs:
       - name: Package
         id: package
         run: |
-          cmake --build build --config Release --target package
-          $FILE=(ls build/eosio-keygen*.zip)
+          cmake --build build --target package
+          $FILE=(ls build/*.exe)
           echo "::set-output name=filename::$FILE"
-          echo "::set-output name=name::$(([io.fileinfo]"$FILE").basename).zip"
+          echo "::set-output name=name::$(([io.fileinfo]"$FILE").basename).exe"
 
       - name: Upload
         uses: actions/upload-release-asset@v1
@@ -71,4 +71,4 @@ jobs:
           upload_url: ${{ github.event.release.upload_url }}
           asset_name: ${{ steps.package.outputs.name }}
           asset_path: ${{ steps.package.outputs.filename }}
-          asset_content_type: application/zip
+          asset_content_type: application/vnd.microsoft.portable-executable
