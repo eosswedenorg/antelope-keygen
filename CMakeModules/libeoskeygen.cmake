@@ -18,12 +18,16 @@ macro(fromGit tag)
 		GIT_TAG        ${tag}
 	)
 
-	FetchContent_MakeAvailable(libeoskeygen)
+	FetchContent_GetProperties(libeoskeygen)
+	if (NOT libeoskeygen_POPULATED)
+		FetchContent_Populate(libeoskeygen)
+		add_subdirectory(${libeoskeygen_SOURCE_DIR} ${libeoskeygen_BINARY_DIR} EXCLUDE_FROM_ALL)
+	endif()
 endmacro()
 
 macro(buildLocal src)
 	message ("Using local libeoskeygen at: ${src}")
-	add_subdirectory(${src} ${src}/build)
+	add_subdirectory(${src} ${src}/build EXCLUDE_FROM_ALL)
 endmacro()
 
 # If we have a local libeoskeygen
