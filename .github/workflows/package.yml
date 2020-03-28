@@ -43,14 +43,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Dependancies
-        shell: bash
-        run: |
-          mkdir -p build
-          cd build
-          curl https://mirror.firedaemon.com/OpenSSL/openssl-1.1.1e-dev.zip -O
-          7z x openssl-1.1.1e-dev.zip
-
       - name: Configure
         run: |
           if ("${{matrix.arch}}" -eq "x86") {
