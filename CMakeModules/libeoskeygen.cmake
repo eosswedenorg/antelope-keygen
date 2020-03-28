@@ -3,7 +3,7 @@
 #  Variables
 # --------------------------------
 set( LIBEOSKEYGEN_GIT_URL "https://github.com/eosswedenorg/libeoskeygen.git" )
-set( LIBEOSKEYGEN_WANTED_VERSION 0.1.0 )
+set( LIBEOSKEYGEN_WANTED_VERSION 0.1.1 )
 
 # --------------------------------
 #  Macros
