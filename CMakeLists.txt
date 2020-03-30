@@ -92,6 +92,16 @@ endif (UNIX)
 #  Package
 # --------------------------------
 
+if (CPACK_GENERATOR MATCHES "^[Nn][Ss][Ii][Ss]$")
+	set( NSIS_LICENSE_FILE ${PROJECT_BINARY_DIR}/NSIS_LICENSE )
+	file(WRITE ${NSIS_LICENSE_FILE} "")
+	foreach(file IN ITEMS LICENSE LICENSE.bitcoin)
+		file(READ ${CMAKE_CURRENT_LIST_DIR}/${file} content)
+		file(APPEND ${NSIS_LICENSE_FILE} "--- ${file}\n\n${content}\n")
+	endforeach()
+	set( CPACK_RESOURCE_FILE_LICENSE ${NSIS_LICENSE_FILE} )
+endif()
+
 set( CPACK_DEBIAN_PACKAGE_PRIORITY "optional" )
 set( CPACK_DEBIAN_PACKAGE_SECTION "misc" )
 set( CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON )
