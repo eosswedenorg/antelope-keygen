@@ -23,7 +23,6 @@ jobs:
     - name: Dependancies
       shell: bash
       run: |
-        mkdir -p build
         if [ "$RUNNER_OS" == "macOS" ]; then
             brew install openssl
         fi
@@ -34,7 +33,7 @@ jobs:
         if [ "$RUNNER_OS" == "macOS" ]; then
             SSL_OPTS="-D OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1"
         fi
-        cd build && cmake ${SSL_OPTS} ${{matrix.build-opts}} ..
+        cmake ${SSL_OPTS} ${{matrix.build-opts}} -B build
 
     - name: Build
       shell: bash
