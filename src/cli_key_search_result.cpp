@@ -21,23 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <openssl/sha.h>
-#include <openssl/ripemd.h>
-#include "../hash.h"
+#include <iostream>
+#include <eoskeygen/core/dictionary.h>
+#include <eoskeygen/crypto/WIF.h>
+#include "console.h"
+#include "cli_key_search_result.h"
 
 namespace eoskeygen {
 
-sha256_t* sha256(const unsigned char *data, std::size_t len, sha256_t* out) {
-	return (sha256_t *) SHA256(data, len, out->data);
+static size_t highlight(console::Color color, const std::string& str, size_t pos, size_t len) {
+
+	std::cout << console::fg(color, console::bold)
+		<< str.substr(pos, len)
+		<< console::reset;
+	return len;
 }
 
-sha256_t* sha256d(const unsigned char *data, std::size_t len, sha256_t* out) {
-	SHA256(data, len, out->data);
-	return (sha256_t *) SHA256(out->data, 32, out->data);
+CliKeySearchResult::CliKeySearchResult(const Dictionary& dict) :
+m_dict (dict)
+{
 }
 
-ripemd160_t* ripemd160(const unsigned char *data, std::size_t len, ripemd160_t* out) {
-	return (ripemd160_t *) RIPEMD160(data, len, out->data);
+void CliKeySearchResult::onResult(const struct ec_keypair* key, const struct KeySearch::result& result) {
+
+	std::string pub = wif_pub_encode(key->pub);
+	Dictionary::search_result_t dict_res = m_dict.search(pub);
+
+	std::cout << "----" << std::endl;
+	std::cout << "Found: " << pub.substr(result.pos, result.len) << std::endl;
+
+	std::cout << "Public: EOS";
+	for(size_t i = 3; i < pub.length(); ) {
+
+		if (i == result.pos) {
+			i += highlight(console::red, pub, result.pos, result.len);
+			continue;
+		}
+
+		auto p = dict_res.find(i);
+		if (p != dict_res.end()) {
+			i += highlight(console::blue, pub, p->first, p->second);
+			continue;
+		}
+
+		std::cout << pub[i++];
+	}
+
+	std::cout << std::endl
+		<< "Private: " << wif_priv_encode(key->secret) << std::endl;
 }
 
 } // namespace eoskeygen

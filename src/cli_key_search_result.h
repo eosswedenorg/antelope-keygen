@@ -21,20 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_CRYPTO_WIF_H
-#define EOSIOKEYGEN_CRYPTO_WIF_H
+#ifndef EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
+#define EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 
-#include <string>
-#include "types.h"
+#include <eoskeygen/core/string.h>
+#include <eoskeygen/crypto/types.h>
+#include <eoskeygen/key_search.h>
+#include <eoskeygen/key_search_result.h>
 
 namespace eoskeygen {
 
-std::string wif_priv_encode(ec_privkey_t priv);
+class Dictionary;
 
-std::string wif_pub_encode(ec_pubkey_t pub);
+class CliKeySearchResult : public IKeySearchResult
+{
+public:
+	CliKeySearchResult(const Dictionary& dict);
 
-void wif_print_key(const struct ec_keypair *key);
+	virtual void onResult(const struct ec_keypair* key, const struct KeySearch::result& result);
+
+protected :
+
+	const Dictionary& m_dict;
+};
 
 } // namespace eoskeygen
 
-#endif /* EOSIOKEYGEN_CRYPTO_WIF_H */
+#endif /* EOSIOKEYGEN_KEY_SEARCH_HELPERS_H */

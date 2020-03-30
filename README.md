@@ -9,7 +9,7 @@ This program generates public and private keypair for [EOS](https://eos.io/)
 
 ## Compile
 
-You will need `openssl` development files (version 1.1 or later) to compile and `cmake 3.15` or later to compile this project.
+You will need `libeoskeygen` and `cmake 3.15` or later to compile this project.
 
 ### Linux/MacOS
 
@@ -18,11 +18,37 @@ You will need `openssl` development files (version 1.1 or later) to compile and 
 #### Linux
 
 **Ubuntu:**
+
+First you need to have a compiler. this can be installed with apt.
+
 ```sh
-$ apt-get install gcc g++ libssl-dev
+$ apt-get install gcc g++
 ```
 
-**Other**: Consult the manual for you package manager.
+You then need `libeoskeygen`.
+
+This can be installed from [EOS Sweden's APT Repository](https://eosswedenorg.github.io/apt) like this:
+
+```sh
+$ sudo apt-get install software-properties-common
+$ curl https://apt.eossweden.org/key 2> /dev/null | sudo apt-key add -
+$ sudo apt-add-repository -y 'deb [arch=amd64] https://apt.eossweden.org/main `lsb_release -cs` stable'
+$ sudo apt-get install libeoskeygen-dev
+```
+
+or manually via `.deb` file from [github](https://github.com/eosswedenorg/libeoskeygen/releases)
+
+```sh
+$ wget <url>
+$ sudo apt install ./libeoskeygen-dev-<version>.deb
+```
+
+**Other**:
+
+Consult the manual for you package manager.
+`libeoskeygen` will be downloaded and compiled if it's not installed automatically (however this is slower).
+
+Consult [libeoskeygen's github](https://github.com/eosswedenorg/libeoskeygen) if you want to compile and install it manually.
 
 **CMake**
 
@@ -48,12 +74,14 @@ Other methods is documanted at https://cmake.org/download
 
 You must have a compiler installed. This project is known to build with `Xcode 11.0` but other versions should work.
 
-You need to have opessl and cmake installed also, this can be done with this `brew` command:
+You need to have cmake installed also, this can be done with this `brew` command:
 ```sh
-$ brew install openssl cmake
+$ brew install cmake
 ```
 
 If you need a newer version of cmake, you can download the official `.dmg` file: [cmake-3.15.7-Darwin-x86_64.dmg](https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Darwin-x86_64.dmg). or see https://cmake.org/download for other versions.
+
+`libeoskeygen` needs to be compiled and installed from source. [Go here](https://github.com/eosswedenorg/libeoskeygen)
 
 #### Build
 
@@ -73,12 +101,11 @@ $ cmake .. && make
 
 #### Dependencies
 
-Download and install `cmake` version `3.15` or newer from [cmake.org](https://cmake.org) and download
-[openssl](https://mirror.firedaemon.com/OpenSSL/openssl-1.1.1e-dev.zip)
-
-unpack `openssl-1.1.1e-dev.zip` somewhere on the filesystem.
+Download and install `cmake` version `3.15` or newer from [cmake.org](https://cmake.org)
 
 You will also need a compiler. [Build Tools for Visual Studio 2019](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=16) (Selecting C++ during installation) is recommended.
+
+
 
 #### Build.
 
@@ -103,7 +130,6 @@ These compile options are available:
 | Cmake                      | build.sh          | Description                               |
 |--------------------------- | ----------------- | ------------------------------------------|
 | -DCMAKE_BUILD_TYPE=`value` | -t `value`        | Type of build 							 |
-| -DUSE_THREADS=`OFF`        | --disable-threads | Disable thread support                    |
 | -DFORCE_ANSI=`ON`          | --force-ansi      | Force ANSI console colors even on windows |
 
 For more details about options run `./build.sh -l` or `mkdir build && cmake build -LA`

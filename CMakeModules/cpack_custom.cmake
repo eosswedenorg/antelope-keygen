@@ -104,7 +104,7 @@ set( CPACK_DEBIAN_FILE_NAME
 # --------------------------------
 
 
-# Defult to gzip tar on unix. zip otherwise.
+# Default to gzip tar on unix. zip otherwise.
 if (NOT CPACK_GENERATOR)
 	if (UNIX)
 		set( CPACK_GENERATOR "TGZ" )

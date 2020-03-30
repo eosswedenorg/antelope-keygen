@@ -26,16 +26,17 @@
 #endif /* HAVE_THREADS */
 #include <iostream>
 #include <cstring>
-#include "config.h"
-#include "core/file.h"
-#include "core/dictionary.h"
-#include "core/string.h"
-#include "crypto/base58.h"
-#include "crypto/ec.h"
-#include "crypto/WIF.h"
+#include <eoskeygen/core/file.h>
+#include <eoskeygen/core/string.h>
+#include <eoskeygen/core/dictionary.h>
+#include <eoskeygen/crypto/base58.h>
+#include <eoskeygen/crypto/ec.h>
+#include <eoskeygen/crypto/WIF.h>
+#include <eoskeygen/key_search.h>
+#include "cli_key_search_result.h"
 #include "console.h"
-#include "key_search.h"
 #include "benchmark.h"
+#include "config.h"
 
 // Command line options.
 bool option_l33t = false;
@@ -47,8 +48,9 @@ int option_num_threads = std::thread::hardware_concurrency();
 int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
 
 	eoskeygen::KeySearch ks;
+	eoskeygen::CliKeySearchResult rs(dict);
 
-	ks.addDictionary(dict);
+	ks.setCallback(&rs);
 
 	for(auto it = words.begin(); it != words.end(); it++) {
 		size_t p = eoskeygen::is_base58(*it);
