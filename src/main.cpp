@@ -21,11 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifdef HAVE_THREADS
-#include <thread>
-#endif /* HAVE_THREADS */
 #include <iostream>
 #include <cstring>
+#include <eoskeygen/config.h>
 #include <eoskeygen/core/file.h>
 #include <eoskeygen/core/string.h>
 #include <eoskeygen/core/dictionary.h>
@@ -41,9 +39,9 @@
 // Command line options.
 bool option_l33t = false;
 
-#ifdef HAVE_THREADS
-int option_num_threads = std::thread::hardware_concurrency();
-#endif /* HAVE_THREADS */
+#ifdef LIBEOSKEYGEN_HAVE_THREADS
+size_t option_num_threads = eoskeygen::KeySearch::max_threads();
+#endif /* LIBEOSKEYGEN_HAVE_THREADS */
 
 int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
 
@@ -70,15 +68,15 @@ int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& d
 		ks.addList(words);
 	}
 
-#ifdef HAVE_THREADS
+#ifdef LIBEOSKEYGEN_HAVE_THREADS
 	ks.setThreadCount(option_num_threads);
-#endif /* HAVE_THREADS */
+#endif /* LIBEOSKEYGEN_HAVE_THREADS */
 
 	std::cout << "Searching for " << count
 		<< " keys containing: " << eoskeygen::strjoin(ks.getList(), ",")
-#ifdef HAVE_THREADS
+#ifdef LIBEOSKEYGEN_HAVE_THREADS
 		<< ", Using: " << option_num_threads << " threads"
-#endif /* HAVE_THREADS */
+#endif /* LIBEOSKEYGEN_HAVE_THREADS */
 		<< std::endl;
 
 	ks.find(count);
@@ -90,9 +88,9 @@ void usage(const char *name) {
 
 	std::cout << name
 		<< " [ -h | --help | -v | search [ -m | --l33t"
-#ifdef HAVE_THREADS
+#ifdef LIBEOSKEYGEN_HAVE_THREADS
 		<< " | --threads=<num>"
-#endif /* HAVE_THREADS */
+#endif /* LIBEOSKEYGEN_HAVE_THREADS */
 		<< " | --dict=<file> ... "
 		<< " | --lang=<value> ... ] <word_list>|file:<filename> [ <count:10> ]"
 		<< " | benchmark [ <num:1000> ]"
@@ -120,11 +118,11 @@ void usage(const char *name) {
 			  << std::endl << std::endl
 			  << "  --l33t: Takes each word in <word_list> and find all l33tspeak" << std::endl
 			  << "          combinations of that word and uses the new list for the search."
-#ifdef HAVE_THREADS
+#ifdef LIBEOSKEYGEN_HAVE_THREADS
 			  << std::endl << std::endl
 			  << "  --threads=<num>: Use <num> of parallel threads for searching." << std::endl
 			  << "                   Default is what the operating system recomend."
-#endif /* HAVE_THREADS */
+#endif /* LIBEOSKEYGEN_HAVE_THREADS */
 			  << std::endl << std::endl
 			  << "  --dict=<file>: Use words found in <file> (separated by newline) to" << std::endl
 			  << "                 highlight words in the keys found (note that the words in this" << std::endl
@@ -192,7 +190,7 @@ int main(int argc, char **argv) {
 			} else if (!strcmp(argv[p], "--l33t")) {
 				option_l33t = true;
 			} else if (!memcmp(argv[p], "--threads=", 10)) {
-#ifdef HAVE_THREADS
+#ifdef LIBEOSKEYGEN_HAVE_THREADS
 				option_num_threads = atoi(argv[p] + 10);
 				if (option_num_threads < 2) {
 					std::cerr << "NOTICE: Number of threads less than 2 does not make sense."
@@ -204,7 +202,7 @@ int main(int argc, char **argv) {
 				// otherwise we might break scripts. Print a nice message instead.
 				std::cerr << "NOTICE: eosio-keygen is not compiled with"
 					<< " thread support. this option is ignored." << std::endl;
-#endif /* HAVE_THREADS */
+#endif /* LIBEOSKEYGEN_HAVE_THREADS */
 			}
 			// Dictionary.
 			else if (!memcmp(argv[p], "--dict=", 7)) {
