@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest ]
-        build-opts: [ "-DUSE_THREADS=ON", "-DUSE_THREADS=OFF" ]
+        build-opts: [ "-DFORCE_ANSI=ON", "-DFORCE_ANSI=OFF" ]
 
     name: ${{matrix.os}} (${{matrix.build-opts}})
     runs-on: ${{matrix.os}}
