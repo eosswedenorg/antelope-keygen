@@ -9,7 +9,6 @@ project(eosio-keygen
 set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
 
 # Options
-option(USE_THREADS "Compile with support for threads (if available)." ON)
 option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
