@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 #include <iostream>
+#include <libeosio/WIF.h>
 #include <eoskeygen/core/dictionary.h>
-#include <eoskeygen/crypto/WIF.h>
 #include "console.h"
 #include "cli_key_search_result.h"
 
@@ -42,9 +42,9 @@ m_dict (dict)
 {
 }
 
-void CliKeySearchResult::onResult(const struct ec_keypair* key, const struct KeySearch::result& result) {
+void CliKeySearchResult::onResult(const struct libeosio::ec_keypair* key, const struct KeySearch::result& result) {
 
-	std::string pub = wif_pub_encode(key->pub);
+	std::string pub = libeosio::wif_pub_encode(key->pub);
 	Dictionary::search_result_t dict_res = m_dict.search(pub);
 
 	std::cout << "----" << std::endl;
@@ -68,7 +68,7 @@ void CliKeySearchResult::onResult(const struct ec_keypair* key, const struct Key
 	}
 
 	std::cout << std::endl
-		<< "Private: " << wif_priv_encode(key->secret) << std::endl;
+		<< "Private: " << libeosio::wif_priv_encode(key->secret) << std::endl;
 }
 
 } // namespace eoskeygen

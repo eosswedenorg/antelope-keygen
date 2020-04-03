@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 #include <chrono>
-#include <eoskeygen/crypto/ec.h>
+#include <libeosio/ec.h>
 #include "benchmark.h"
 
 using std::chrono::steady_clock;
@@ -43,8 +43,8 @@ void benchmark(size_t num_keys, struct benchmark_result* res) {
 	start = steady_clock::now();
 
 	for(size_t i = 0; i < num_keys; i++) {
-		struct ec_keypair k;
-		ec_generate_key(&k);
+		struct libeosio::ec_keypair k;
+		libeosio::ec_generate_key(&k);
 	}
 
 	res->sec = duration<float>(steady_clock::now() - start).count();

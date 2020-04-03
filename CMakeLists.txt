@@ -13,8 +13,6 @@ option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
-include(libeoskeygen)
-
 # Use installpath from GNUInstallDirs as default.
 include(GNUInstallDirs)
 
@@ -38,6 +36,11 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 	add_definitions( "-D_CRT_SECURE_NO_WARNINGS=1" )
 endif()
+
+# --------------------------------
+#  Common code
+# --------------------------------
+add_subdirectory( common )
 
 # --------------------------------
 #  Program
@@ -66,7 +69,7 @@ include_directories(${PROJECT_BINARY_DIR})
 
 add_executable( ${PROGRAM_EXE} ${PROGRAM_SOURCE} )
 
-target_link_libraries( ${PROGRAM_EXE} PUBLIC eoskeygen )
+target_link_libraries( ${PROGRAM_EXE} PUBLIC common )
 
 # --------------------------------
 #  Install

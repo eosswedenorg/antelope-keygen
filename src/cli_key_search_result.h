@@ -24,8 +24,8 @@
 #ifndef EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 #define EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 
+#include <libeosio/types.h>
 #include <eoskeygen/core/string.h>
-#include <eoskeygen/crypto/types.h>
 #include <eoskeygen/key_search.h>
 #include <eoskeygen/key_search_result.h>
 
@@ -38,7 +38,7 @@ class CliKeySearchResult : public IKeySearchResult
 public:
 	CliKeySearchResult(const Dictionary& dict);
 
-	virtual void onResult(const struct ec_keypair* key, const struct KeySearch::result& result);
+	virtual void onResult(const struct libeosio::ec_keypair* key, const struct KeySearch::result& result);
 
 protected :
 
