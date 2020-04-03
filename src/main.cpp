@@ -30,6 +30,7 @@
 #include <eoskeygen/crypto/base58.h>
 #include <eoskeygen/crypto/ec.h>
 #include <eoskeygen/crypto/WIF.h>
+#include <eoskeygen/core/leet.h>
 #include <eoskeygen/key_search.h>
 #include "cli_key_search_result.h"
 #include "console.h"
@@ -73,7 +74,7 @@ int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& d
 #endif /* LIBEOSKEYGEN_HAVE_THREADS */
 
 	std::cout << "Searching for " << count
-		<< " keys containing: " << eoskeygen::strjoin(ks.getList(), ",")
+		<< " keys containing: " << eoskeygen::strlist::join(ks.getList(), ",")
 #ifdef LIBEOSKEYGEN_HAVE_THREADS
 		<< ", Using: " << option_num_threads << " threads"
 #endif /* LIBEOSKEYGEN_HAVE_THREADS */
@@ -250,7 +251,7 @@ int main(int argc, char **argv) {
 				}
 				// List
 				else {
-					words = eoskeygen::strsplitwords(arg);
+					words = eoskeygen::strlist::splitw(arg);
 				}
 
 				if (p + 1 < argc) {
