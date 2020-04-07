@@ -28,10 +28,18 @@ if (WIN32)
 	set( CMAKE_INSTALL_MANDIR "." )
 endif (WIN32)
 
-# Configure the compiler options
+# --------------------------------
+#  Compiler settings
+# --------------------------------
+
 set( CMAKE_CXX_STANDARD 11 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS OFF )
+
+# c++ flags
+set( CMAKE_CXX_FLAGS_DEBUG "-O0 -g" )
+set( CMAKE_CXX_FLAGS_RELEASE "-O3" )
+set( CMAKE_CXX_FLAGS_MINSIZEREL "-Os" )
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -Wconversion -Wno-sign-conversion -Wextra" )
