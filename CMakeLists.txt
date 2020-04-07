@@ -78,7 +78,7 @@ target_link_libraries( ${PROGRAM_EXE} PUBLIC common )
 install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # Readme and license
-install(FILES README.md LICENSE LICENSE.bitcoin
+install(FILES README.md LICENSE
 		DESTINATION ${CMAKE_INSTALL_SHAREDIR})
 
 # Documentation
@@ -95,13 +95,7 @@ endif (UNIX)
 # --------------------------------
 
 if (CPACK_GENERATOR MATCHES "^[Nn][Ss][Ii][Ss]$")
-	set( NSIS_LICENSE_FILE ${PROJECT_BINARY_DIR}/NSIS_LICENSE )
-	file(WRITE ${NSIS_LICENSE_FILE} "")
-	foreach(file IN ITEMS LICENSE LICENSE.bitcoin)
-		file(READ ${CMAKE_CURRENT_LIST_DIR}/${file} content)
-		file(APPEND ${NSIS_LICENSE_FILE} "--- ${file}\n\n${content}\n")
-	endforeach()
-	set( CPACK_RESOURCE_FILE_LICENSE ${NSIS_LICENSE_FILE} )
+	set( CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE )
 endif()
 
 set( CPACK_DEBIAN_PACKAGE_PRIORITY "optional" )
