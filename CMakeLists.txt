@@ -8,9 +8,6 @@ project(eosio-keygen
 
 set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
 
-# Options
-option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
-
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
 # Use installpath from GNUInstallDirs as default.
@@ -37,58 +34,24 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 	add_definitions( "-D_CRT_SECURE_NO_WARNINGS=1" )
 endif()
 
-# --------------------------------
-#  Common code
-# --------------------------------
-add_subdirectory( common )
-
-# --------------------------------
-#  Program
-# --------------------------------
-
-set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
-
-set (PROGRAM_SOURCE
-	src/isatty.cpp
-	src/cli_key_search_result.cpp
-	src/console.cpp
-	src/benchmark.cpp
-	src/main.cpp
-)
-
-if (WIN32 AND NOT FORCE_ANSI)
-	set (PROGRAM_SOURCE ${PROGRAM_SOURCE} src/console_win32.cpp)
-else()
-	# *nix should have ansi support.
-	set (PROGRAM_SOURCE ${PROGRAM_SOURCE} src/console_ansi.cpp)
-endif()
-
 # Project config file
-configure_file(src/config.h.in "${PROJECT_BINARY_DIR}/config.h" @ONLY)
+configure_file(config.h.in "${PROJECT_BINARY_DIR}/config.h" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
 
-add_executable( ${PROGRAM_EXE} ${PROGRAM_SOURCE} )
+# --------------------------------
+#  Subdirectories
+# --------------------------------
 
-target_link_libraries( ${PROGRAM_EXE} PUBLIC common )
+add_subdirectory( common )
+add_subdirectory( cli )
 
 # --------------------------------
 #  Install
 # --------------------------------
 
-install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-
 # Readme and license
 install(FILES README.md LICENSE
 		DESTINATION ${CMAKE_INSTALL_SHAREDIR})
-
-# Documentation
-
-if (UNIX)
-	configure_file( docs/eosio-keygen.1.in ${PROJECT_BINARY_DIR}/man1/eosio-keygen.1 )
-
-	install(DIRECTORY ${PROJECT_BINARY_DIR}/man1
-			DESTINATION ${CMAKE_INSTALL_MANDIR})
-endif (UNIX)
 
 # --------------------------------
 #  Package
