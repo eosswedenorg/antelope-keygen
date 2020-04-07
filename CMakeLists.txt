@@ -8,6 +8,11 @@ project(eosio-keygen
 
 set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
 
+# Default to release build if none is set.
+if (NOT CMAKE_BUILD_TYPE)
+	set( CMAKE_BUILD_TYPE Release )
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
 # Use installpath from GNUInstallDirs as default.
