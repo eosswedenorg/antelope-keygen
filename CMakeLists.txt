@@ -65,6 +65,7 @@ include_directories(${PROJECT_BINARY_DIR})
 
 add_subdirectory( common )
 add_subdirectory( cli )
+add_subdirectory( gui )
 
 # --------------------------------
 #  Install
