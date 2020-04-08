@@ -26,7 +26,6 @@
 
 #include <vector>
 #include <string>
-#include <eoskeygen/core/strlist.h>
 
 namespace eoskeygen {
 
