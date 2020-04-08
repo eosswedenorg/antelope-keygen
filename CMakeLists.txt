@@ -13,7 +13,7 @@ if (NOT CMAKE_BUILD_TYPE)
 	set( CMAKE_BUILD_TYPE Release )
 endif()
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Use installpath from GNUInstallDirs as default.
 include(GNUInstallDirs)
