@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 
-# Project name and version
+# --------------------------------
+#  Project Info
+# --------------------------------
+
 project(eosio-keygen
 	VERSION 1.0.4
 	DESCRIPTION "Keygenerator for EOSIO"
@@ -8,14 +11,19 @@ project(eosio-keygen
 
 set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
 
+# --------------------------------
+#  CMake settings
+# --------------------------------
+
+# Append modules dir
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 # Default to release build if none is set.
 if (NOT CMAKE_BUILD_TYPE)
 	set( CMAKE_BUILD_TYPE Release )
 endif()
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-
-# Use installpath from GNUInstallDirs as default.
+# Install path
 include(GNUInstallDirs)
 
 set( CMAKE_INSTALL_SHAREDIR ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME} )
