@@ -12,6 +12,17 @@ project(eosio-keygen
 set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
 
 # --------------------------------
+#  Options
+# --------------------------------
+
+option(BUILD_COMPONENT_CLI "Build CLI Component" ON)
+option(BUILD_COMPONENT_GUI "Build GUI Component (Qt5)" OFF)
+
+if (NOT BUILD_COMPONENT_CLI AND NOT BUILD_COMPONENT_GUI)
+	message(FATAL_ERROR "Atleast one of BUILD_COMPONENT_GUI,BUILD_COMPONENT_CLI must be set to ON")
+endif()
+
+# --------------------------------
 #  CMake settings
 # --------------------------------
 
@@ -60,12 +71,18 @@ configure_file(config.h.in "${PROJECT_BINARY_DIR}/config.h" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
 
 # --------------------------------
-#  Subdirectories
+#  Components
 # --------------------------------
 
 add_subdirectory( common )
-add_subdirectory( cli )
-add_subdirectory( gui )
+
+if (BUILD_COMPONENT_CLI)
+	add_subdirectory( cli )
+endif()
+
+if (BUILD_COMPONENT_GUI)
+	add_subdirectory( gui )
+endif()
 
 # --------------------------------
 #  Install
