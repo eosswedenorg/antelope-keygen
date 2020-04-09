@@ -18,5 +18,5 @@ set( PROGRAM_SRC
 add_executable( ${PROGRAM_EXE} ${PROGRAM_SRC} )
 
 # Libraries
-find_package( Qt5 COMPONENTS Core Widgets REQUIRED )
+find_package( Qt5 5.11 COMPONENTS Core Widgets REQUIRED )
 target_link_libraries( ${PROGRAM_EXE} Qt5::Core Qt5::Widgets common )
