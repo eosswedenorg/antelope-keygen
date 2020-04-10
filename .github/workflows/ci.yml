@@ -12,14 +12,17 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest ]
-        build-opts: [
-            -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=ON,
-            -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=OFF,
-            -DBUILD_COMPONENT_CLI=OFF -DBUILD_COMPONENT_GUI=ON
-        ]
+        build: [ cli-force-ansi-on, cli-force-ansi-off, gui ]
+        include:
+          - build: cli-force-ansi-on
+            cmake-opts: -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=ON
+          - build: cli-force-ansi-off
+            cmake-opts: -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=ON
+          - build: gui
+            cmake-opts: -DBUILD_COMPONENT_CLI=OFF -DBUILD_COMPONENT_GUI=ON
 
 
-    name: ${{matrix.os}} (${{matrix.build-opts}})
+    name: ${{matrix.os}} (${{matrix.build}})
     runs-on: ${{matrix.os}}
 
     steps:
@@ -33,12 +36,12 @@ jobs:
         fi
 
     - name: Qt - Ubuntu
-      if: contains(matrix.build-opts, '-DBUILD_COMPONENT_GUI=ON') && runner.os == 'Linux'
+      if: matrix.build == 'gui' && runner.os == 'Linux'
       shell: bash
       run: sudo apt-get install qt5-default
 
     - name: Qt - Windows/Mac
-      if: contains(matrix.build-opts, '-DBUILD_COMPONENT_GUI=ON') && runner.os != 'Linux'
+      if: matrix.build == 'gui' && runner.os != 'Linux'
       uses: jurplel/install-qt-action@v2
       with:
         version: '5.9'
@@ -49,7 +52,7 @@ jobs:
         if [ "$RUNNER_OS" == "macOS" ]; then
             SSL_OPTS="-D OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1"
         fi
-        cmake ${SSL_OPTS} ${{matrix.build-opts}} -B build
+        cmake ${SSL_OPTS} ${{matrix.cmake-opts}} -B build
 
     - name: Build
       shell: bash
@@ -58,5 +61,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
-        name: ${{matrix.os}}_${{matrix.build-opts}}-build
+        name: ${{matrix.os}}_${{matrix.build}}-build
         path: build
