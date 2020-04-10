@@ -36,6 +36,10 @@ if (WIN32)
 	set( CMAKE_INSTALL_MANDIR "." )
 endif (WIN32)
 
+# Path to a directory outside of CMAKE_BUILD_DIR
+# Should be used to cache large downloaded data that won't be deleted on clean builds.
+set( DOWNLOAD_CACHE_DIR ${CMAKE_CURRENT_LIST_DIR}/.cache )
+
 # --------------------------------
 #  Compiler settings
 # --------------------------------
