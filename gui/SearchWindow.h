@@ -31,18 +31,16 @@
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QGridLayout>
+#include <QFutureWatcher>
 #include <QWidget>
 #include <eoskeygen/key_search_result.h>
 #include <eoskeygen/key_search.h>
-
-class QThread;
 
 class SearchWindow : public QWidget, public eoskeygen::IKeySearchResult
 {
 	Q_OBJECT
 public:
 	explicit SearchWindow(QWidget *parent = 0, Qt::WindowFlags flags = Qt::WindowFlags());
-	virtual ~SearchWindow();
 
 	void onResult(const struct libeosio::ec_keypair* key, const struct eoskeygen::KeySearch::result& result);
 
@@ -70,7 +68,7 @@ signals:
 private:
 
 	// Search worker thread.
-	QThread* m_worker;
+	QFutureWatcher<void> m_worker;
 
 	eoskeygen::KeySearch m_ksearch;
 

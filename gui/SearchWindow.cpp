@@ -24,7 +24,8 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QGridLayout>
-#include <QThread>
+#include <QFuture>
+#include <QtConcurrent>
 #include <libeosio/WIF.h>
 #include <eoskeygen/core/leet.h>
 #include <eoskeygen/core/string.h>
@@ -32,7 +33,6 @@
 
 SearchWindow::SearchWindow(QWidget *parent, Qt::WindowFlags flags) :
 QWidget			(parent, flags),
-m_worker		(NULL),
 m_status		("status"),
 m_leet_cb		("L33t"),
 m_btn_exec		("Search"),
@@ -86,20 +86,15 @@ m_btn_clear		("Clear")
 	m_txt_search.setFocus();
 }
 
-SearchWindow::~SearchWindow()
-{
-	// Make sure worker thread exits.
-	if (m_worker) {
-		m_worker->quit();
-	   	m_worker->wait();
-	}
-}
-
 void SearchWindow::initSignals()
 {
 	// Buttons
 	connect(&m_btn_exec, SIGNAL(released()), this, SLOT(search()));
 	connect(&m_btn_clear, SIGNAL(released()), &m_output, SLOT(clear()));
+
+	// Worker Thread
+	connect(&m_worker, SIGNAL(started()), this, SLOT(searchStarted()));
+	connect(&m_worker, SIGNAL(finished()), this, SLOT(searchFinished()));
 
 	connect(this, SIGNAL(addOutput(QString)), this, SLOT(output(QString)));
 }
@@ -137,7 +132,7 @@ void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct
 
 void SearchWindow::search()
 {
-	if (m_worker && m_worker->isRunning()) {
+	if (m_worker.isRunning()) {
 		return;
 	}
 
@@ -162,16 +157,10 @@ void SearchWindow::search()
 	m_ksearch.addList(list);
 	m_ksearch.setThreadCount(m_num_threads.value());
 
-	// Create search thread
-	m_worker = QThread::create([this] {
-		m_ksearch.find(m_num_results.value());
-	});
-
-	connect(m_worker, SIGNAL(started()), this, SLOT(searchStarted()));
-	connect(m_worker, SIGNAL(finished()), this, SLOT(searchFinished()));
+	QFuture<void> future = QtConcurrent::run(m_ksearch, &eoskeygen::KeySearch::find, m_num_results.value());
+	m_worker.setFuture(future);
 
 	m_status.setText("Searching for: " + QString::fromStdString(eoskeygen::strlist::join(list, ", ")));
-	m_worker->start();
 }
 
 void SearchWindow::output(const std::string& html)
@@ -206,10 +195,4 @@ void SearchWindow::searchFinished()
 	m_btn_clear.setEnabled(true);
 	m_num_threads.setEnabled(true);
 	m_num_results.setEnabled(true);
-
-	// We are done with the worker pointer.
-	if (m_worker) {
-		delete m_worker;
-		m_worker = NULL;
-	}
 }
