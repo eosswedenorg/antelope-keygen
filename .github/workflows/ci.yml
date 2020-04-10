@@ -12,7 +12,12 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest ]
-        build-opts: [ "-DFORCE_ANSI=ON", "-DFORCE_ANSI=OFF" ]
+        build-opts: [
+            -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=ON,
+            -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=OFF,
+            -DBUILD_COMPONENT_CLI=OFF -DBUILD_COMPONENT_GUI=ON
+        ]
+
 
     name: ${{matrix.os}} (${{matrix.build-opts}})
     runs-on: ${{matrix.os}}
@@ -20,12 +25,23 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Dependancies
+    - name: OpenSSL
       shell: bash
       run: |
         if [ "$RUNNER_OS" == "macOS" ]; then
             brew install openssl
         fi
+
+    - name: Qt - Ubuntu
+      if: contains(matrix.build-opts, '-DBUILD_COMPONENT_GUI=ON') && runner.os == 'Linux'
+      shell: bash
+      run: sudo apt-get install qt5-default
+
+    - name: Qt - Windows/Mac
+      if: contains(matrix.build-opts, '-DBUILD_COMPONENT_GUI=ON') && runner.os != 'Linux'
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.9'
 
     - name: Configure
       shell: bash
