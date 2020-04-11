@@ -23,6 +23,7 @@
  */
 #include <QDebug>
 #include <QMessageBox>
+#include <QScrollBar>
 #include <QGridLayout>
 #include <QFuture>
 #include <QtConcurrent>
@@ -175,6 +176,9 @@ void SearchWindow::output(const QString& html)
 	} else {
 		m_output.setHtml(html);
 	}
+
+	// Force scrollbar to the bottom.
+	m_output.verticalScrollBar()->setValue(m_output.verticalScrollBar()->maximum());
 }
 
 void SearchWindow::searchStarted()
