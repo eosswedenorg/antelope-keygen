@@ -53,6 +53,9 @@ public :
 	// Clear all words from the dictionary.
 	void clear();
 
+	// Returns the list of words in the dictionary.
+	const std::set<std::string>& getWords() const;
+
 	// Returns true if word exists in the dictionary.
 	bool contains(const std::string& word) const;
 

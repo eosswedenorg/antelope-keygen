@@ -79,6 +79,11 @@ void Dictionary::add(const Dictionary& dictionary)
 	);
 }
 
+const std::set<std::string>& Dictionary::getWords() const
+{
+	return m_words;
+}
+
 void Dictionary::clear()
 {
 	m_words.clear();
