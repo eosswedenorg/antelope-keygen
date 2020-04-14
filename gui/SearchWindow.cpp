@@ -223,6 +223,7 @@ void SearchWindow::searchStarted()
 	m_txt_search.setEnabled(false);
 	m_txt_search.setHidden(true);
 	m_dict_lang.setEnabled(false);
+	m_leet_cb.setEnabled(false);
 	m_btn_exec.setEnabled(false);
 	m_btn_clear.setEnabled(false);
 	m_num_threads.setEnabled(false);
@@ -234,6 +235,7 @@ void SearchWindow::searchFinished()
 	m_txt_search.setEnabled(true);
 	m_txt_search.setHidden(false);
 	m_dict_lang.setEnabled(true);
+	m_leet_cb.setEnabled(true);
 	m_btn_exec.setEnabled(true);
 	m_btn_clear.setEnabled(true);
 	m_num_threads.setEnabled(true);
