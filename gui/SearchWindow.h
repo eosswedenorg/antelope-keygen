@@ -48,6 +48,8 @@ public:
 private :
 	void initSignals();
 
+	void loadDictionaries();
+
 private slots:
 
 	// Start a search
@@ -63,8 +65,8 @@ private slots:
 	// Called when a search is done.
 	void searchFinished();
 
-	// Called when dictionary language(s) are selected.
-	void langSelected(QStringList selected);
+	// Called when a new language file should be added
+	void langFileAdd();
 
 signals:
 	void addOutput(const QString& line);
@@ -96,6 +98,8 @@ private:
 	QCheckBox m_leet_cb;
 
 	MultiSelect m_dict_lang;
+
+	MultiSelect m_dict_file;
 
 	// Buttons
 	QPushButton m_btn_exec;
