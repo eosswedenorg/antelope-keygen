@@ -35,6 +35,7 @@
 #include <QWidget>
 #include <eoskeygen/key_search_result.h>
 #include <eoskeygen/key_search.h>
+#include "MultiSelect.h"
 
 class SearchWindow : public QWidget, public eoskeygen::IKeySearchResult
 {
@@ -62,6 +63,9 @@ private slots:
 	// Called when a search is done.
 	void searchFinished();
 
+	// Called when dictionary language(s) are selected.
+	void langSelected(QStringList selected);
+
 signals:
 	void addOutput(const QString& line);
 
@@ -71,6 +75,8 @@ private:
 	QFutureWatcher<void> m_worker;
 
 	eoskeygen::KeySearch m_ksearch;
+
+	eoskeygen::Dictionary m_dict;
 
 	//  Widgets
 	// ----------------
@@ -88,6 +94,8 @@ private:
 	QSpinBox m_num_results;
 
 	QCheckBox m_leet_cb;
+
+	MultiSelect m_dict_lang;
 
 	// Buttons
 	QPushButton m_btn_exec;

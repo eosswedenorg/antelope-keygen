@@ -30,12 +30,15 @@
 #include <libeosio/WIF.h>
 #include <eoskeygen/core/leet.h>
 #include <eoskeygen/core/string.h>
+#include "config.h"
+#include "helpers.h"
 #include "SearchWindow.h"
 
 SearchWindow::SearchWindow(QWidget *parent, Qt::WindowFlags flags) :
 QWidget			(parent, flags),
 m_status		("status"),
 m_leet_cb		("L33t"),
+m_dict_lang 	("Dictionary Language"),
 m_btn_exec		("Search"),
 m_btn_clear		("Clear")
 {
@@ -54,6 +57,9 @@ m_btn_clear		("Clear")
 	m_layout.setColumnStretch(0, 10);
 
 	// First row.
+	m_dict_lang.addItems(get_files(CONFIG_DICT_FULL_PATH));
+	m_layout.addWidget(&m_dict_lang, 0, 0);
+
 	m_layout.addWidget(&m_leet_cb, 0, 1);
 
 	m_num_threads.setValue((int) eoskeygen::KeySearch::max_threads());
@@ -98,6 +104,8 @@ void SearchWindow::initSignals()
 	connect(&m_worker, SIGNAL(finished()), this, SLOT(searchFinished()));
 
 	connect(this, SIGNAL(addOutput(QString)), this, SLOT(output(QString)));
+
+	connect(&m_dict_lang, SIGNAL(selectionChanged(QStringList)), this, SLOT(langSelected(QStringList)));
 }
 
 void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct eoskeygen::KeySearch::result& result)
@@ -108,6 +116,7 @@ void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct
 	QString mid = pub.mid(pos, len);
 	QString left = pub.left(pos);
 	QString right = pub.mid(pos + len, pub.size() - pos);
+	eoskeygen::Dictionary::search_result_t dict_res = m_dict.search(pub.toStdString());
 
 	QString out = "Public:  " + pub.left(3);
 	for(int i = 3; i < pub.length(); ) {
@@ -115,6 +124,16 @@ void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct
 		if (i == pos) {
 			out += "<font color=red>" + pub.mid(pos, len) + "</font>";
 			i += len;
+			continue;
+		}
+
+		// Look in the dictionary.
+		auto dp = dict_res.find(i);
+		if (dp != dict_res.end()) {
+			int p = (int) dp->first;
+			int l = (int) dp->second;
+			out += "<font color=blue>" + pub.mid(p, l) + "</font>";
+			i += l;
 			continue;
 		}
 
@@ -181,10 +200,29 @@ void SearchWindow::output(const QString& html)
 	m_output.verticalScrollBar()->setValue(m_output.verticalScrollBar()->maximum());
 }
 
+void SearchWindow::langSelected(QStringList selected)
+{
+	std::string base_path(CONFIG_DICT_FULL_PATH);
+
+	// Clear dictionary first.
+	m_dict.clear();
+
+	// Go through all selected languages.
+	for(QStringList::const_iterator it = selected.cbegin(); it != selected.cend(); it++) {
+
+		// Load and add them to dictionary.
+		eoskeygen::Dictionary dict;
+		dict.loadFromFile(base_path + "/" + it->toStdString());
+
+		m_dict.add(dict);
+	}
+}
+
 void SearchWindow::searchStarted()
 {
 	m_txt_search.setEnabled(false);
 	m_txt_search.setHidden(true);
+	m_dict_lang.setEnabled(false);
 	m_btn_exec.setEnabled(false);
 	m_btn_clear.setEnabled(false);
 	m_num_threads.setEnabled(false);
@@ -195,6 +233,7 @@ void SearchWindow::searchFinished()
 {
 	m_txt_search.setEnabled(true);
 	m_txt_search.setHidden(false);
+	m_dict_lang.setEnabled(true);
 	m_btn_exec.setEnabled(true);
 	m_btn_clear.setEnabled(true);
 	m_num_threads.setEnabled(true);
