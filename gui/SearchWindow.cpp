@@ -114,7 +114,7 @@ void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct
 
 		if (i == pos) {
 			out += "<font color=red>" + pub.mid(pos, len) + "</font>";
-			i += pos;
+			i += len;
 			continue;
 		}
 
