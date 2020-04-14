@@ -28,8 +28,8 @@
 #include <QListWidgetItem>
 #include "MultiSelect.h"
 
-MultiSelect::MultiSelect(const QString& text, QWidget *parent) :
-QPushButton	(text + ": none", parent)
+MultiSelect::MultiSelect(const QString& text, bool user_can_add, QWidget *parent) :
+QPushButton		(text + ": none", parent)
 {
 	QPushButton* btn;
 	QVBoxLayout* layout;
@@ -52,6 +52,13 @@ QPushButton	(text + ": none", parent)
 	QObject::connect(btn, SIGNAL(clicked()), m_dialog, SLOT(accept()));
 	QObject::connect(m_dialog, SIGNAL(accepted()), this, SLOT(selectionConfirmed()));
 	QObject::connect(m_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(listItemClicked(QListWidgetItem*)));
+
+	// Configured to let users add items. provide button and signal.
+	if (user_can_add) {
+		btn = new QPushButton("Add");
+		layout->addWidget(btn);
+		QObject::connect(btn, SIGNAL(clicked()), this, SLOT(addBtnClicked()));
+	}
 }
 
 void MultiSelect::addItem(const QString& text, bool checked)
@@ -123,6 +130,12 @@ void MultiSelect::listItemClicked(QListWidgetItem *item)
 	// toggle state when user clicks.
 	bool checked = item->checkState() == Qt::Checked;
 	item->setCheckState(checked ? Qt::Unchecked : Qt::Checked);
+}
+
+void MultiSelect::addBtnClicked()
+{
+	// Just emit addNewItem event.
+	emit addNewItem();
 }
 
 void MultiSelect::mousePressEvent(QMouseEvent *event)

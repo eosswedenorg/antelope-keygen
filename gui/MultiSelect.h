@@ -43,7 +43,7 @@ class MultiSelect : public QPushButton
 {
     Q_OBJECT
 public:
-    MultiSelect(const QString& text, QWidget *parent = 0);
+    MultiSelect(const QString& text, bool user_add_item = false, QWidget *parent = 0);
 
 	// Items.
 
@@ -61,6 +61,10 @@ signals:
 	// This signal is emitted whenever the user has made a new selection.
 	void selectionChanged(QStringList selected);
 
+	// This signal is emitted whenever the user clicks the "Add" button.
+	// NOTE: Will only be emitted if `user_add_item` has been set to `true` in the constructor.
+	void addNewItem();
+
 private slots :
 
 	// Called when the dialog is accepted.
@@ -68,6 +72,9 @@ private slots :
 
 	// Called when a list item is clicked on.
 	void listItemClicked(QListWidgetItem *item);
+
+	// Called when the add button is clicked on.
+	void addBtnClicked();
 
 protected :
 
