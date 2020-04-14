@@ -16,6 +16,7 @@ set( PROGRAM_SRC
 	main.cpp
 	SearchWindow.cpp
 	MultiSelect.cpp
+	helpers.cpp
 )
 
 add_executable( ${PROGRAM_EXE} ${PROGRAM_SRC} )
