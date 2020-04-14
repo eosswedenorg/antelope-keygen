@@ -54,19 +54,19 @@ QPushButton	(text + ": none", parent)
 	QObject::connect(m_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(listItemClicked(QListWidgetItem*)));
 }
 
-void MultiSelect::addItem(const QString& text)
+void MultiSelect::addItem(const QString& text, bool checked)
 {
 	QListWidgetItem* item = new QListWidgetItem(text, m_list);
 	item->setFlags(Qt::ItemIsEnabled);
-	item->setCheckState(Qt::Unchecked);
+	item->setCheckState(checked ? Qt::Checked : Qt::Unchecked);
 }
 
-void MultiSelect::addItems(const QStringList& list)
+void MultiSelect::addItems(const QStringList& list, bool checked)
 {
 	QStringList::const_iterator it;
 
 	for(it = list.cbegin(); it != list.cend(); it++) {
-		addItem(*it);
+		addItem(*it, checked);
 	}
 }
 

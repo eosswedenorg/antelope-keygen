@@ -47,9 +47,9 @@ public:
 
 	// Items.
 
-	void addItem(const QString& text);
+	void addItem(const QString& text, bool checked = false);
 
-	void addItems(const QStringList& list);
+	void addItems(const QStringList& list, bool checked = false);
 
 	void clearItems();
 
