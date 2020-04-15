@@ -22,15 +22,15 @@
  * SOFTWARE.
  */
 #include <QApplication>
-#include "SearchWindow.h"
+#include "MainWindow.hpp"
 
 int main(int argc, char **argv) {
 
 	QApplication app(argc, argv);
 
-	SearchWindow search_win;
+	MainWindow window;
 
-	search_win.show();
+	window.show();
 
 	return app.exec();
 }
