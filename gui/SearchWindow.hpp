@@ -35,7 +35,7 @@
 #include <QWidget>
 #include <eoskeygen/key_search_result.h>
 #include <eoskeygen/key_search.h>
-#include "MultiSelect.h"
+#include "MultiSelect.hpp"
 
 class SearchWindow : public QWidget, public eoskeygen::IKeySearchResult
 {

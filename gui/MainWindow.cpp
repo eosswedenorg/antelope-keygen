@@ -25,7 +25,7 @@
 #include <QGridLayout>
 #include <QStackedWidget>
 #include "GenerateWindow.hpp"
-#include "SearchWindow.h"
+#include "SearchWindow.hpp"
 #include "MainWindow.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :

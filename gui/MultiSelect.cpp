@@ -26,7 +26,7 @@
 #include <QMouseEvent>
 #include <QListWidget>
 #include <QListWidgetItem>
-#include "MultiSelect.h"
+#include "MultiSelect.hpp"
 
 MultiSelect::MultiSelect(const QString& text, bool user_can_add, QWidget *parent) :
 QPushButton		(text + ": none", parent)

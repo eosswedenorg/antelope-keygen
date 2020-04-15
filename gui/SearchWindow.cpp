@@ -32,8 +32,8 @@
 #include <eoskeygen/core/leet.h>
 #include <eoskeygen/core/string.h>
 #include "config.h"
-#include "helpers.h"
-#include "SearchWindow.h"
+#include "helpers.hpp"
+#include "SearchWindow.hpp"
 
 SearchWindow::SearchWindow(QWidget *parent, Qt::WindowFlags flags) :
 QWidget			(parent, flags),
