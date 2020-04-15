@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 #include <vector>
-#include <iostream>
 #include <cstdio>
 #include <iterator>
 #include <algorithm>
