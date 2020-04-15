@@ -14,6 +14,7 @@ set( PROGRAM_EXE ${COMPONENT_NAME} )
 
 set( PROGRAM_SRC
 	main.cpp
+	MainWindow.cpp
 	GenerateWindow.cpp
 	SearchWindow.cpp
 	MultiSelect.cpp

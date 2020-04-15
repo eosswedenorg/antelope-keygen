@@ -1,0 +1,55 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2020 EOS Sw/eden
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+#include <QMenuBar>
+#include <QGridLayout>
+#include <QStackedWidget>
+#include "GenerateWindow.hpp"
+#include "SearchWindow.h"
+#include "MainWindow.hpp"
+
+MainWindow::MainWindow(QWidget *parent) :
+QMainWindow	(parent)
+{
+	// Create sub windows and stacked widget.
+	m_stacked = new QStackedWidget();
+	m_stacked->addWidget(new GenerateWindow());
+	m_stacked->addWidget(new SearchWindow());
+
+	setCentralWidget(m_stacked);
+
+	// Menu bar.
+
+	menuBar()->addAction("Generate", this, SLOT(switchToGenerate()));
+	menuBar()->addAction("Search", this, SLOT(switchToSearch()));
+}
+
+void MainWindow::switchToGenerate()
+{
+	m_stacked->setCurrentIndex(0);
+}
+
+void MainWindow::switchToSearch()
+{
+	m_stacked->setCurrentIndex(1);
+}
