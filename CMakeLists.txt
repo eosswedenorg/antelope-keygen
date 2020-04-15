@@ -10,6 +10,7 @@ project(eosio-keygen
 	HOMEPAGE_URL "https://github.com/eosswedenorg/eosio-keygen" )
 
 set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
+set( PROJECT_LICENSE_FILE ${CMAKE_CURRENT_LIST_DIR}/LICENSE )
 
 # --------------------------------
 #  Options
@@ -89,7 +90,7 @@ endif()
 # --------------------------------
 
 # Readme and license
-install(FILES README.md LICENSE
+install(FILES README.md ${PROJECT_LICENSE_FILE}
 		DESTINATION ${CMAKE_INSTALL_SHAREDIR})
 
 # --------------------------------
@@ -97,7 +98,7 @@ install(FILES README.md LICENSE
 # --------------------------------
 
 if (CPACK_GENERATOR MATCHES "^[Nn][Ss][Ii][Ss]$")
-	set( CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE )
+	set( CPACK_RESOURCE_FILE_LICENSE ${PROJECT_LICENSE_FILE} )
 endif()
 
 set( CPACK_DEBIAN_PACKAGE_PRIORITY "optional" )
