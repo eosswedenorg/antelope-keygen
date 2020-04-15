@@ -42,6 +42,8 @@ private slots :
 	// Switch to search window.
 	void switchToSearch();
 
+	void showAbout();
+
 private :
 
 	QStackedWidget* m_stacked;

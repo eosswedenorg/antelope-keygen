@@ -21,9 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include <QMessageBox>
 #include <QMenuBar>
 #include <QGridLayout>
 #include <QStackedWidget>
+#include "gui_about.h"
 #include "GenerateWindow.hpp"
 #include "SearchWindow.hpp"
 #include "MainWindow.hpp"
@@ -42,6 +44,7 @@ QMainWindow	(parent)
 
 	menuBar()->addAction("Generate", this, SLOT(switchToGenerate()));
 	menuBar()->addAction("Search", this, SLOT(switchToSearch()));
+	menuBar()->addAction("About", this, SLOT(showAbout()));
 }
 
 void MainWindow::switchToGenerate()
@@ -52,4 +55,9 @@ void MainWindow::switchToGenerate()
 void MainWindow::switchToSearch()
 {
 	m_stacked->setCurrentIndex(1);
+}
+
+void MainWindow::showAbout()
+{
+	QMessageBox::about(this, EOSIOKEYGEN_GUI_ABOUT_TITLE, EOSIOKEYGEN_GUI_ABOUT_TEXT);
 }
