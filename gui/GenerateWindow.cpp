@@ -58,24 +58,27 @@ m_btn_copy_both	("Copy keys")
 	layout = new QGridLayout();
 	layout->setAlignment(Qt::AlignCenter);
 
-	// Public key row
+	// Stretch first and last column to make the widgets horizontally centered.
+	layout->setColumnStretch(0, 1);
+	layout->setColumnStretch(4, 1);
 
-	layout->addWidget(new QLabel("Public:"), 0, 0, Qt::AlignRight);
-	layout->addWidget(&m_pub, 0, 1);
-	layout->addWidget(&m_btn_copy_pub, 0, 2);
+	// Public key row
+	layout->addWidget(new QLabel("Public:"), 0, 1, Qt::AlignRight);
+	layout->addWidget(&m_pub, 0, 2);
+	layout->addWidget(&m_btn_copy_pub, 0, 3);
 
 	// Private key row
 
-	layout->addWidget(new QLabel("Private:"), 1, 0, Qt::AlignRight);
-	layout->addWidget(&m_priv, 1, 1);
-	layout->addWidget(&m_btn_copy_priv, 1, 2);
+	layout->addWidget(new QLabel("Private:"), 1, 1, Qt::AlignRight);
+	layout->addWidget(&m_priv, 1, 2);
+	layout->addWidget(&m_btn_copy_priv, 1, 3);
 
 	// Bottom row
 
 	m_btn_copy_both.setFixedWidth(80);
 
-	layout->addWidget(&m_btn_gen, 2, 1);
-	layout->addWidget(&m_btn_copy_both, 2, 2);
+	layout->addWidget(&m_btn_gen, 2, 2);
+	layout->addWidget(&m_btn_copy_both, 2, 3);
 
 	setLayout(layout);
 
