@@ -31,7 +31,7 @@
 #include <libeosio/WIF.h>
 #include <eoskeygen/core/leet.h>
 #include <eoskeygen/core/string.h>
-#include "config.h"
+#include "config.hpp"
 #include "helpers.hpp"
 #include "SearchWindow.hpp"
 
