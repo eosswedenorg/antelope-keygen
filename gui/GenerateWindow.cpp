@@ -60,13 +60,13 @@ m_btn_copy_both	("Copy keys")
 
 	// Public key row
 
-	layout->addWidget(new QLabel("Public:"), 0, 0);
+	layout->addWidget(new QLabel("Public:"), 0, 0, Qt::AlignRight);
 	layout->addWidget(&m_pub, 0, 1);
 	layout->addWidget(&m_btn_copy_pub, 0, 2);
 
 	// Private key row
 
-	layout->addWidget(new QLabel("Private:"), 1, 0);
+	layout->addWidget(new QLabel("Private:"), 1, 0, Qt::AlignRight);
 	layout->addWidget(&m_priv, 1, 1);
 	layout->addWidget(&m_btn_copy_priv, 1, 2);
 
