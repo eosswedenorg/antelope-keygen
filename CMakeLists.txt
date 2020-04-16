@@ -60,7 +60,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 endif()
 
 # Project config file
-configure_file(config.h.in "${PROJECT_BINARY_DIR}/config.h" @ONLY)
+configure_file(config.hpp.in "${PROJECT_BINARY_DIR}/config.hpp" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
 
 # --------------------------------

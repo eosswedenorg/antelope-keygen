@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 #include <iostream>
-#include "console.h"
+#include "console.hpp"
 
 namespace eoskeygen {
 

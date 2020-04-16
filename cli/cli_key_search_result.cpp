@@ -24,8 +24,8 @@
 #include <iostream>
 #include <libeosio/WIF.h>
 #include <eoskeygen/core/dictionary.h>
-#include "console.h"
-#include "cli_key_search_result.h"
+#include "console.hpp"
+#include "cli_key_search_result.hpp"
 
 namespace eoskeygen {
 

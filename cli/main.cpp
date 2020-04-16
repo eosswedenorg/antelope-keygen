@@ -32,10 +32,10 @@
 #include <eoskeygen/core/dictionary.h>
 #include <eoskeygen/core/leet.h>
 #include <eoskeygen/key_search.h>
-#include "cli_key_search_result.h"
-#include "console.h"
-#include "benchmark.h"
-#include "config.h"
+#include "cli_key_search_result.hpp"
+#include "console.hpp"
+#include "benchmark.hpp"
+#include "config.hpp"
 
 // Command line options.
 bool option_l33t = false;

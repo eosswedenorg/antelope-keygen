@@ -5,7 +5,7 @@
 #define _isatty isatty
 #define _fileno fileno
 #endif
-#include "isatty.h"
+#include "isatty.hpp"
 
 namespace eoskeygen {
 

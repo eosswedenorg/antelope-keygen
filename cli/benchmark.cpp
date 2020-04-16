@@ -23,7 +23,7 @@
  */
 #include <chrono>
 #include <libeosio/ec.h>
-#include "benchmark.h"
+#include "benchmark.hpp"
 
 using std::chrono::steady_clock;
 using std::chrono::duration;
