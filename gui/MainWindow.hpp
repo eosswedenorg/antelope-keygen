@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2019-2020 EOS Sw/eden
+ * Copyright (c) 2020 EOS Sw/eden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_CONFIG_H
-#define EOSIOKEYGEN_CONFIG_H
+#ifndef MAIN_WINDOW_H
+#define MAIN_WINDOW_H
 
-#define PROGRAM_NAME "@PROJECT_NAME@"
-#define PROGRAM_VERSION "@PROJECT_VERSION@"
+#include <QMainWindow>
 
-// Paths
-#define CONFIG_SHARE_PATH "@CMAKE_INSTALL_DATADIR@/@CMAKE_PROJECT_NAME@"
-#define CONFIG_SHARE_FULL_PATH "@CMAKE_INSTALL_FULL_DATADIR@/@CMAKE_PROJECT_NAME@"
+class QStackedWidget;
 
-#define CONFIG_DICT_PATH "@CMAKE_INSTALL_DATADIR@/@CMAKE_PROJECT_NAME@/dict"
-#define CONFIG_DICT_FULL_PATH "@CMAKE_INSTALL_FULL_DATADIR@/@CMAKE_PROJECT_NAME@/dict"
+class MainWindow : public QMainWindow
+{
+	Q_OBJECT
+public:
+    MainWindow(QWidget *parent = 0);
 
-#endif /* EOSIOKEYGEN_CONFIG_H */
+private slots :
+
+	// Switch to generate window.
+	void switchToGenerate();
+
+	// Switch to search window.
+	void switchToSearch();
+
+	void showAbout();
+
+private :
+
+	QStackedWidget* m_stacked;
+};
+
+#endif /* MAIN_WINDOW_H */

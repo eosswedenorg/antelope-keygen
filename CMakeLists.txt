@@ -10,6 +10,18 @@ project(eosio-keygen
 	HOMEPAGE_URL "https://github.com/eosswedenorg/eosio-keygen" )
 
 set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
+set( PROJECT_LICENSE_FILE ${CMAKE_CURRENT_LIST_DIR}/LICENSE )
+
+# --------------------------------
+#  Options
+# --------------------------------
+
+option(BUILD_COMPONENT_CLI "Build CLI Component" ON)
+option(BUILD_COMPONENT_GUI "Build GUI Component (Qt5)" OFF)
+
+if (NOT BUILD_COMPONENT_CLI AND NOT BUILD_COMPONENT_GUI)
+	message(FATAL_ERROR "Atleast one of BUILD_COMPONENT_GUI,BUILD_COMPONENT_CLI must be set to ON")
+endif()
 
 # --------------------------------
 #  CMake settings
@@ -64,18 +76,25 @@ configure_file(config.hpp.in "${PROJECT_BINARY_DIR}/config.hpp" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
 
 # --------------------------------
-#  Subdirectories
+#  Components
 # --------------------------------
 
 add_subdirectory( common )
-add_subdirectory( cli )
+
+if (BUILD_COMPONENT_CLI)
+	add_subdirectory( cli )
+endif()
+
+if (BUILD_COMPONENT_GUI)
+	add_subdirectory( gui )
+endif()
 
 # --------------------------------
 #  Install
 # --------------------------------
 
 # Readme and license
-install(FILES README.md LICENSE
+install(FILES README.md ${PROJECT_LICENSE_FILE}
 		DESTINATION ${CMAKE_INSTALL_SHAREDIR})
 
 # --------------------------------
@@ -83,7 +102,7 @@ install(FILES README.md LICENSE
 # --------------------------------
 
 if (CPACK_GENERATOR MATCHES "^[Nn][Ss][Ii][Ss]$")
-	set( CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE )
+	set( CPACK_RESOURCE_FILE_LICENSE ${PROJECT_LICENSE_FILE} )
 endif()
 
 set( CPACK_DEBIAN_PACKAGE_PRIORITY "optional" )

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2019-2020 EOS Sw/eden
+ * Copyright (c) 2020 EOS Sw/eden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_CONFIG_H
-#define EOSIOKEYGEN_CONFIG_H
+#include <QApplication>
+#include "MainWindow.hpp"
 
-#define PROGRAM_NAME "@PROJECT_NAME@"
-#define PROGRAM_VERSION "@PROJECT_VERSION@"
+int main(int argc, char **argv) {
 
-// Paths
-#define CONFIG_SHARE_PATH "@CMAKE_INSTALL_DATADIR@/@CMAKE_PROJECT_NAME@"
-#define CONFIG_SHARE_FULL_PATH "@CMAKE_INSTALL_FULL_DATADIR@/@CMAKE_PROJECT_NAME@"
+	QApplication app(argc, argv);
 
-#define CONFIG_DICT_PATH "@CMAKE_INSTALL_DATADIR@/@CMAKE_PROJECT_NAME@/dict"
-#define CONFIG_DICT_FULL_PATH "@CMAKE_INSTALL_FULL_DATADIR@/@CMAKE_PROJECT_NAME@/dict"
+	MainWindow window;
 
-#endif /* EOSIOKEYGEN_CONFIG_H */
+	window.show();
+
+	return app.exec();
+}

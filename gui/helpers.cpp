@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2019-2020 EOS Sw/eden
+ * Copyright (c) 2020 EOS Sw/eden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_CONFIG_H
-#define EOSIOKEYGEN_CONFIG_H
+#include "helpers.hpp"
 
-#define PROGRAM_NAME "@PROJECT_NAME@"
-#define PROGRAM_VERSION "@PROJECT_VERSION@"
+QStringList get_files(const QDir& directory) {
 
-// Paths
-#define CONFIG_SHARE_PATH "@CMAKE_INSTALL_DATADIR@/@CMAKE_PROJECT_NAME@"
-#define CONFIG_SHARE_FULL_PATH "@CMAKE_INSTALL_FULL_DATADIR@/@CMAKE_PROJECT_NAME@"
+	QFileInfoList list;
+	QStringList ret;
 
-#define CONFIG_DICT_PATH "@CMAKE_INSTALL_DATADIR@/@CMAKE_PROJECT_NAME@/dict"
-#define CONFIG_DICT_FULL_PATH "@CMAKE_INSTALL_FULL_DATADIR@/@CMAKE_PROJECT_NAME@/dict"
+	list = directory.entryInfoList(QDir::Files);
+   	for (int i = 0; i < list.size(); ++i) {
+		QFileInfo info = list.at(i);
+		ret << info.fileName();
+   	}
+	return ret;
+}
 
-#endif /* EOSIOKEYGEN_CONFIG_H */
+QStringList get_files(const QString& directory)
+{
+	return get_files(QDir(directory));
+}

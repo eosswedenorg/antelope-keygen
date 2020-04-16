@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2019-2020 EOS Sw/eden
+ * Copyright (c) 2020 EOS Sw/eden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_CONFIG_H
-#define EOSIOKEYGEN_CONFIG_H
+#include <QMessageBox>
+#include <QMenuBar>
+#include <QGridLayout>
+#include <QStackedWidget>
+#include "gui_about.h"
+#include "GenerateWindow.hpp"
+#include "SearchWindow.hpp"
+#include "MainWindow.hpp"
 
-#define PROGRAM_NAME "@PROJECT_NAME@"
-#define PROGRAM_VERSION "@PROJECT_VERSION@"
+MainWindow::MainWindow(QWidget *parent) :
+QMainWindow	(parent)
+{
+	// Create sub windows and stacked widget.
+	m_stacked = new QStackedWidget();
+	m_stacked->addWidget(new GenerateWindow());
+	m_stacked->addWidget(new SearchWindow());
 
-// Paths
-#define CONFIG_SHARE_PATH "@CMAKE_INSTALL_DATADIR@/@CMAKE_PROJECT_NAME@"
-#define CONFIG_SHARE_FULL_PATH "@CMAKE_INSTALL_FULL_DATADIR@/@CMAKE_PROJECT_NAME@"
+	setCentralWidget(m_stacked);
 
-#define CONFIG_DICT_PATH "@CMAKE_INSTALL_DATADIR@/@CMAKE_PROJECT_NAME@/dict"
-#define CONFIG_DICT_FULL_PATH "@CMAKE_INSTALL_FULL_DATADIR@/@CMAKE_PROJECT_NAME@/dict"
+	// Menu bar.
 
-#endif /* EOSIOKEYGEN_CONFIG_H */
+	menuBar()->addAction("Generate", this, SLOT(switchToGenerate()));
+	menuBar()->addAction("Search", this, SLOT(switchToSearch()));
+	menuBar()->addAction("About", this, SLOT(showAbout()));
+}
+
+void MainWindow::switchToGenerate()
+{
+	m_stacked->setCurrentIndex(0);
+}
+
+void MainWindow::switchToSearch()
+{
+	m_stacked->setCurrentIndex(1);
+}
+
+void MainWindow::showAbout()
+{
+	QMessageBox::about(this, EOSIOKEYGEN_GUI_ABOUT_TITLE, EOSIOKEYGEN_GUI_ABOUT_TEXT);
+}

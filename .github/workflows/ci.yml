@@ -12,28 +12,46 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest ]
-        build-opts: [ "-DFORCE_ANSI=ON", "-DFORCE_ANSI=OFF" ]
+        build: [ cli-force-ansi-on, cli-force-ansi-off, gui ]
+        include:
+          - build: cli-force-ansi-on
+            cmake-opts: -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=ON
+          - build: cli-force-ansi-off
+            cmake-opts: -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=ON
+          - build: gui
+            cmake-opts: -DBUILD_COMPONENT_CLI=OFF -DBUILD_COMPONENT_GUI=ON
 
-    name: ${{matrix.os}} (${{matrix.build-opts}})
+
+    name: ${{matrix.os}} (${{matrix.build}})
     runs-on: ${{matrix.os}}
 
     steps:
     - uses: actions/checkout@v1
 
-    - name: Dependancies
+    - name: OpenSSL OSX
+      if: runner.os == 'macOS'
       shell: bash
-      run: |
-        if [ "$RUNNER_OS" == "macOS" ]; then
-            brew install openssl
-        fi
+      run: brew install openssl
+
+    - name: Qt - Ubuntu
+      if: matrix.build == 'gui' && runner.os == 'Linux'
+      shell: bash
+      run: sudo apt-get install qt5-default
+
+    - name: Qt - Windows/Mac
+      if: matrix.build == 'gui' && runner.os != 'Linux'
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.9'
 
     - name: Configure
       shell: bash
       run: |
+        OPTS="${{matrix.cmake-opts}}"
         if [ "$RUNNER_OS" == "macOS" ]; then
-            SSL_OPTS="-D OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1"
+            OPTS="-D OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1 ${OPTS}"
         fi
-        cmake ${SSL_OPTS} ${{matrix.build-opts}} -B build
+        cmake ${OPTS} -B build
 
     - name: Build
       shell: bash
@@ -42,5 +60,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
-        name: ${{matrix.os}}_${{matrix.build-opts}}-build
+        name: ${{matrix.os}}_${{matrix.build}}-build
         path: build
