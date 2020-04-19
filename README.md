@@ -25,31 +25,6 @@ First you need to have a compiler. this can be installed with apt.
 $ apt-get install gcc g++
 ```
 
-You then need `libeoskeygen`.
-
-This can be installed from [EOS Sweden's APT Repository](https://eosswedenorg.github.io/apt) like this:
-
-```sh
-$ sudo apt-get install software-properties-common
-$ curl https://apt.eossweden.org/key 2> /dev/null | sudo apt-key add -
-$ sudo apt-add-repository -y 'deb [arch=amd64] https://apt.eossweden.org/main `lsb_release -cs` stable'
-$ sudo apt-get install libeoskeygen-dev
-```
-
-or manually via `.deb` file from [github](https://github.com/eosswedenorg/libeoskeygen/releases)
-
-```sh
-$ wget <url>
-$ sudo apt install ./libeoskeygen-dev-<version>.deb
-```
-
-**Other**:
-
-Consult the manual for you package manager.
-`libeoskeygen` will be downloaded and compiled if it's not installed automatically (however this is slower).
-
-Consult [libeoskeygen's github](https://github.com/eosswedenorg/libeoskeygen) if you want to compile and install it manually.
-
 **CMake**
 
 If your package manager don't provide a sufficiently new version of cmake, you can install it with these commands:
@@ -133,6 +108,32 @@ These compile options are available:
 | -DFORCE_ANSI=`ON`          | --force-ansi      | Force ANSI console colors even on windows |
 
 For more details about options run `./build.sh -l` or `mkdir build && cmake build -LA`
+
+### libeosio
+
+To speed up the build process, you can install `libeosio`
+
+#### Ubuntu
+
+You can use [EOS Sweden's APT Repository](https://eosswedenorg.github.io/apt) like this:
+
+```sh
+$ sudo apt-get install software-properties-common
+$ curl https://apt.eossweden.org/key 2> /dev/null | sudo apt-key add -
+$ sudo apt-add-repository -y 'deb [arch=amd64] https://apt.eossweden.org/main `lsb_release -cs` stable'
+$ sudo apt-get install libeosio-dev
+```
+
+or manually via `.deb` file from [github](https://github.com/eosswedenorg/libeosio/releases)
+
+```sh
+$ wget <url>
+$ sudo apt install ./libeosio-dev-<version>.deb
+```
+
+#### Other
+
+Consult [libeosio's github](https://github.com/eosswedenorg/libeosio)
 
 ## Install
 
