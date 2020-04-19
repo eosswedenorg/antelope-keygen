@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <libeosio/ec.h>
-#include <libeosio/WIF.h>
+#include <libeosio/ec.hpp>
+#include <libeosio/WIF.hpp>
 #include <eoskeygen/config.h>
 #include <eoskeygen/core/string.h>
 #include <eoskeygen/key_search_result.h>

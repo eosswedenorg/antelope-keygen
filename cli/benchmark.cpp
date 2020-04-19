@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 #include <chrono>
-#include <libeosio/ec.h>
+#include <libeosio/ec.hpp>
 #include "benchmark.hpp"
 
 using std::chrono::steady_clock;

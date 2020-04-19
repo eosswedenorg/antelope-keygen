@@ -25,7 +25,7 @@
 #include <thread>
 #include <mutex>
 #include <vector>
-#include <libeosio/ec.h>
+#include <libeosio/ec.hpp>
 #include <eoskeygen/key_search_result.h>
 #include <eoskeygen/key_search.h>
 

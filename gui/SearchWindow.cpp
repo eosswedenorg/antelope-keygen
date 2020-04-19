@@ -28,7 +28,7 @@
 #include <QGridLayout>
 #include <QFuture>
 #include <QtConcurrent>
-#include <libeosio/WIF.h>
+#include <libeosio/WIF.hpp>
 #include <eoskeygen/core/leet.h>
 #include <eoskeygen/core/string.h>
 #include "config.hpp"

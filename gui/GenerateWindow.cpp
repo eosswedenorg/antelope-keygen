@@ -26,8 +26,8 @@
 #include <QGridLayout>
 #include <QClipboard>
 #include <QGuiApplication>
-#include <libeosio/ec.h>
-#include <libeosio/WIF.h>
+#include <libeosio/ec.hpp>
+#include <libeosio/WIF.hpp>
 #include "GenerateWindow.hpp"
 
 void _initKeyWidget(QLineEdit& w) {

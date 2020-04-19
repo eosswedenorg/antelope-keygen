@@ -23,9 +23,9 @@
  */
 #include <iostream>
 #include <cstring>
-#include <libeosio/base58.h>
-#include <libeosio/ec.h>
-#include <libeosio/WIF.h>
+#include <libeosio/base58.hpp>
+#include <libeosio/ec.hpp>
+#include <libeosio/WIF.hpp>
 #include <eoskeygen/config.h>
 #include <eoskeygen/core/file.h>
 #include <eoskeygen/core/string.h>
