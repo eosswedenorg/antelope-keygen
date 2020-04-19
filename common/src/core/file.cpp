@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 #include <cstdio>
-#include <eoskeygen/core/string.h>
-#include <eoskeygen/core/file.h>
+#include <eoskeygen/core/string.hpp>
+#include <eoskeygen/core/file.hpp>
 
 namespace eoskeygen {
 

@@ -33,8 +33,8 @@
 #include <QGridLayout>
 #include <QFutureWatcher>
 #include <QWidget>
-#include <eoskeygen/key_search_result.h>
-#include <eoskeygen/key_search.h>
+#include <eoskeygen/key_search_result.hpp>
+#include <eoskeygen/key_search.hpp>
 #include "MultiSelect.hpp"
 
 class SearchWindow : public QWidget, public eoskeygen::IKeySearchResult

@@ -27,9 +27,9 @@
 #include <stdint.h>
 #include <string>
 #include <libeosio/types.hpp>
-#include <eoskeygen/config.h>
-#include <eoskeygen/core/dictionary.h>
-#include <eoskeygen/core/strlist.h>
+#include <eoskeygen/config.hpp>
+#include <eoskeygen/core/dictionary.hpp>
+#include <eoskeygen/core/strlist.hpp>
 
 namespace eoskeygen {
 

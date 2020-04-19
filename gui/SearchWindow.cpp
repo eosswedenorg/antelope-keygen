@@ -29,8 +29,8 @@
 #include <QFuture>
 #include <QtConcurrent>
 #include <libeosio/WIF.hpp>
-#include <eoskeygen/core/leet.h>
-#include <eoskeygen/core/string.h>
+#include <eoskeygen/core/leet.hpp>
+#include <eoskeygen/core/string.hpp>
 #include "config.hpp"
 #include "helpers.hpp"
 #include "SearchWindow.hpp"

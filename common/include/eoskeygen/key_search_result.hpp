@@ -21,32 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <cstddef>
-#include <cctype>
-#include <algorithm>
-#include <eoskeygen/core/string.hpp>
+#ifndef EOSIOKEYGEN_COMMON_KEY_SEARCH_RESULT_H
+#define EOSIOKEYGEN_COMMON_KEY_SEARCH_RESULT_H
+
+#include <eoskeygen/key_search.hpp>
 
 namespace eoskeygen {
 
-std::string& strtolower(std::string& str) {
-	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c){ return std::tolower(c); });
-	return str;
-}
+class IKeySearchResult
+{
+public :
 
-std::string& ltrim(std::string& str) {
-	auto it = std::find_if(str.begin(), str.end(), [](char ch){ return !std::isspace(ch); });
-	str.erase(str.begin(), it);
-	return str;
-}
-
-std::string& rtrim(std::string& str) {
-	auto it = std::find_if(str.rbegin(), str.rend(), [](char ch){ return !std::isspace(ch); });
-	str.erase(it.base(), str.end());
-	return str;
-}
-
-std::string& trim(std::string& str) {
-	return ltrim(rtrim(str));
-}
+	virtual void onResult(const struct libeosio::ec_keypair* key, const struct KeySearch::result& result) = 0;
+};
 
 } // namespace eoskeygen
+
+#endif /* EOSIOKEYGEN_COMMON_KEY_SEARCH_RESULT_H */

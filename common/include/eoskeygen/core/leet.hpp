@@ -21,15 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_CORE_FILE_H
-#define EOSIOKEYGEN_COMMON_CORE_FILE_H
+#ifndef EOSIOKEYGEN_COMMON_CORE_LEET_H
+#define EOSIOKEYGEN_COMMON_CORE_LEET_H
 
-#include <eoskeygen/core/strlist.h>
+#include <string>
+#include <eoskeygen/core/strlist.hpp>
 
 namespace eoskeygen {
 
-bool readLines(const std::string& filename, strlist_t& lines);
+strlist_t l33twords(std::string str);
 
-} // namespace
+} // namespace eoskeygen
 
-#endif /* EOSIOKEYGEN_COMMON_CORE_FILE_H */
+#endif /* EOSIOKEYGEN_COMMON_CORE_LEET_H */

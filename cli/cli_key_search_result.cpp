@@ -23,7 +23,7 @@
  */
 #include <iostream>
 #include <libeosio/WIF.hpp>
-#include <eoskeygen/core/dictionary.h>
+#include <eoskeygen/core/dictionary.hpp>
 #include "console.hpp"
 #include "cli_key_search_result.hpp"
 

@@ -23,10 +23,10 @@
  */
 #include <libeosio/ec.hpp>
 #include <libeosio/WIF.hpp>
-#include <eoskeygen/config.h>
-#include <eoskeygen/core/string.h>
-#include <eoskeygen/key_search_result.h>
-#include <eoskeygen/key_search.h>
+#include <eoskeygen/config.hpp>
+#include <eoskeygen/core/string.hpp>
+#include <eoskeygen/key_search_result.hpp>
+#include <eoskeygen/key_search.hpp>
 
 namespace eoskeygen {
 

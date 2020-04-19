@@ -21,20 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_KEY_SEARCH_RESULT_H
-#define EOSIOKEYGEN_COMMON_KEY_SEARCH_RESULT_H
+#ifndef EOSIOKEYGEN_COMMON_CORE_FILE_H
+#define EOSIOKEYGEN_COMMON_CORE_FILE_H
 
-#include <eoskeygen/key_search.h>
+#include <eoskeygen/core/strlist.hpp>
 
 namespace eoskeygen {
 
-class IKeySearchResult
-{
-public :
+bool readLines(const std::string& filename, strlist_t& lines);
 
-	virtual void onResult(const struct libeosio::ec_keypair* key, const struct KeySearch::result& result) = 0;
-};
+} // namespace
 
-} // namespace eoskeygen
-
-#endif /* EOSIOKEYGEN_COMMON_KEY_SEARCH_RESULT_H */
+#endif /* EOSIOKEYGEN_COMMON_CORE_FILE_H */

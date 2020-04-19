@@ -21,16 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_CORE_LEET_H
-#define EOSIOKEYGEN_COMMON_CORE_LEET_H
+#ifndef EOSIOKEYGEN_COMMON_CONFIG_H
+#define EOSIOKEYGEN_COMMON_CONFIG_H
 
-#include <string>
-#include <eoskeygen/core/strlist.h>
+// Defined if we have thread support.
+#define EOSIOKEYGEN_HAVE_THREADS
 
-namespace eoskeygen {
-
-strlist_t l33twords(std::string str);
-
-} // namespace eoskeygen
-
-#endif /* EOSIOKEYGEN_COMMON_CORE_LEET_H */
+#endif /* EOSIOKEYGEN_COMMON_CONFIG_H */

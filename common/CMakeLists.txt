@@ -34,7 +34,7 @@ if (USE_THREADS)
 endif (USE_THREADS)
 
 # Project config file
-configure_file(src/config.h.in "${CMAKE_CURRENT_LIST_DIR}/include/eoskeygen/config.h" @ONLY)
+configure_file(config.hpp.in "${CMAKE_CURRENT_LIST_DIR}/include/eoskeygen/config.hpp" @ONLY)
 
 add_library( ${COMMON_NAME} STATIC ${COMMON_SOURCE} )
 

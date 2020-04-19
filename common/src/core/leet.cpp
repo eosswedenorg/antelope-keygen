@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 #include <algorithm>
-#include <eoskeygen/core/leet.h>
+#include <eoskeygen/core/leet.hpp>
 
 namespace eoskeygen {
 

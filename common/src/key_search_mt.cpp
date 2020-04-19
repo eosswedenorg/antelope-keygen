@@ -26,8 +26,8 @@
 #include <mutex>
 #include <vector>
 #include <libeosio/ec.hpp>
-#include <eoskeygen/key_search_result.h>
-#include <eoskeygen/key_search.h>
+#include <eoskeygen/key_search_result.hpp>
+#include <eoskeygen/key_search.hpp>
 
 namespace eoskeygen {
 

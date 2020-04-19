@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 #include <algorithm>
-#include <eoskeygen/core/string.h>
-#include <eoskeygen/core/strlist.h>
+#include <eoskeygen/core/string.hpp>
+#include <eoskeygen/core/strlist.hpp>
 
 namespace eoskeygen {
 
