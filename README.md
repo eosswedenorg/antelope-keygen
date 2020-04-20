@@ -103,7 +103,8 @@ C:\repo\build> cmake --build . --config Release
 These compile options are available:
 
 | Cmake                      | build.sh          | Description                               |
-|--------------------------- | ----------------- | ------------------------------------------|
+|--------------------------- | ----------------- | ----------------------------------------- |
+| -DUSE_THREADS=`OFF`        | --disable-threads | Disable thread support                    |
 | -DCMAKE_BUILD_TYPE=`value` | -t `value`        | Type of build 							 |
 | -DFORCE_ANSI=`ON`          | --force-ansi      | Force ANSI console colors even on windows |
 
