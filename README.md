@@ -102,11 +102,13 @@ C:\repo\build> cmake --build . --config Release
 
 These compile options are available:
 
-| Cmake                      | build.sh          | Description                               |
-|--------------------------- | ----------------- | ----------------------------------------- |
-| -DUSE_THREADS=`OFF`        | --disable-threads | Disable thread support                    |
-| -DCMAKE_BUILD_TYPE=`value` | -t `value`        | Type of build 							 |
-| -DFORCE_ANSI=`ON`          | --force-ansi      | Force ANSI console colors even on windows |
+| Cmake                       | build.sh          | Description                               |
+|---------------------------- | ----------------- | ----------------------------------------- |
+| -DBUILD_COMPONENT_CLI=`OFF` | --no-cli          | Do not build cli program                  |
+| -DBUILD_COMPONENT_GUI=`ON`  | --gui             | Build gui program (Qt5)                   |
+| -DUSE_THREADS=`OFF`         | --disable-threads | Disable thread support                    |
+| -DCMAKE_BUILD_TYPE=`value`  | -t `value`        | Type of build                             |
+| -DFORCE_ANSI=`ON`           | --force-ansi      | Force ANSI console colors even on windows |
 
 For more details about options run `./build.sh -l` or `mkdir build && cmake build -LA`
 
