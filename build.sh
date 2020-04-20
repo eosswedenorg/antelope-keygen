@@ -1,11 +1,11 @@
 #!/bin/bash
 
 function usage() {
-	echo "Usage: ${0##*/} [ -h|--help ] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [--pkg-type deb|zip|tgz] [ --disable-threads ] [ --force-ansi ]"
+	echo "Usage: ${0##*/} [ -h|--help ] [ --no-cli ] [ --gui] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [--pkg-type deb|zip|tgz] [ --disable-threads ] [ --force-ansi ]"
 	exit 1
 }
 
-options=$(getopt -n "${0##*/}" -o "lht:" -l "help,type:,pkg-type:,disable-threads,force-ansi" -- "$@")
+options=$(getopt -n "${0##*/}" -o "lht:" -l "help,no-cli,gui,type:,pkg-type:,disable-threads,force-ansi" -- "$@")
 
 [ $? -eq 0 ] || usage
 
@@ -33,6 +33,10 @@ while true; do
 		TARGET="package"
 		ARGS="${ARGS} -DCPACK_GENERATOR=${1^^}"
 		;;
+	--no-cli)
+		ARGS="${ARGS} -DBUILD_COMPONENT_CLI=OFF" ;;
+	--gui)
+		ARGS="${ARGS} -DBUILD_COMPONENT_GUI=ON" ;;
 	--disable-threads)
 		ARGS="${ARGS} -DUSE_THREADS=OFF" ;;
 	--force-ansi)
@@ -47,6 +51,9 @@ while true; do
 	esac
 	shift
 done
+
+# Remove cache first
+rm build/CMakeCache.txt 2> /dev/null
 
 cmake -B build $ARGS .
 if [ ${ONLY_CONFIG} -eq 0 ]; then
