@@ -89,8 +89,10 @@ private:
 	// Search input.
 	QLineEdit m_txt_search;
 
+#ifdef EOSIOKEYGEN_HAVE_THREADS
 	// Number of Threads.
 	QSpinBox m_num_threads;
+#endif /* EOSIOKEYGEN_HAVE_THREADS */
 
 	// Number of Results
 	QSpinBox m_num_results;

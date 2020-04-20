@@ -66,10 +66,12 @@ m_btn_clear		("Clear")
 
 	m_layout.addWidget(&m_leet_cb, 0, 2);
 
+#ifdef EOSIOKEYGEN_HAVE_THREADS
 	m_num_threads.setValue((int) eoskeygen::KeySearch::max_threads());
 	m_num_threads.setRange(1, (int) eoskeygen::KeySearch::max_threads());
 	m_num_threads.setSuffix(" Threads");
 	m_layout.addWidget(&m_num_threads, 0, 3);
+#endif /* EOSIOKEYGEN_HAVE_THREADS */
 
 	m_num_results.setValue(10);
 	m_num_results.setRange(1, 99);
@@ -208,7 +210,9 @@ void SearchWindow::search()
 
 	m_ksearch.clear();
 	m_ksearch.addList(list);
+#ifdef EOSIOKEYGEN_HAVE_THREADS
 	m_ksearch.setThreadCount(m_num_threads.value());
+#endif /* EOSIOKEYGEN_HAVE_THREADS */
 
 	QFuture<void> future = QtConcurrent::run(m_ksearch, &eoskeygen::KeySearch::find, m_num_results.value());
 	m_worker.setFuture(future);
@@ -250,7 +254,9 @@ void SearchWindow::searchStarted()
 	m_leet_cb.setEnabled(false);
 	m_btn_exec.setEnabled(false);
 	m_btn_clear.setEnabled(false);
+#ifdef EOSIOKEYGEN_HAVE_THREADS
 	m_num_threads.setEnabled(false);
+#endif /* EOSIOKEYGEN_HAVE_THREADS */
 	m_num_results.setEnabled(false);
 }
 
@@ -263,6 +269,8 @@ void SearchWindow::searchFinished()
 	m_leet_cb.setEnabled(true);
 	m_btn_exec.setEnabled(true);
 	m_btn_clear.setEnabled(true);
+#ifdef EOSIOKEYGEN_HAVE_THREADS
 	m_num_threads.setEnabled(true);
+#endif /* EOSIOKEYGEN_HAVE_THREADS */
 	m_num_results.setEnabled(true);
 }
