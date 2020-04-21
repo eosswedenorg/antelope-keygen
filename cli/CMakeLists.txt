@@ -8,18 +8,18 @@ option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
 set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
 
 set (PROGRAM_SOURCE
-	isatty.cpp
-	cli_key_search_result.cpp
-	console.cpp
-	benchmark.cpp
-	main.cpp
+	src/isatty.cpp
+	src/cli_key_search_result.cpp
+	src/console.cpp
+	src/benchmark.cpp
+	src/main.cpp
 )
 
 if (WIN32 AND NOT FORCE_ANSI)
-	set (PROGRAM_SOURCE ${PROGRAM_SOURCE} console_win32.cpp)
+	set (PROGRAM_SOURCE ${PROGRAM_SOURCE} src/console_win32.cpp)
 else()
 	# *nix should have ansi support.
-	set (PROGRAM_SOURCE ${PROGRAM_SOURCE} console_ansi.cpp)
+	set (PROGRAM_SOURCE ${PROGRAM_SOURCE} src/console_ansi.cpp)
 endif()
 
 add_executable( ${PROGRAM_EXE} ${PROGRAM_SOURCE} )
