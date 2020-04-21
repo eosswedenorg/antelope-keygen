@@ -93,10 +93,8 @@ set( CPACK_DEBIAN_PACKAGE_RELEASE "1" CACHE STRING "Debian package release versi
 # So we have to do it here.
 set( CPACK_DEBIAN_PACKAGE_HOMEPAGE "${PROJECT_HOMEPAGE_URL}" )
 
-# Set "correct" filename that also include system version and architecture.
-set( CPACK_DEBIAN_FILE_NAME
-	"${PROJECT_NAME}-${PROJECT_VERSION}-${CPACK_DEBIAN_PACKAGE_RELEASE}-${CPACK_SYSTEM_NAME}-${CPACK_SYSTEM_VERSION}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}.deb"
-)
+# Always build components for deb packages
+set( CPACK_DEB_COMPONENT_INSTALL ON )
 
 
 # --------------------------------
@@ -112,10 +110,3 @@ if (NOT CPACK_GENERATOR)
 		set( CPACK_GENERATOR "ZIP" )
 	endif()
 endif()
-
-
-# --------------------------------
-#  Include original CPack module.
-# --------------------------------
-
-include( CPack )

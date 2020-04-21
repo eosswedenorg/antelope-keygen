@@ -1,0 +1,7 @@
+
+# Include component specific config
+foreach( component @CPACK_COMPONENTS_ALL@ )
+	if (EXISTS "@CMAKE_CURRENT_BINARY_DIR@/${component}/CPackProperties.cmake")
+		include("@CMAKE_CURRENT_BINARY_DIR@/${component}/CPackProperties.cmake")
+	endif()
+endforeach()

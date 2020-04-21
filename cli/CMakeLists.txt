@@ -1,3 +1,13 @@
+cmake_minimum_required(VERSION 3.15)
+
+# --------------------------------
+#  Project Info
+# --------------------------------
+
+project(eosio-keygen
+	VERSION ${CMAKE_PROJECT_VERSION}
+	LANGUAGES CXX)
+
 # Options
 option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
 
@@ -5,7 +15,7 @@ option(FORCE_ANSI "Force ANSI console colors even on windows" OFF)
 #  Program
 # --------------------------------
 
-set (PROGRAM_EXE ${CMAKE_PROJECT_NAME})
+set (PROGRAM_EXE ${PROJECT_NAME})
 
 set (PROGRAM_SOURCE
 	src/isatty.cpp
@@ -30,7 +40,9 @@ target_link_libraries( ${PROGRAM_EXE} PUBLIC common )
 #  Install
 # --------------------------------
 
-install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS ${PROGRAM_EXE}
+		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+		COMPONENT cli)
 
 # Documentation
 
@@ -38,5 +50,13 @@ if (UNIX)
 	configure_file( docs/eosio-keygen.1.in ${PROJECT_BINARY_DIR}/man1/eosio-keygen.1 )
 
 	install(DIRECTORY ${PROJECT_BINARY_DIR}/man1
-			DESTINATION ${CMAKE_INSTALL_MANDIR})
+			DESTINATION ${CMAKE_INSTALL_MANDIR}
+			COMPONENT cli)
 endif (UNIX)
+
+# --------------------------------
+#  Package
+# --------------------------------
+
+configure_file(cmake/CPackComponentConfig.cmake.in
+	${PROJECT_BINARY_DIR}/CPackProperties.cmake)

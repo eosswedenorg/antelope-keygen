@@ -76,6 +76,29 @@ configure_file(config.hpp.in "${PROJECT_BINARY_DIR}/config.hpp" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
 
 # --------------------------------
+#  Install
+# --------------------------------
+
+# Readme and license
+install(FILES README.md ${PROJECT_LICENSE_FILE}
+		DESTINATION ${CMAKE_INSTALL_SHAREDIR})
+
+# --------------------------------
+#  Package
+# --------------------------------
+
+include(CPackConfig)
+
+set( CPACK_COMPONENTS_ALL cli gui )
+
+if (CPACK_GENERATOR MATCHES "^[Nn][Ss][Ii][Ss]$")
+	set( CPACK_RESOURCE_FILE_LICENSE ${PROJECT_LICENSE_FILE} )
+endif()
+
+set (CPACK_PROPERTIES_FILE ${PROJECT_BINARY_DIR}/CPackComponentsInclude.cmake)
+configure_file(cmake/CPackProperties.cmake.in ${CPACK_PROPERTIES_FILE} @ONLY)
+
+# --------------------------------
 #  Components
 # --------------------------------
 
@@ -90,23 +113,6 @@ if (BUILD_COMPONENT_GUI)
 endif()
 
 # --------------------------------
-#  Install
+#  CPack
 # --------------------------------
-
-# Readme and license
-install(FILES README.md ${PROJECT_LICENSE_FILE}
-		DESTINATION ${CMAKE_INSTALL_SHAREDIR})
-
-# --------------------------------
-#  Package
-# --------------------------------
-
-if (CPACK_GENERATOR MATCHES "^[Nn][Ss][Ii][Ss]$")
-	set( CPACK_RESOURCE_FILE_LICENSE ${PROJECT_LICENSE_FILE} )
-endif()
-
-set( CPACK_DEBIAN_PACKAGE_PRIORITY "optional" )
-set( CPACK_DEBIAN_PACKAGE_SECTION "misc" )
-set( CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON )
-
-include( cpack_custom )
+include (CPack)

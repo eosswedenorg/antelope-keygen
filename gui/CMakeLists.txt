@@ -1,3 +1,9 @@
+cmake_minimum_required(VERSION 3.15)
+
+project(eosio-keygen-gui
+	VERSION ${CMAKE_PROJECT_VERSION}
+	DESCRIPTION "Keygenerator for EOSIO (gui)"
+	LANGUAGES CXX)
 
 # Qt5 needs MOC,RCC and UIC
 set( CMAKE_AUTOMOC ON )
@@ -20,9 +26,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 #  Program
 # --------------------------------
 
-set( COMPONENT_NAME ${CMAKE_PROJECT_NAME}-gui)
-
-set( PROGRAM_EXE ${COMPONENT_NAME} )
+set( PROGRAM_EXE ${PROJECT_NAME} )
 
 set( PROGRAM_SRC
 	main.cpp
@@ -45,4 +49,11 @@ target_link_libraries( ${PROGRAM_EXE} Qt5::Concurrent Qt5::Core Qt5::Widgets com
 
 install(TARGETS ${PROGRAM_EXE}
 		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-		COMPONENT ${COMPONENT_NAME})
+		COMPONENT gui)
+
+# --------------------------------
+#  Package
+# --------------------------------
+
+configure_file(cmake/CPackComponentConfig.cmake.in
+	${PROJECT_BINARY_DIR}/CPackProperties.cmake)
