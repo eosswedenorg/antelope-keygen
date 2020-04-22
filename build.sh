@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function usage() {
-	echo "Usage: ${0##*/} [ -h|--help ] [ --no-cli ] [ --gui] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [--pkg-type deb|zip|tgz] [ --disable-threads ] [ --force-ansi ]"
+	echo "Usage: ${0##*/} [ -h|--help ] [ --no-cli ] [ --gui] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [--pkg-type nsis|deb|zip|tgz] [ --disable-threads ] [ --force-ansi ]"
 	exit 1
 }
 
@@ -26,7 +26,7 @@ while true; do
 		;;
 	--pkg-type)
 		shift
-		[[ ! "$1" =~ ^(deb|zip|tgz)$ ]] && {
+		[[ ! "$1" =~ ^(nsis|deb|zip|tgz)$ ]] && {
 		    echo "Incorrect package type '$1' provided"
 		    usage
 		}
