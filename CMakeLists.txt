@@ -61,15 +61,22 @@ set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS OFF )
 
 # c++ flags
-set( CMAKE_CXX_FLAGS_DEBUG "-O0 -g" )
-set( CMAKE_CXX_FLAGS_RELEASE "-O3" )
-set( CMAKE_CXX_FLAGS_MINSIZEREL "-Os" )
+add_compile_options(
+	"$<$<CXX_COMPILER_ID:GNU>:-Werror;-Wall;-Wconversion;-Wno-sign-conversion;-Wextra>"
+	"$<$<CXX_COMPILER_ID:MSVC>:/W3;-D_CRT_SECURE_NO_WARNINGS=1>"
 
-if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -Wconversion -Wno-sign-conversion -Wextra" )
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-	add_definitions( "-D_CRT_SECURE_NO_WARNINGS=1" )
-endif()
+	# Debug
+	"$<$<CONFIG:Debug>:$<$<CXX_COMPILER_ID:GNU>:-O0;-g>>"
+	"$<$<CONFIG:Debug>:$<$<CXX_COMPILER_ID:MSVC>:/Od;/Zi>>"
+
+	# Release
+	"$<$<CONFIG:Release>:$<$<CXX_COMPILER_ID:GNU>:-O3>>"
+	"$<$<CONFIG:Release>:$<$<CXX_COMPILER_ID:MSVC>:/O2>>"
+
+	# MinSizeRel
+	"$<$<CONFIG:MinSizeRel>:$<$<CXX_COMPILER_ID:GNU>:-Os>>"
+	"$<$<CONFIG:MinSizeRel>:$<$<CXX_COMPILER_ID:MSVC>:/O1>>"
+)
 
 # Project config file
 configure_file(config.hpp.in "${PROJECT_BINARY_DIR}/config.hpp" @ONLY)
