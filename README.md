@@ -9,7 +9,7 @@ This program generates public and private keypair for [EOS](https://eos.io/)
 
 ## Compile
 
-You will need `libeoskeygen` and `cmake 3.15` or later to compile this project.
+You will need `libeosio` and `cmake 3.15` or later to compile this project.
 
 ### Linux/MacOS
 
@@ -56,7 +56,7 @@ $ brew install cmake
 
 If you need a newer version of cmake, you can download the official `.dmg` file: [cmake-3.15.7-Darwin-x86_64.dmg](https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Darwin-x86_64.dmg). or see https://cmake.org/download for other versions.
 
-`libeoskeygen` needs to be compiled and installed from source. [Go here](https://github.com/eosswedenorg/libeoskeygen)
+`libeosio` needs to be compiled and installed from source. [Go here](https://github.com/eosswedenorg/libeosio)
 
 #### Build
 
