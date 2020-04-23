@@ -70,7 +70,7 @@ function(qt5_win_deploy)
 	configure_file(${_QT_INSTALL_CONFIG_TEMPLATE} ${_QT_INSTALL_CONFIG} @ONLY)
 
 	if (_deploy_INSTALL_COMPONENT)
-		set(_install_args "COMPONENT ${_deploy_INSTALL_COMPONENT}")
+		set(_install_args COMPONENT ${_deploy_INSTALL_COMPONENT})
 	endif()
 
 	install(SCRIPT ${_QT_INSTALL_CONFIG} ${_install_args})
