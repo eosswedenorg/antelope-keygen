@@ -37,7 +37,7 @@ set( PROGRAM_SRC
 	helpers.cpp
 )
 
-add_executable( ${PROGRAM_EXE} ${PROGRAM_SRC} )
+add_executable( ${PROGRAM_EXE} WIN32 ${PROGRAM_SRC} )
 
 # Libraries
 find_package( Qt5 COMPONENTS Concurrent Core Widgets  REQUIRED )
