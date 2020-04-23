@@ -5,6 +5,11 @@ project(eosio-keygen-gui
 	DESCRIPTION "Keygenerator for EOSIO (gui)"
 	LANGUAGES CXX)
 
+# Append modules dir
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+include(QtUtils)
+
 # Qt5 needs MOC,RCC and UIC
 set( CMAKE_AUTOMOC ON )
 set( CMAKE_AUTORCC ON )
@@ -40,8 +45,14 @@ set( PROGRAM_SRC
 add_executable( ${PROGRAM_EXE} WIN32 ${PROGRAM_SRC} )
 
 # Libraries
-find_package( Qt5 COMPONENTS Concurrent Core Widgets  REQUIRED )
-target_link_libraries( ${PROGRAM_EXE} Qt5::Concurrent Qt5::Core Qt5::Widgets common )
+target_link_libraries( ${PROGRAM_EXE} common )
+
+# QT
+qt5_app(TARGET ${PROGRAM_EXE}
+	SKIP_TRANSLATIONS
+	MODULES Core Gui Widgets Concurrent
+	INSTALL_COMPONENT gui
+)
 
 # --------------------------------
 #  Install
