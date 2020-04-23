@@ -1,0 +1,23 @@
+
+# Custom script that installs Qt runtime files.
+
+if (EXISTS @_QT_INSTALL_CONFIG_DEPFILE@)
+	file(STRINGS @_QT_INSTALL_CONFIG_DEPFILE@ _lines)
+
+	# First line is the output path.
+	list(GET _lines 0 BASE_PATH)
+
+	# Rest of the lines are the files relative to the path.
+	list(SUBLIST _lines 1 -1 FILES)
+
+	foreach(file ${FILES})
+		get_filename_component(rel_path ${file} DIRECTORY BASE_DIR ${BASE_PATH})
+
+		set(install_path ${CMAKE_INSTALL_PREFIX}/@CMAKE_INSTALL_BINDIR@)
+		if (rel_path)
+			set(install_path "${install_path}/${rel_path}")
+		endif()
+
+		file(INSTALL ${BASE_PATH}/${file} DESTINATION ${install_path})
+	endforeach()
+endif()
