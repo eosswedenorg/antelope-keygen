@@ -34,12 +34,12 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 set( PROGRAM_EXE ${PROJECT_NAME} )
 
 set( PROGRAM_SRC
-	main.cpp
-	MainWindow.cpp
-	GenerateWindow.cpp
-	SearchWindow.cpp
-	MultiSelect.cpp
-	helpers.cpp
+	src/main.cpp
+	src/MainWindow.cpp
+	src/GenerateWindow.cpp
+	src/SearchWindow.cpp
+	src/MultiSelect.cpp
+	src/helpers.cpp
 )
 
 add_executable( ${PROGRAM_EXE} WIN32 ${PROGRAM_SRC} )
