@@ -68,7 +68,7 @@ and find all l33tspeak combinations of that word and uses the new list for the s
 .B --threads=<num>
 Use
 .I <num>
-of parallel threads for searching. Default is what the operating system recomends.
+of parallel threads for searching. Default is what the operating system recommends.
 .TP 20
 .B --dict=<file>
 Use words found in
