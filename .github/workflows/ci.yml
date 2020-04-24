@@ -15,17 +15,17 @@ jobs:
         build: [ cli, cli-mt, cli-ansi, cli-ansi-mt, gui, gui-mt ]
         include:
           - build: cli
-            cmake-opts: -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=OFF -DUSE_THREADS=OFF
+            cmake-opts: -DCOMPONENT_CLI=ON -DCOMPONENT_GUI=OFF -DFORCE_ANSI=OFF -DUSE_THREADS=OFF
           - build: cli-mt
-            cmake-opts: -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=OFF -DUSE_THREADS=ON
+            cmake-opts: -DCOMPONENT_CLI=ON -DCOMPONENT_GUI=OFF -DFORCE_ANSI=OFF -DUSE_THREADS=ON
           - build: cli-ansi
-            cmake-opts: -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=ON -DUSE_THREADS=OFF
+            cmake-opts: -DCOMPONENT_CLI=ON -DCOMPONENT_GUI=OFF -DFORCE_ANSI=ON -DUSE_THREADS=OFF
           - build: cli-ansi-mt
-            cmake-opts: -DBUILD_COMPONENT_CLI=ON -DBUILD_COMPONENT_GUI=OFF -DFORCE_ANSI=ON -DUSE_THREADS=ON
+            cmake-opts: -DCOMPONENT_CLI=ON -DCOMPONENT_GUI=OFF -DFORCE_ANSI=ON -DUSE_THREADS=ON
           - build: gui
-            cmake-opts: -DBUILD_COMPONENT_CLI=OFF -DBUILD_COMPONENT_GUI=ON -DUSE_THREADS=OFF
+            cmake-opts: -DCOMPONENT_CLI=OFF -DCOMPONENT_GUI=ON -DUSE_THREADS=OFF
           - build: gui-mt
-            cmake-opts: -DBUILD_COMPONENT_CLI=OFF -DBUILD_COMPONENT_GUI=ON -DUSE_THREADS=ON
+            cmake-opts: -DCOMPONENT_CLI=OFF -DCOMPONENT_GUI=ON -DUSE_THREADS=ON
 
     name: ${{matrix.os}} (${{matrix.build}})
     runs-on: ${{matrix.os}}

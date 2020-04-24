@@ -34,9 +34,9 @@ while true; do
 		ARGS="${ARGS} -DCPACK_GENERATOR=${1^^}"
 		;;
 	--no-cli)
-		ARGS="${ARGS} -DBUILD_COMPONENT_CLI=OFF" ;;
+		ARGS="${ARGS} -DCOMPONENT_CLI=OFF" ;;
 	--gui)
-		ARGS="${ARGS} -DBUILD_COMPONENT_GUI=ON" ;;
+		ARGS="${ARGS} -DCOMPONENT_GUI=ON" ;;
 	--disable-threads)
 		ARGS="${ARGS} -DUSE_THREADS=OFF" ;;
 	--force-ansi)

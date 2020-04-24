@@ -16,10 +16,10 @@ set( PROJECT_LICENSE_FILE ${CMAKE_CURRENT_LIST_DIR}/LICENSE )
 #  Options
 # --------------------------------
 
-option(BUILD_COMPONENT_CLI "Build CLI Component" ON)
-option(BUILD_COMPONENT_GUI "Build GUI Component (Qt5)" OFF)
+option(COMPONENT_CLI "Build CLI Component" ON)
+option(COMPONENT_GUI "Build GUI Component (Qt5)" OFF)
 
-if (NOT BUILD_COMPONENT_CLI AND NOT BUILD_COMPONENT_GUI)
+if (NOT COMPONENT_CLI AND NOT COMPONENT_GUI)
 	message(FATAL_ERROR "Atleast one of BUILD_COMPONENT_GUI,BUILD_COMPONENT_CLI must be set to ON")
 endif()
 
@@ -111,11 +111,11 @@ configure_file(cmake/CPackProperties.cmake.in ${CPACK_PROPERTIES_FILE} @ONLY)
 
 add_subdirectory( common )
 
-if (BUILD_COMPONENT_CLI)
+if (COMPONENT_CLI)
 	add_subdirectory( cli )
 endif()
 
-if (BUILD_COMPONENT_GUI)
+if (COMPONENT_GUI)
 	add_subdirectory( gui )
 endif()
 
