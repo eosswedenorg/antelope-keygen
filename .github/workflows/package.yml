@@ -50,7 +50,7 @@ jobs:
           } else {
               $PLATFORM="${{matrix.arch}}"
           }
-          cmake -A $PLATFORM -D CPACK_GENERATOR=NSIS -S . -B build
+          cmake -A $PLATFORM -D CMAKE_BUILD_TYPE=Release -D CPACK_GENERATOR=NSIS -S . -B build
 
       - name: Build
         run: cmake --build build --config Release
