@@ -30,9 +30,9 @@ endif()
 # Append modules dir
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default to release build if none is set.
+# Default to debug build if none is set.
 if (NOT CMAKE_BUILD_TYPE)
-	set( CMAKE_BUILD_TYPE Release )
+	set( CMAKE_BUILD_TYPE Debug )
 endif()
 
 # Install path
