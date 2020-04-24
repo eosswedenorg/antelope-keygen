@@ -30,4 +30,4 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Author
 
-Henrik Hautakoski - [henrik@eossweden.org](mailto:henrik@eossweden.org)
+Henrik Hautakoski - [Sw/eden](https://eossweden.org/) - [henrik@eossweden.org](mailto:henrik@eossweden.org)
