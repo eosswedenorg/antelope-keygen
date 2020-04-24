@@ -67,6 +67,11 @@ install(FILES ${PROJECT_LICENSE_FILE}
 		COMPONENT gui
 		RENAME LICENSE.gui)
 
+install(FILES README.md
+		DESTINATION ${CMAKE_INSTALL_SHAREDIR}
+		COMPONENT gui
+		RENAME README.gui.md)
+
 # --------------------------------
 #  Package
 # --------------------------------
