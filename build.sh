@@ -1,11 +1,11 @@
 #!/bin/bash
 
 function usage() {
-	echo "Usage: ${0##*/} [ -h|--help ] [ --no-cli ] [ --gui] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [--pkg-type nsis|deb|zip|tgz] [ --disable-threads ] [ --force-ansi ]"
+	echo "Usage: ${0##*/} [ -h|--help ] [ --cli|--no-cli ] [ --gui|--no-gui] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [--pkg-type nsis|deb|zip|tgz] [ --disable-threads ] [ --force-ansi ]"
 	exit 1
 }
 
-options=$(getopt -n "${0##*/}" -o "lht:" -l "help,no-cli,gui,type:,pkg-type:,disable-threads,force-ansi" -- "$@")
+options=$(getopt -n "${0##*/}" -o "lht:" -l "help,cli,no-cli,gui,no-gui,type:,pkg-type:,disable-threads,force-ansi" -- "$@")
 
 [ $? -eq 0 ] || usage
 
@@ -33,10 +33,14 @@ while true; do
 		TARGET="package"
 		ARGS="${ARGS} -DCPACK_GENERATOR=${1^^}"
 		;;
+	--cli)
+		ARGS="${ARGS} -DCOMPONENT_CLI=ON" ;;
 	--no-cli)
 		ARGS="${ARGS} -DCOMPONENT_CLI=OFF" ;;
 	--gui)
 		ARGS="${ARGS} -DCOMPONENT_GUI=ON" ;;
+	--no-gui)
+		ARGS="${ARGS} -DCOMPONENT_GUI=OFF" ;;
 	--disable-threads)
 		ARGS="${ARGS} -DUSE_THREADS=OFF" ;;
 	--force-ansi)
