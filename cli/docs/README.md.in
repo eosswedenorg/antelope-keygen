@@ -3,6 +3,8 @@
 
 Generate public and private keypair for [EOSIO](https://eos.io/)
 
+Source code is available at [github.com](https://github.com/eosswedenorg/eosio-keygen)
+
 ## Synopsis
 
 ```shell
@@ -89,7 +91,7 @@ However, use this at your own risk. we cannot guarantee that the keys are
 cryptographically secure as this depends on OpenSSL's implementation (alto it is
 widely used and should be safe)
 
-Please read the `LICENSE` file.
+Please read the `LICENSE.cli` file.
 
 ```
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,

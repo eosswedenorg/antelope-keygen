@@ -51,6 +51,11 @@ install(FILES ${PROJECT_LICENSE_FILE}
 
 # Documentation
 
+configure_file( docs/README.md.in ${PROJECT_BINARY_DIR}/README.cli.md @ONLY )
+install(FILES ${PROJECT_BINARY_DIR}/README.cli.md
+		DESTINATION ${CMAKE_INSTALL_SHAREDIR}
+		COMPONENT cli)
+
 if (UNIX)
 	configure_file( docs/eosio-keygen.1.in ${PROJECT_BINARY_DIR}/man1/eosio-keygen.1 )
 
