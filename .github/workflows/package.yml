@@ -10,16 +10,27 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-16.04, ubuntu-18.04 ]
-    name: ${{matrix.os}}
+        component: [ cli, gui ]
+        include:
+          - component: cli
+            build-opts: --cli --no-gui -t Release --pkg-type deb
+          - component: gui
+            build-opts: --no-cli --gui -t Release --pkg-type deb
+    name: ${{matrix.os}} (${{matrix.component}})
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v1
 
+      - name: Qt
+        if: startsWith(matrix.component, 'gui')
+        shell: bash
+        run: sudo apt-get install qt5-default
+
       - name: Package
         id: package
         run: |
-            ./build.sh -t Release --pkg-type deb
-            FILE=$(ls build/*.deb | head -1)
+            ./build.sh ${{matrix.build-opts}}
+            FILE=$(ls build/eosio-*.deb | head -1)
             echo "::set-output name=filename::$FILE"
             echo "::set-output name=name::$(basename $FILE)"
 
