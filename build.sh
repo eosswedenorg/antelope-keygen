@@ -13,6 +13,7 @@ eval set -- "$options"
 
 ONLY_CONFIG=0
 ARGS=""
+BUILD_ARGS="--clean-first"
 while true; do
 
 	case $1 in
@@ -23,6 +24,7 @@ while true; do
 		    usage
 		}
 		ARGS="${ARGS} -DCMAKE_BUILD_TYPE=${1}"
+		BUILD_ARGS="${BUILD_ARGS} --config ${1}"
 		;;
 	--pkg-type)
 		shift
@@ -61,5 +63,5 @@ rm build/CMakeCache.txt 2> /dev/null
 
 cmake -B build $ARGS .
 if [ ${ONLY_CONFIG} -eq 0 ]; then
-	cmake --build build --clean-first --target ${TARGET}
+	cmake --build build ${BUILD_ARGS} --target ${TARGET}
 fi
