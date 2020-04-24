@@ -83,14 +83,6 @@ configure_file(config.hpp.in "${PROJECT_BINARY_DIR}/config.hpp" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
 
 # --------------------------------
-#  Install
-# --------------------------------
-
-# Readme and license
-install(FILES README.md ${PROJECT_LICENSE_FILE}
-		DESTINATION ${CMAKE_INSTALL_SHAREDIR})
-
-# --------------------------------
 #  Package
 # --------------------------------
 

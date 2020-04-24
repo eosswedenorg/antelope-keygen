@@ -62,6 +62,11 @@ install(TARGETS ${PROGRAM_EXE}
 		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 		COMPONENT gui)
 
+install(FILES ${PROJECT_LICENSE_FILE}
+		DESTINATION ${CMAKE_INSTALL_SHAREDIR}
+		COMPONENT gui
+		RENAME LICENSE.gui)
+
 # --------------------------------
 #  Package
 # --------------------------------
