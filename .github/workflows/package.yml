@@ -63,7 +63,7 @@ jobs:
         uses: jurplel/install-qt-action@v2
         with:
           arch: ${{ matrix.qt-arch }}
-          version: '5.9'
+          version: '5.11.0'
 
       - name: Configure
         run: cmake -A ${{matrix.arch}} -DCOMPONENT_GUI=ON -DCOMPONENT_CLI=ON -D CMAKE_BUILD_TYPE=Release -D CPACK_GENERATOR=NSIS -S . -B build
