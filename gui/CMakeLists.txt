@@ -72,6 +72,10 @@ install(FILES README.md
 		COMPONENT gui
 		RENAME README.gui.md)
 
+install(FILES LICENSE.qt5
+		DESTINATION ${CMAKE_INSTALL_SHAREDIR}
+		COMPONENT gui)
+
 # --------------------------------
 #  Package
 # --------------------------------
