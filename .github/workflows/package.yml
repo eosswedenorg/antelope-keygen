@@ -49,6 +49,11 @@ jobs:
     strategy:
       matrix:
         arch: [ Win32, x64 ]
+        include:
+          - arch: Win32
+            qt-arch: win32_msvc2015
+          - arch: x64
+            qt-arch: win64_msvc2015_64
     name: Windows (${{matrix.arch}})
     runs-on: windows-latest
     steps:
@@ -57,6 +62,7 @@ jobs:
       - name: Qt
         uses: jurplel/install-qt-action@v2
         with:
+          arch: ${{ matrix.qt-arch }}
           version: '5.9'
 
       - name: Configure
