@@ -52,6 +52,15 @@ endif (WIN32)
 # Should be used to cache large downloaded data that won't be deleted on clean builds.
 set( DOWNLOAD_CACHE_DIR ${CMAKE_CURRENT_LIST_DIR}/.cache )
 
+set( components )
+if (COMPONENT_CLI)
+	list(APPEND components cli )
+endif()
+
+if (COMPONENT_GUI)
+	list(APPEND components gui )
+endif()
+
 # --------------------------------
 #  Compiler settings
 # --------------------------------
@@ -88,7 +97,7 @@ include_directories(${PROJECT_BINARY_DIR})
 
 include(CPackConfig)
 
-set( CPACK_COMPONENTS_ALL cli gui )
+set( CPACK_COMPONENTS_ALL ${components} )
 
 if (CPACK_GENERATOR MATCHES "^[Nn][Ss][Ii][Ss]$")
 	set( CPACK_RESOURCE_FILE_LICENSE ${PROJECT_LICENSE_FILE} )
@@ -103,13 +112,9 @@ configure_file(cmake/CPackProperties.cmake.in ${CPACK_PROPERTIES_FILE} @ONLY)
 
 add_subdirectory( common )
 
-if (COMPONENT_CLI)
-	add_subdirectory( cli )
-endif()
-
-if (COMPONENT_GUI)
-	add_subdirectory( gui )
-endif()
+foreach(comp ${components})
+	add_subdirectory( ${comp} )
+endforeach()
 
 # --------------------------------
 #  CPack
