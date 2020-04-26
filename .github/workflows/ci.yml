@@ -11,7 +11,7 @@ jobs:
   compile:
     strategy:
       matrix:
-        os: [ ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest ]
+        os: [ ubuntu-18.04, macos-latest, windows-latest ]
         build: [ cli, cli-mt, cli-ansi, cli-ansi-mt, gui, gui-mt ]
         include:
           - build: cli
