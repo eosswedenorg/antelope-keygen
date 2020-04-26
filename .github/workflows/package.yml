@@ -23,7 +23,7 @@ jobs:
       - name: Qt
         if: startsWith(matrix.component, 'gui')
         shell: bash
-        run: sudo apt-get install qt5-default
+        run: sudo apt-get install qt5-default=5.9.5+dfsg-0ubuntu2.5
 
       - name: Package
         id: package

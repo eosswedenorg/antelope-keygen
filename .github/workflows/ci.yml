@@ -41,7 +41,7 @@ jobs:
     - name: Qt - Ubuntu
       if: startsWith(matrix.build, 'gui') && runner.os == 'Linux'
       shell: bash
-      run: sudo apt-get install qt5-default
+      run: sudo apt-get install qt5-default=5.9.5+dfsg-0ubuntu2.5
 
     - name: Qt - Windows/Mac
       if: startsWith(matrix.build, 'gui') && runner.os != 'Linux'
