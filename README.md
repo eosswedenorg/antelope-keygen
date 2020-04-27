@@ -13,6 +13,11 @@ You will need `libeosio` and `cmake 3.15` or later to compile this project.
 
 ### Linux/MacOS
 
+**NOTE:** Only Ubuntu 18.04 is officially supported.
+
+The project should compile fine on most versions/distros but it is only tested
+and distributed for Ubuntu 18.04 by [Sw/eden](www.eossweden.org).
+
 #### Dependencies
 
 #### Linux
