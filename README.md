@@ -11,6 +11,8 @@ This program generates public and private keypair for [EOS](https://eos.io/)
 
 You will need `libeosio` and `cmake 3.15` or later to compile this project.
 
+`Qt 5.9.0` or later is required for the graphical program.
+
 ### Linux/MacOS
 
 **NOTE:** Only Ubuntu 18.04 is officially supported.
@@ -50,6 +52,19 @@ $ wget -O cmake.sh https://github.com/Kitware/CMake/releases/download/v3.15.5/cm
 
 Other methods is documanted at https://cmake.org/download
 
+**Qt (only for gui program)**
+
+You will need to install `qt >= 5.9.0`
+
+On **ubuntu** you can do this via `apt`
+
+```
+$ apt-get install qt5-default
+```
+
+For other distributions, download the official [qt-installer](https://www.qt.io/download-qt-installer).
+It is recommended to install the latest stable version.
+
 #### MacOS
 
 **NOTE:** Support for MacOS is still experimental and may or may not work as expected.
@@ -64,6 +79,14 @@ $ brew install cmake
 If you need a newer version of cmake, you can download the official `.dmg` file: [cmake-3.15.7-Darwin-x86_64.dmg](https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Darwin-x86_64.dmg). or see https://cmake.org/download for other versions.
 
 `libeosio` needs to be compiled and installed from source. [Go here](https://github.com/eosswedenorg/libeosio)
+
+**Qt (only for gui program)**
+
+This can be installed with brew.
+
+```sh
+$ brew install qt
+```
 
 #### Build
 
@@ -87,7 +110,9 @@ Download and install `cmake` version `3.15` or newer from [cmake.org](https://cm
 
 You will also need a compiler. [Build Tools for Visual Studio 2019](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=16) (Selecting C++ during installation) is recommended.
 
+**Qt (only for gui program)**
 
+Download the official [qt-installer](https://www.qt.io/download-qt-installer) and follow the steps. It is recommended to install the latest stable version.
 
 #### Build.
 
@@ -103,6 +128,14 @@ C:\repo> mkdir build
 C:\repo> cd build
 C:\repo\build> cmake -D OPENSSL_ROOT_DIR="C:/path/to/openssl-1.1/x86" ..
 C:\repo\build> cmake --build . --config Release
+```
+
+**Qt**
+
+If you are compiling the gui program. you will need to point `cmake` to the location `qt` where installed. this can be done by the `CMAKE_PREFIX_PATH` variable:
+
+```
+C:\repo> cmake -D CMAKE_PREFIX_PATH="C:/path/to/qt/msvc2017_64"
 ```
 
 ## Compile options
