@@ -52,6 +52,8 @@ Other methods is documanted at https://cmake.org/download
 
 #### MacOS
 
+**NOTE:** Support for MacOS is still experimental and may or may not work as expected.
+
 You must have a compiler installed. This project is known to build with `Xcode 11.0` but other versions should work.
 
 You need to have cmake installed also, this can be done with this `brew` command:
