@@ -91,6 +91,12 @@ add_compile_options(
 configure_file(config.hpp.in "${PROJECT_BINARY_DIR}/config.hpp" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
 
+# Bundle eosio-extras on windows.
+if (WIN32)
+	include(extras)
+	list(APPEND components extras )
+endif()
+
 # --------------------------------
 #  Package
 # --------------------------------
@@ -113,7 +119,9 @@ configure_file(cmake/CPackProperties.cmake.in ${CPACK_PROPERTIES_FILE} @ONLY)
 add_subdirectory( common )
 
 foreach(comp ${components})
-	add_subdirectory( ${comp} )
+	if ( EXISTS ${CMAKE_CURRENT_LIST_DIR}/${comp} )
+		add_subdirectory( ${comp} )
+	endif()
 endforeach()
 
 # --------------------------------
