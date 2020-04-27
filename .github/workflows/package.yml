@@ -15,7 +15,7 @@ jobs:
             build-opts: --cli --no-gui -t Release --pkg-type deb
           - component: gui
             build-opts: --no-cli --gui -t Release --pkg-type deb
-    name: ${{matrix.os}} (${{matrix.component}})
+    name: Ubuntu (${{matrix.component}})
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
