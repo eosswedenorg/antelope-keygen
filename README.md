@@ -124,10 +124,8 @@ you need to set `OPENSSL_ROOT_DIR` to the directory where you unpacked
 For example:
 
 ```
-C:\repo> mkdir build
-C:\repo> cd build
-C:\repo\build> cmake -D OPENSSL_ROOT_DIR="C:/path/to/openssl-1.1/x86" ..
-C:\repo\build> cmake --build . --config Release
+C:\repo> cmake -D OPENSSL_ROOT_DIR="C:/path/to/openssl-1.1/x86" -B build
+C:\repo> cmake --build build --config Release
 ```
 
 **Qt**
