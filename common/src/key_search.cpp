@@ -83,6 +83,12 @@ void KeySearch::_search_linear()
 	}
 }
 
+void KeySearch::abort()
+{
+	// exit find() operation by setting m_max to zero.
+	m_max = 0;
+}
+
 void KeySearch::find(size_t num_results)
 {
 	m_count = 0;

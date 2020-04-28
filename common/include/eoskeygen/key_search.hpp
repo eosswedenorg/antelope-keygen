@@ -71,6 +71,12 @@ public :
 	void setThreadCount(size_t num);
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 
+	// Aborts find() operation if started.
+	// This is useful for multithreaded code (like GUI application)
+	// If find() is started as a seperate thread. This method could be called
+	// from the gui thread if the user presses "cancel" button.
+	void abort();
+
 	// Perform a search.
 	void find(size_t num_results);
 
