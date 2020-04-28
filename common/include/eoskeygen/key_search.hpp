@@ -83,14 +83,20 @@ protected :
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 	void _thr_proc();
 
-	void _search_mt(size_t n);
+	void _search_mt();
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 
-	void _search_linear(size_t n);
+	void _search_linear();
 
 protected :
 	// List of words to search for.
 	strlist_t m_words;
+
+	// Max keys to search for.
+	std::size_t m_max;
+
+	// Current number of keys found.
+	std::size_t m_count;
 
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 	// Number of threads to use.

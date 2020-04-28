@@ -31,39 +31,33 @@
 
 namespace eoskeygen {
 
-// Max keys to search for,
-std::size_t g_max;
-
-// How many keys we have found so far.
-std::size_t g_count;
-
-// Mutex guard for g_count.
+// Mutex guard for m_count.
 std::mutex g_count_mtx;
 
 // Thread process.
-void KeySearch::_thr_proc() {
-
+void KeySearch::_thr_proc()
+{
 	struct libeosio::ec_keypair pair;
 
-	while (g_count < g_max) {
+	while (m_count < m_max) {
 		struct result res;
 
 		libeosio::ec_generate_key(&pair);
 		if (_contains_word(&pair, res)) {
 
 			// Guard output with mutex, so we don't get
-			// interrupted mid write and can write to g_count and res safely.
+			// interrupted mid write and can write to m_count and res safely.
 			const std::lock_guard<std::mutex> lock(g_count_mtx);
 
-			// It is possible g_count was updated by another thread
+			// It is possible m_count was updated by another thread
 			// after we checked it in the while loop.
 			// So while we have the lock, we need to check it again.
-			if (g_count >= g_max) {
+			if (m_count >= m_max) {
 				return;
 			}
 
 			// Update count and call result function.
-			g_count++;
+			m_count++;
 			m_callback->onResult(&pair, res);
 		}
 	}
@@ -79,15 +73,11 @@ size_t KeySearch::max_threads()
 	return std::thread::hardware_concurrency();
 }
 
-void KeySearch::_search_mt(size_t n)
+void KeySearch::_search_mt()
 {
 	std::vector<std::thread> t;
 
 	t.resize(m_threads - 1);
-
-	// Setup global variables for the threads.
-	g_max = n;
-	g_count = 0;
 
 	// Launch them.
 	for(std::size_t i = 0; i < t.size(); i++) {

@@ -31,10 +31,12 @@
 namespace eoskeygen {
 
 KeySearch::KeySearch() :
+	m_max		(0),
+	m_count		(0),
 #ifdef EOSIOKEYGEN_HAVE_THREADS
-	m_threads(0),
+	m_threads	(0),
 #endif
-	m_callback(NULL)
+	m_callback	(NULL)
 {
 }
 
@@ -67,32 +69,34 @@ void KeySearch::setCallback(IKeySearchResult* callback)
 	m_callback = callback;
 }
 
-void KeySearch::_search_linear(size_t n) {
-
-	size_t count = 0;
+void KeySearch::_search_linear()
+{
 	struct libeosio::ec_keypair pair;
 
-	while (count < n) {
+	while (m_count < m_max) {
 		struct result res;
 		libeosio::ec_generate_key(&pair);
 		if (_contains_word(&pair, res)) {
 			m_callback->onResult(&pair, res);
-			count++;
+			m_count++;
 		}
 	}
 }
 
-void KeySearch::find(size_t num_results) {
+void KeySearch::find(size_t num_results)
+{
+	m_count = 0;
+	m_max = num_results;
 
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 	// Only do multithread if number of threads makes sense.
 	if (m_threads >= 2) {
-		_search_mt(num_results);
+		_search_mt();
 		return;
 	}
 #endif /* HAVE_THREADS */
 
-	_search_linear(num_results);
+	_search_linear();
 }
 
 bool KeySearch::_contains_word(const struct libeosio::ec_keypair* key, struct result& result) {
