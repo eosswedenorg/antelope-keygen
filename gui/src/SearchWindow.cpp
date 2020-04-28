@@ -214,7 +214,7 @@ void SearchWindow::search()
 	m_ksearch.setThreadCount(m_num_threads.value());
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 
-	QFuture<void> future = QtConcurrent::run(m_ksearch, &eoskeygen::KeySearch::find, m_num_results.value());
+	QFuture<void> future = QtConcurrent::run(&m_ksearch, &eoskeygen::KeySearch::find, m_num_results.value());
 	m_worker.setFuture(future);
 
 	m_status.setText("Searching for: " + QString::fromStdString(eoskeygen::strlist::join(list, ", ")));
