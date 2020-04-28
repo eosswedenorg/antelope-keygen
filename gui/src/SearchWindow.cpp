@@ -186,6 +186,7 @@ void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct
 void SearchWindow::search()
 {
 	if (m_worker.isRunning()) {
+		m_ksearch.abort();
 		return;
 	}
 
@@ -247,12 +248,13 @@ void SearchWindow::langFileAdd()
 
 void SearchWindow::searchStarted()
 {
+	m_btn_exec.setText("Cancel");
+
 	m_txt_search.setEnabled(false);
 	m_txt_search.setHidden(true);
 	m_dict_lang.setEnabled(false);
 	m_dict_file.setEnabled(false);
 	m_leet_cb.setEnabled(false);
-	m_btn_exec.setEnabled(false);
 	m_btn_clear.setEnabled(false);
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 	m_num_threads.setEnabled(false);
@@ -262,12 +264,13 @@ void SearchWindow::searchStarted()
 
 void SearchWindow::searchFinished()
 {
+	m_btn_exec.setText("Search");
+
 	m_txt_search.setEnabled(true);
 	m_txt_search.setHidden(false);
 	m_dict_lang.setEnabled(true);
 	m_dict_file.setEnabled(true);
 	m_leet_cb.setEnabled(true);
-	m_btn_exec.setEnabled(true);
 	m_btn_clear.setEnabled(true);
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 	m_num_threads.setEnabled(true);
