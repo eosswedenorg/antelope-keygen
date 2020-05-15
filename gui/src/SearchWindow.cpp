@@ -31,6 +31,7 @@
 #include <libeosio/WIF.hpp>
 #include <eoskeygen/core/leet.hpp>
 #include <eoskeygen/core/string.hpp>
+#include "gui_text.h"
 #include "config.hpp"
 #include "helpers.hpp"
 #include "SearchWindow.hpp"
@@ -61,6 +62,9 @@ m_btn_clear		("Clear")
 
 	// First row.
 	m_dict_lang.addItems(get_files(CONFIG_DICT_FULL_PATH));
+	m_dict_lang.setToolTip(EOSIOKEYGEN_GUI_TEXT_DICT_LANG_TOOLTIP);
+	m_dict_file.setToolTip(EOSIOKEYGEN_GUI_TEXT_DICT_FILE_TOOLTIP);
+
 	m_layout.addWidget(&m_dict_lang, 0, 0);
 	m_layout.addWidget(&m_dict_file, 0, 1);
 
