@@ -25,7 +25,7 @@
 #include <QMenuBar>
 #include <QGridLayout>
 #include <QStackedWidget>
-#include "gui_about.h"
+#include "gui_text.h"
 #include "GenerateWindow.hpp"
 #include "SearchWindow.hpp"
 #include "MainWindow.hpp"
@@ -59,5 +59,7 @@ void MainWindow::switchToSearch()
 
 void MainWindow::showAbout()
 {
-	QMessageBox::about(this, EOSIOKEYGEN_GUI_ABOUT_TITLE, EOSIOKEYGEN_GUI_ABOUT_TEXT);
+	QMessageBox::about(this,
+		EOSIOKEYGEN_GUI_TEXT_ABOUT_TITLE,
+		EOSIOKEYGEN_GUI_TEXT_ABOUT_BODY);
 }

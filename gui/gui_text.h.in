@@ -21,12 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_GUI_ABOUT_H
-#define EOSIOKEYGEN_GUI_ABOUT_H
+#ifndef EOSIOKEYGEN_GUI_TEXT_H
+#define EOSIOKEYGEN_GUI_TEXT_H
 
-#define EOSIOKEYGEN_GUI_ABOUT_TITLE "@PROJECT_NAME@ - About"
+#include <config.hpp>
 
-#define EOSIOKEYGEN_GUI_ABOUT_TEXT \
+#define EOSIOKEYGEN_GUI_TEXT_ABOUT_TITLE "@PROJECT_NAME@ - About"
+
+#define EOSIOKEYGEN_GUI_TEXT_ABOUT_BODY \
 	"<h1>@PROJECT_NAME@ - v@PROJECT_VERSION@</h1>" \
 	"<p>@PROJECT_DESCRIPTION@</p>" \
 	"<p><a href=\"@PROJECT_HOMEPAGE_URL@\">@PROJECT_HOMEPAGE_URL@</a></p>" \
@@ -34,4 +36,19 @@
 	"<h2>Author</h2>" \
 	"<p>@GUI_ABOUT_AUTHOR@</p>"
 
-#endif /* EOSIOKEYGEN_CONFIG_ABOUT_H */
+#define EOSIOKEYGEN_GUI_TEXT_DICT_LANG_TOOLTIP \
+	"<p>Highlight words from given language dictionary in the found keys (note that the words " \
+	"<strong>are not</strong> used for search. only for highlight output).</p>" \
+	"<p>There can be more then one language. In that case contents " \
+	"of all languges are merged into one dictionary.</p>" \
+	"<p>The langauges are stored in files at <i>" CONFIG_SHARE_FULL_PATH "/dict</i></p>"
+
+
+#define EOSIOKEYGEN_GUI_TEXT_DICT_FILE_TOOLTIP \
+	"<p>Use words found in file (separated by newline) to highlight " \
+	"words in the keys found (note that the words in this " \
+	"file are not used for search. only for highlight output).</p>" \
+	"<p>There can be more then one file. In that case contents " \
+	"of all files are merged into one dictionary.</p>"
+
+#endif /* EOSIOKEYGEN_GUI_TEXT_H */
