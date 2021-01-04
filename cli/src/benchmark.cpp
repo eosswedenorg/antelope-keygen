@@ -25,29 +25,25 @@
 #include <libeosio/ec.hpp>
 #include "benchmark.hpp"
 
-using std::chrono::steady_clock;
-using std::chrono::duration;
-using std::chrono::time_point;
-
 namespace eoskeygen {
 
-void benchmark(size_t num_keys, struct benchmark_result* res) {
+std::chrono::duration<float> _run_benchmark(size_t num_keys) {
+	auto start = std::chrono::steady_clock::now();
+	for(size_t i = 0; i < num_keys; i++) {
+		struct libeosio::ec_keypair k;
+		libeosio::ec_generate_key(&k);
+	}
+	return std::chrono::steady_clock::now() - start;
+}
 
-	time_point<steady_clock> start;
+void benchmark(size_t num_keys, struct benchmark_result* res) {
 
 	if (num_keys < 1) {
 		res->sec = res->kps = 0;
 		return;
 	}
 
-	start = steady_clock::now();
-
-	for(size_t i = 0; i < num_keys; i++) {
-		struct libeosio::ec_keypair k;
-		libeosio::ec_generate_key(&k);
-	}
-
-	res->sec = duration<float>(steady_clock::now() - start).count();
+	res->sec = _run_benchmark(num_keys).count();
 	res->kps = static_cast<float>(num_keys) / res->sec;
 }
 
