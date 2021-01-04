@@ -44,47 +44,6 @@ bool option_l33t = false;
 size_t option_num_threads = eoskeygen::KeySearch::max_threads();
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 
-int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
-
-	eoskeygen::KeySearch ks;
-	eoskeygen::CliKeySearchResult rs(dict);
-
-	ks.setCallback(&rs);
-
-	for(auto it = words.begin(); it != words.end(); it++) {
-		size_t p = libeosio::is_base58(*it);
-		if (p != std::string::npos) {
-			std::cerr << "The word '"
-				<< *it << "' contains an invalid non-base58 character '"
-				<< (*it)[p] << "'" << std::endl;
-			return 1;
-		}
-	}
-
-	if (option_l33t) {
-		for(std::size_t i = 0; i < words.size(); i++) {
-			ks.addList(eoskeygen::l33twords(words[i]));
-		}
-	} else {
-		ks.addList(words);
-	}
-
-#ifdef EOSIOKEYGEN_HAVE_THREADS
-	ks.setThreadCount(option_num_threads);
-#endif /* EOSIOKEYGEN_HAVE_THREADS */
-
-	std::cout << "Searching for " << count
-		<< " keys containing: " << eoskeygen::strlist::join(ks.getList(), ",")
-#ifdef EOSIOKEYGEN_HAVE_THREADS
-		<< ", Using: " << option_num_threads << " threads"
-#endif /* EOSIOKEYGEN_HAVE_THREADS */
-		<< std::endl;
-
-	ks.find(count);
-
-	return 0;
-}
-
 void usage(const char *name) {
 
 	std::cout << name
@@ -140,6 +99,47 @@ void usage(const char *name) {
 	std::cout << " Benchmark: " << std::endl
 			  << "  performs a benchmark test, generating <num> keys and measuring the time." << std::endl
 			  << std::endl;
+}
+
+int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
+
+	eoskeygen::KeySearch ks;
+	eoskeygen::CliKeySearchResult rs(dict);
+
+	ks.setCallback(&rs);
+
+	for(auto it = words.begin(); it != words.end(); it++) {
+		size_t p = libeosio::is_base58(*it);
+		if (p != std::string::npos) {
+			std::cerr << "The word '"
+				<< *it << "' contains an invalid non-base58 character '"
+				<< (*it)[p] << "'" << std::endl;
+			return 1;
+		}
+	}
+
+	if (option_l33t) {
+		for(std::size_t i = 0; i < words.size(); i++) {
+			ks.addList(eoskeygen::l33twords(words[i]));
+		}
+	} else {
+		ks.addList(words);
+	}
+
+#ifdef EOSIOKEYGEN_HAVE_THREADS
+	ks.setThreadCount(option_num_threads);
+#endif /* EOSIOKEYGEN_HAVE_THREADS */
+
+	std::cout << "Searching for " << count
+		<< " keys containing: " << eoskeygen::strlist::join(ks.getList(), ",")
+#ifdef EOSIOKEYGEN_HAVE_THREADS
+		<< ", Using: " << option_num_threads << " threads"
+#endif /* EOSIOKEYGEN_HAVE_THREADS */
+		<< std::endl;
+
+	ks.find(count);
+
+	return 0;
 }
 
 void cmd_benchmark(size_t num_keys) {
