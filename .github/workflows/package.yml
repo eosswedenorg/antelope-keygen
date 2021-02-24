@@ -9,21 +9,27 @@ jobs:
   ubuntu:
     strategy:
       matrix:
+        os: [ ubuntu-18.04, ubuntu-20.04 ]
         component: [ cli, gui ]
         include:
           - component: cli
             build-opts: --cli --no-gui -t Release --pkg-type deb
           - component: gui
             build-opts: --no-cli --gui -t Release --pkg-type deb
-    name: Ubuntu (${{matrix.component}})
-    runs-on: ubuntu-18.04
+    name: ${{matrix.os}} (${{matrix.component}})
+    runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v1
 
       - name: Qt
         if: startsWith(matrix.component, 'gui')
         shell: bash
-        run: sudo apt-get install qt5-default=5.9.5+dfsg-0ubuntu2.5
+        run: |
+          if [ "${{matrix.os}}" == "ubuntu-20.04" ]; then
+            sudo apt-get install qt5-default=5.12.8+dfsg-0ubuntu1
+          else :
+            sudo apt-get install qt5-default=5.9.5+dfsg-0ubuntu2.5
+          fi
 
       - name: Package
         id: package
