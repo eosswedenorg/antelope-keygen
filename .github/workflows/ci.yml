@@ -13,7 +13,7 @@ jobs:
   compile:
     strategy:
       matrix:
-        os: [ ubuntu-18.04, macos-latest, windows-latest ]
+        os: [ ubuntu-20.04, ubuntu-18.04, macos-latest, windows-latest ]
         build: [ cli, cli-mt, cli-ansi, cli-ansi-mt, gui, gui-mt ]
         include:
           - build: cli
@@ -43,7 +43,12 @@ jobs:
     - name: Qt - Ubuntu
       if: startsWith(matrix.build, 'gui') && runner.os == 'Linux'
       shell: bash
-      run: sudo apt-get install qt5-default=5.9.5+dfsg-0ubuntu2.5
+      run: |
+        if [ "${{matrix.os}}" == "ubuntu-20.04" ]; then
+          sudo apt-get install qt5-default=5.12.8+dfsg-0ubuntu1
+        else :
+          sudo apt-get install qt5-default=5.9.5+dfsg-0ubuntu2.5
+        fi
 
     - name: Qt - Windows/Mac
       if: startsWith(matrix.build, 'gui') && runner.os != 'Linux'
