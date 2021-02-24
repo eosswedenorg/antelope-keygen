@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.15)
 # --------------------------------
 
 project(eosio-keygen
-	VERSION 1.0.6
+	VERSION 1.0.7
 	DESCRIPTION "Keygenerator for EOSIO"
 	HOMEPAGE_URL "https://github.com/eosswedenorg/eosio-keygen" )
 
