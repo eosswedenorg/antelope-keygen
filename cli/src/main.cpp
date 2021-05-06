@@ -39,6 +39,7 @@
 
 // Command line options.
 bool option_l33t = false;
+std::string key_prefix = "EOS";
 
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 size_t option_num_threads = eoskeygen::KeySearch::max_threads();
@@ -48,10 +49,10 @@ void usage(const char *name) {
 
 	std::cout << std::endl
 		<< "Usage:" << std::endl
-		<< "  " << name << std::endl;
+		<< " " << name << " [ options ]" << std::endl;
 
 	std::cout << "  " << name
-		<< " search [ -m | --l33t"
+		<< " [ options ] search [ -m | --l33t"
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 		<< " | --threads=<num>"
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
@@ -60,7 +61,7 @@ void usage(const char *name) {
 		<< " ]"
 		<< std::endl;
 
-	std::cout << "  " << name << " benchmark [ <num:1000> ]" << std::endl;
+	std::cout << "  " << name << " [ options ] benchmark [ <num:1000> ]" << std::endl;
 
 	std::cout << "  " << name << " -h | --help" << std::endl;
 	std::cout << "  " << name << " -v" << std::endl;
@@ -73,6 +74,8 @@ void usage(const char *name) {
 		<< "  -h --help     Shows this help text."
 		<< std::endl << std::endl
 		<< "  -v            Shows version."
+		<< std::endl << std::endl
+		<< "  --fio         Generate keys from FIO network instead of EOSIO."
 		<< std::endl << std::endl;
 
 	std::cout << "search: " << std::endl
@@ -112,7 +115,7 @@ void usage(const char *name) {
 int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
 
 	eoskeygen::KeySearch ks;
-	eoskeygen::CliKeySearchResult rs(dict);
+	eoskeygen::CliKeySearchResult rs(dict, key_prefix);
 
 	ks.setCallback(&rs);
 
@@ -169,11 +172,16 @@ int main(int argc, char **argv) {
 	// when parsing command line.
 	int p = 1;
 
+	if (p < argc && !strcmp(argv[p], "--fio")) {
+		p++;
+		key_prefix = "FIO";
+	}
+
 	// No args, just print a key.
-	if (argc <= 1) {
+	if (p >= argc) {
 		struct libeosio::ec_keypair pair;
 		libeosio::ec_generate_key(&pair);
-		libeosio::wif_print_key(&pair);
+		libeosio::wif_print_key(&pair, key_prefix);
 		return 0;
 	}
 
