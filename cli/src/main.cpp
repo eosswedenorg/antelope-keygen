@@ -46,57 +46,65 @@ size_t option_num_threads = eoskeygen::KeySearch::max_threads();
 
 void usage(const char *name) {
 
-	std::cout << name
-		<< " [ -h | --help | -v | search [ -m | --l33t"
+	std::cout << std::endl
+		<< "Usage:" << std::endl
+		<< "  " << name << std::endl;
+
+	std::cout << "  " << name
+		<< " search [ -m | --l33t"
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 		<< " | --threads=<num>"
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 		<< " | --dict=<file> ... "
 		<< " | --lang=<value> ... ] <word_list>|file:<filename> [ <count:10> ]"
-		<< " | benchmark [ <num:1000> ]"
 		<< " ]"
-		<< std::endl << std::endl;
+		<< std::endl;
 
-	std::cout << " - Output one EOSIO key pair if no arguments are given" << std::endl << std::endl;
+	std::cout << "  " << name << " benchmark [ <num:1000> ]" << std::endl;
+
+	std::cout << "  " << name << " -h | --help" << std::endl;
+	std::cout << "  " << name << " -v" << std::endl;
+
+	std::cout << std::endl << " - Output one EOSIO key pair if no arguments are given" << std::endl << std::endl;
 
 	// Options
 	std::cout
-		<< " Options:" << std::endl
-		<< "   -h, --help     Shows this help text."
+		<< "Options:" << std::endl
+		<< "  -h --help     Shows this help text."
 		<< std::endl << std::endl
-		<< "   -v             Shows version."
+		<< "  -v            Shows version."
 		<< std::endl << std::endl;
 
-	std::cout << " search: " << std::endl
+	std::cout << "search: " << std::endl
 			  << "  performs a search, finding <count> public keys containing" << std::endl
 			  << "  one or more words from <word_list> (separated with ',')." << std::endl
 			  << std::endl
 			  << "  Instead of a list it is possible to specify a file with words" << std::endl
 			  << "  (separated with newline '\\n') using file:<filename>"
 			  << std::endl << std::endl
-			  << "  -m: Monochrome, disables all color output."
+			  << "  -m               Monochrome, disables all color output."
 			  << std::endl << std::endl
-			  << "  --l33t: Takes each word in <word_list> and find all l33tspeak" << std::endl
-			  << "          combinations of that word and uses the new list for the search."
+			  << "  --l33t           Takes each word in <word_list> and find all l33tspeak" << std::endl
+			  << "                   combinations of that word and uses the new list for the search."
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 			  << std::endl << std::endl
-			  << "  --threads=<num>: Use <num> of parallel threads for searching." << std::endl
-			  << "                   Default is what the operating system recomend."
+			  << "  --threads=<num>  Use <num> of parallel threads for searching." << std::endl
+			  << "                   Default is what the operating system recomends."
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 			  << std::endl << std::endl
-			  << "  --dict=<file>: Use words found in <file> (separated by newline) to" << std::endl
-			  << "                 highlight words in the keys found (note that the words in this" << std::endl
-			  << "                 file are not used for search. only for highlight output)." << std::endl
-			  << "                 There can be more then one --dict flag. In that case contents" << std::endl
-			  << "                 of all files are merged into one dictionary." << std::endl
+			  << "  --dict=<file>    Use words found in <file> (separated by newline) to" << std::endl
+			  << "                   highlight words in the keys found (note that the words in this" << std::endl
+			  << "                   file are not used for search. only for highlight output)." << std::endl
+			  << "                   There can be more then one --dict flag. In that case contents" << std::endl
+			  << "                   of all files are merged into one dictionary." << std::endl
 			  << std::endl << std::endl
-			  << "  --lang=<value>: Same as --dict but will use <value>" << std::endl
-			  << "                  to find a file in " << CONFIG_SHARE_FULL_PATH << "/dict." << std::endl
-			  << "                  There can be more then one --lang flag. In that case contents" << std::endl
-			  << "                  of all files are merged into one dictionary." << std::endl
+			  << "  --lang=<value>   Same as --dict but will use <value>" << std::endl
+			  << "                   to find a file in " << CONFIG_SHARE_FULL_PATH << "/dict." << std::endl
+			  << "                   There can be more then one --lang flag. In that case contents" << std::endl
+			  << "                   of all files are merged into one dictionary." << std::endl
 			  << std::endl;
 
-	std::cout << " Benchmark: " << std::endl
+	std::cout << "benchmark: " << std::endl
 			  << "  performs a benchmark test, generating <num> keys and measuring the time." << std::endl
 			  << std::endl;
 }
