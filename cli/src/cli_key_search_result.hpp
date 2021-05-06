@@ -24,6 +24,7 @@
 #ifndef EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 #define EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 
+#include <string>
 #include <libeosio/types.hpp>
 #include <eoskeygen/core/string.hpp>
 #include <eoskeygen/key_search.hpp>
@@ -36,13 +37,15 @@ class Dictionary;
 class CliKeySearchResult : public IKeySearchResult
 {
 public:
-	CliKeySearchResult(const Dictionary& dict);
+	CliKeySearchResult(const Dictionary& dict, const std::string& prefix);
 
 	virtual void onResult(const struct libeosio::ec_keypair* key, const struct KeySearch::result& result);
 
 protected :
 
 	const Dictionary& m_dict;
+
+	std::string m_prefix;
 };
 
 } // namespace eoskeygen
