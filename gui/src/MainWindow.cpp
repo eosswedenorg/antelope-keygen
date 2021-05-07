@@ -26,12 +26,14 @@
 #include <QGridLayout>
 #include <QStackedWidget>
 #include "gui_text.h"
+#include "Settings.hpp"
 #include "GenerateWindow.hpp"
 #include "SearchWindow.hpp"
 #include "MainWindow.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
-QMainWindow	(parent)
+QMainWindow	(parent),
+m_fio_action (nullptr)
 {
 	// Create sub windows and stacked widget.
 	m_stacked = new QStackedWidget();
@@ -40,10 +42,21 @@ QMainWindow	(parent)
 
 	setCentralWidget(m_stacked);
 
-	// Menu bar.
+	// Add to menu bar.
 
 	menuBar()->addAction("Generate", this, SLOT(switchToGenerate()));
 	menuBar()->addAction("Search", this, SLOT(switchToSearch()));
+
+	// Settings
+
+	m_fio_action = new QAction("FIO Keys", this);
+	m_fio_action->setCheckable(true);
+	connect(m_fio_action, SIGNAL(triggered()), this, SLOT(fioKeysCheckboxChanged()));
+
+	QMenu *settings_menu = menuBar()->addMenu("Settings");
+	settings_menu->addAction(m_fio_action);
+
+	// About
 	menuBar()->addAction("About", this, SLOT(showAbout()));
 }
 
@@ -62,4 +75,9 @@ void MainWindow::showAbout()
 	QMessageBox::about(this,
 		EOSIOKEYGEN_GUI_TEXT_ABOUT_TITLE,
 		EOSIOKEYGEN_GUI_TEXT_ABOUT_BODY);
+}
+
+void MainWindow::fioKeysCheckboxChanged()
+{
+	Settings::setGenerateFioKeys(m_fio_action ? m_fio_action->isChecked() : false);
 }

@@ -21,38 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef MAIN_WINDOW_H
-#define MAIN_WINDOW_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
-#include <QAction>
-#include <QPointer>
-#include <QMainWindow>
-
-class QStackedWidget;
-
-class MainWindow : public QMainWindow
+namespace Settings
 {
-	Q_OBJECT
-public:
-    MainWindow(QWidget *parent = 0);
+	bool shouldGenerateFioKeys();
 
-private slots :
-
-	// Switch to generate window.
-	void switchToGenerate();
-
-	// Switch to search window.
-	void switchToSearch();
-
-	void showAbout();
-
-	void fioKeysCheckboxChanged();
-
-private :
-
-	QStackedWidget* m_stacked;
-
-	QPointer<QAction> m_fio_action;
+	void setGenerateFioKeys(bool value);
 };
 
-#endif /* MAIN_WINDOW_H */
+#endif /* SEARCH_WINDOW_H */

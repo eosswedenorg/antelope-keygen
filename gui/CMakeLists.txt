@@ -39,6 +39,7 @@ set( PROGRAM_SRC
 	src/GenerateWindow.cpp
 	src/SearchWindow.cpp
 	src/MultiSelect.cpp
+	src/Settings.cpp
 	src/helpers.cpp
 )
 

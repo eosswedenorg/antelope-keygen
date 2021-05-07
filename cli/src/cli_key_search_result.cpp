@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include <string>
 #include <iostream>
 #include <libeosio/WIF.hpp>
 #include <eoskeygen/core/dictionary.hpp>
@@ -37,8 +38,9 @@ static size_t highlight(console::Color color, const std::string& str, size_t pos
 	return len;
 }
 
-CliKeySearchResult::CliKeySearchResult(const Dictionary& dict) :
-m_dict (dict)
+CliKeySearchResult::CliKeySearchResult(const Dictionary& dict, const std::string& prefix) :
+m_dict (dict),
+m_prefix (prefix)
 {
 }
 
@@ -50,7 +52,7 @@ void CliKeySearchResult::onResult(const struct libeosio::ec_keypair* key, const 
 	std::cout << "----" << std::endl;
 	std::cout << "Found: " << pub.substr(result.pos, result.len) << std::endl;
 
-	std::cout << "Public: EOS";
+	std::cout << "Public: " << m_prefix.substr(0, 3);
 	for(size_t i = 3; i < pub.length(); ) {
 
 		if (i == result.pos) {

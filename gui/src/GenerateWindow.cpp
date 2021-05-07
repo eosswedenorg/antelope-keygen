@@ -28,6 +28,7 @@
 #include <QGuiApplication>
 #include <libeosio/ec.hpp>
 #include <libeosio/WIF.hpp>
+#include "Settings.hpp"
 #include "GenerateWindow.hpp"
 
 void _initKeyWidget(QLineEdit& w) {
@@ -91,12 +92,13 @@ m_btn_copy_both	("Copy keys")
 
 void GenerateWindow::generate_key()
 {
-	std::string pubstr, privstr;
+	std::string pubstr;
 	struct libeosio::ec_keypair pair;
 
 	libeosio::ec_generate_key(&pair);
 
-	m_pub.setText(QString::fromStdString(libeosio::wif_pub_encode(pair.pub)));
+	pubstr = libeosio::wif_pub_encode(pair.pub, Settings::shouldGenerateFioKeys() ? "FIO" : "EOS");
+	m_pub.setText(QString::fromStdString(pubstr));
 	m_priv.setText(QString::fromStdString(libeosio::wif_priv_encode(pair.secret)));
 }
 
