@@ -24,6 +24,8 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
+#include <QAction>
+#include <QPointer>
 #include <QMainWindow>
 
 class QStackedWidget;
@@ -44,9 +46,13 @@ private slots :
 
 	void showAbout();
 
+	void fioKeysCheckboxChanged();
+
 private :
 
 	QStackedWidget* m_stacked;
+
+	QPointer<QAction> m_fio_action;
 };
 
 #endif /* MAIN_WINDOW_H */
