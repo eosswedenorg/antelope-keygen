@@ -31,6 +31,7 @@
 #include <libeosio/WIF.hpp>
 #include <eoskeygen/core/leet.hpp>
 #include <eoskeygen/core/string.hpp>
+#include "Settings.hpp"
 #include "gui_text.h"
 #include "config.hpp"
 #include "helpers.hpp"
@@ -149,7 +150,7 @@ void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct
 {
 	int pos = (int) result.pos;
 	int len = (int) result.len;
- 	QString pub = QString::fromStdString(libeosio::wif_pub_encode(key->pub));
+ 	QString pub = QString::fromStdString(libeosio::wif_pub_encode(key->pub, Settings::shouldGenerateFioKeys() ? "FIO" : "EOS"));
 	QString mid = pub.mid(pos, len);
 	QString left = pub.left(pos);
 	QString right = pub.mid(pos + len, pub.size() - pos);
