@@ -34,6 +34,10 @@ endif()
 
 add_executable( ${PROGRAM_EXE} ${PROGRAM_SOURCE} )
 
+# Include CLI11
+include ( ${CMAKE_SOURCE_DIR}/lib/CLI11/CMakeLists.txt )
+
+target_include_directories( ${PROGRAM_EXE} PRIVATE ${LIBCLI11_INCLUDE} )
 target_link_libraries( ${PROGRAM_EXE} PUBLIC common )
 
 # --------------------------------
@@ -48,6 +52,12 @@ install(FILES ${PROJECT_LICENSE_FILE}
 		DESTINATION ${CMAKE_INSTALL_SHAREDIR}
 		COMPONENT cli
 		RENAME LICENSE.cli)
+
+install (FILES ${LIBCLI11_LICENSE}
+		DESTINATION ${CMAKE_INSTALL_SHAREDIR}
+		COMPONENT cli
+		RENAME LICENSE.libcli11)
+	
 
 # Documentation
 
