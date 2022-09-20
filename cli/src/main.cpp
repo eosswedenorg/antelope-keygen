@@ -23,6 +23,7 @@
  */
 #include <iostream>
 #include <cstring>
+#include <CLI11/CLI11.hpp>
 #include <libeosio/base58.hpp>
 #include <libeosio/ec.hpp>
 #include <libeosio/WIF.hpp>
@@ -42,75 +43,24 @@ bool option_l33t = false;
 std::string key_prefix = "EOS";
 
 #ifdef EOSIOKEYGEN_HAVE_THREADS
-size_t option_num_threads = eoskeygen::KeySearch::max_threads();
+size_t option_num_threads;
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 
-void usage(const char *name) {
+class CustomFormatter : public CLI::Formatter {
+public:
 
-	std::cout << std::endl
-		<< "Usage:" << std::endl
-		<< "  " << name << " [ options ]" << std::endl;
+	std::string make_usage(const CLI::App *app, std::string name) const
+	{
+		std::stringstream out;
 
-	std::cout << "  " << name
-		<< " [ options ] search [ -m | --l33t"
-#ifdef EOSIOKEYGEN_HAVE_THREADS
-		<< " | --threads=<num>"
-#endif /* EOSIOKEYGEN_HAVE_THREADS */
-		<< " | --dict=<file> ... "
-		<< " | --lang=<value> ... ] <word_list>|file:<filename> [ <count:10> ]"
-		<< " ]"
-		<< std::endl;
+		out << std::endl << CLI::Formatter::make_usage(app, name)
+			<< std::endl
+			<< "Outputs one EOSIO key pair if no subcommand is given"
+			<< std::endl;
 
-	std::cout << "  " << name << " [ options ] benchmark [ <num:1000> ]" << std::endl;
-
-	std::cout << "  " << name << " -h | --help" << std::endl;
-	std::cout << "  " << name << " -v" << std::endl;
-
-	std::cout << std::endl << " - Output one EOSIO key pair if no arguments are given" << std::endl << std::endl;
-
-	// Options
-	std::cout
-		<< "Options:" << std::endl
-		<< "  -h --help     Shows this help text."
-		<< std::endl << std::endl
-		<< "  -v            Shows version."
-		<< std::endl << std::endl
-		<< "  --fio         Generate keys from FIO network instead of EOSIO."
-		<< std::endl << std::endl;
-
-	std::cout << "search: " << std::endl
-			  << "  performs a search, finding <count> public keys containing" << std::endl
-			  << "  one or more words from <word_list> (separated with ',')." << std::endl
-			  << std::endl
-			  << "  Instead of a list it is possible to specify a file with words" << std::endl
-			  << "  (separated with newline '\\n') using file:<filename>"
-			  << std::endl << std::endl
-			  << "  -m               Monochrome, disables all color output."
-			  << std::endl << std::endl
-			  << "  --l33t           Takes each word in <word_list> and find all l33tspeak" << std::endl
-			  << "                   combinations of that word and uses the new list for the search."
-#ifdef EOSIOKEYGEN_HAVE_THREADS
-			  << std::endl << std::endl
-			  << "  --threads=<num>  Use <num> of parallel threads for searching." << std::endl
-			  << "                   Default is what the operating system recomends."
-#endif /* EOSIOKEYGEN_HAVE_THREADS */
-			  << std::endl << std::endl
-			  << "  --dict=<file>    Use words found in <file> (separated by newline) to" << std::endl
-			  << "                   highlight words in the keys found (note that the words in this" << std::endl
-			  << "                   file are not used for search. only for highlight output)." << std::endl
-			  << "                   There can be more then one --dict flag. In that case contents" << std::endl
-			  << "                   of all files are merged into one dictionary." << std::endl
-			  << std::endl << std::endl
-			  << "  --lang=<value>   Same as --dict but will use <value>" << std::endl
-			  << "                   to find a file in " << CONFIG_SHARE_FULL_PATH << "/dict." << std::endl
-			  << "                   There can be more then one --lang flag. In that case contents" << std::endl
-			  << "                   of all files are merged into one dictionary." << std::endl
-			  << std::endl;
-
-	std::cout << "benchmark: " << std::endl
-			  << "  performs a benchmark test, generating <num> keys and measuring the time." << std::endl
-			  << std::endl;
-}
+		return out.str();
+	}
+};
 
 int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
 
@@ -144,7 +94,7 @@ int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& d
 	std::cout << "Searching for " << count
 		<< " keys containing: " << eoskeygen::strlist::join(ks.getList(), ",")
 #ifdef EOSIOKEYGEN_HAVE_THREADS
-		<< ", Using: " << option_num_threads << " threads"
+		<< ", Using: " << ks.getThreadCount() << " threads"
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 		<< std::endl;
 
@@ -168,141 +118,115 @@ void cmd_benchmark(size_t num_keys) {
 
 int main(int argc, char **argv) {
 
-	// current position in argv
-	// when parsing command line.
-	int p = 1;
+	CLI::App cmd("Keygenerator for EOSIO", PROGRAM_NAME);
+	std::vector<std::string> dict_list;
+	std::vector<std::string> lang_list;
+	std::string search_words;
+	int search_count;
+	size_t bench_count;
 
-	if (p < argc && !strcmp(argv[p], "--fio")) {
-		p++;
+	CLI::Option* version = cmd.add_flag("-v,--version", "Show version");
+	CLI::Option* fio = cmd.add_flag("--fio", "Generate keys from FIO network instead of EOSIO.");
+
+	// Search
+	CLI::App* search_cmd = cmd.add_subcommand("search",
+		"performs a search, finding <count> public keys containing "
+		"one or more words from <word_list> (separated with \",\")");
+	CLI::Option* monocrome = search_cmd->add_flag("-m", "Monochrome, disables all color output.");
+
+	search_cmd->add_flag("--l33t", option_l33t, "Takes each word in <word_list> and find all l33tspeak"
+		" combinations of that word and uses the new list for the search.");
+
+#ifdef EOSIOKEYGEN_HAVE_THREADS
+	search_cmd->add_option("--threads", option_num_threads,
+		"Use <num> of parallel threads for searching.\n"
+		"Default is what the operating system recomends.")
+		->default_val(eoskeygen::KeySearch::max_threads());
+
+#endif /* EOSIOKEYGEN_HAVE_THREADS */
+
+	search_cmd->add_option("--dict", dict_list, "");
+	search_cmd->add_option("--lang", lang_list, "");
+	search_cmd->add_option("word_list", search_words,
+		"one or more words (separated with \",\")\n\n"
+		"Instead of a list it is possible to specify a file with words\n"
+		"(separated with newline '\\n') using file:<filename>")->required();
+	search_cmd->add_option("count", search_count, "Number of keys to search for before the program terminates.")->default_val(10);
+
+	// Benchmark
+	CLI::App* bench_cmd = cmd.add_subcommand("benchmark", "performs a benchmark test, "
+		"generating <num> keys and measuring the time.");
+	bench_cmd->add_option("count", bench_count, "")->default_val(1000);
+
+	// Parse command line.
+	cmd.formatter(std::make_shared<CustomFormatter>());
+
+	CLI11_PARSE(cmd, argc, argv);
+
+	if (*version) {
+		std::cout << PROGRAM_NAME << ": v" << PROGRAM_VERSION << std::endl;
+		return 0;
+	}
+
+	if (*fio) {
 		key_prefix = "FIO";
 	}
 
-	// No args, just print a key.
-	if (p >= argc) {
+	if (search_cmd->parsed()) {
+		eoskeygen::strlist_t words;
+		eoskeygen::Dictionary dict;
+
+		if (*monocrome) {
+			eoskeygen::console::disable_color = true;
+		}
+
+		for(auto it = dict_list.begin(); it != dict_list.end(); it++) {
+			eoskeygen::Dictionary d;
+
+			if (d.loadFromFile(*it)) {
+				dict.add(d);
+			} else {
+				std::cerr << "Could not load dictionary from file: " << *it << std::endl;
+			}
+		}
+
+		for(auto it = lang_list.begin(); it != lang_list.end(); it++) {
+			eoskeygen::Dictionary d;
+			std::string filename(CONFIG_SHARE_FULL_PATH "/dicts/" + *it);
+
+			if (d.loadFromFile(filename)) {
+				dict.add(d);
+			} else {
+				std::cerr << "Could not load dictionary from language file: " << filename << std::endl;
+			}
+		}
+
+		if (search_words.rfind("file:", 0) == 0) {
+			std::string filename = search_words.substr(5);
+			if (!eoskeygen::readLines(filename, words)) {
+				std::cerr << "Could not read file: " << filename << std::endl;
+				return 0;
+			}
+
+			if (words.size() < 1) {
+				std::cerr << filename << " did not contain any words" << std::endl;
+				return 0;
+			}
+		} else {
+			words = eoskeygen::strlist::splitw(search_words);
+		}
+
+		return cmd_search(words, dict, search_count);
+
+	} else if (bench_cmd->parsed()) {
+		cmd_benchmark(bench_count);
+	}
+	// No subcommand given, just generate and print a keypair.
+	else {
 		struct libeosio::ec_keypair pair;
 		libeosio::ec_generate_key(&pair);
 		libeosio::wif_print_key(&pair, key_prefix);
 		return 0;
-	}
-
-	if (!strcmp(argv[p], "-h") || !strcmp(argv[p], "--help")) {
-		usage(argv[0]);
-		return 0;
-	}
-
-	if (!strcmp(argv[p], "-v")) {
-		std::cout << PROGRAM_NAME << " v" << PROGRAM_VERSION << std::endl;
-		return 0;
-	}
-
-	if (!strcmp(argv[p], "search")) {
-
-		int count = 10;
-		eoskeygen::strlist_t words;
-		eoskeygen::Dictionary dict;
-
-		while(p++ < argc - 1) {
-			if (!strcmp(argv[p], "-m")) {
-				eoskeygen::console::disable_color = true;
-			} else if (!strcmp(argv[p], "--l33t")) {
-				option_l33t = true;
-			} else if (!memcmp(argv[p], "--threads=", 10)) {
-#ifdef EOSIOKEYGEN_HAVE_THREADS
-				option_num_threads = atoi(argv[p] + 10);
-				if (option_num_threads < 2) {
-					std::cerr << "NOTICE: Number of threads less than 2 does not make sense."
-						<< " So eosio-keygen will use 2." << std::endl;
-					option_num_threads = 2;
-				}
-#else
-				// Even if we dont have threads. we consume the flag.
-				// otherwise we might break scripts. Print a nice message instead.
-				std::cerr << "NOTICE: eosio-keygen is not compiled with"
-					<< " thread support. this option is ignored." << std::endl;
-#endif /* EOSIOKEYGEN_HAVE_THREADS */
-			}
-			// Dictionary.
-			else if (!memcmp(argv[p], "--dict=", 7)) {
-				eoskeygen::Dictionary d;
-				std::string filename(argv[p] + 7);
-
-				if (d.loadFromFile(filename)) {
-					dict.add(d);
-				} else {
-					std::cerr << "Could not load dictionary from file: " << filename << std::endl;
-				}
-			}
-			// Language (dictionary, but we find the file in <CONFIG_SHARE_FULL_PATH>/dict/<lang>)
-			else if (!memcmp(argv[p], "--lang=", 7)) {
-				eoskeygen::Dictionary d;
-				std::string lang(argv[p] + 7);
-				std::string filename(std::string(CONFIG_SHARE_FULL_PATH) + "/dict/" + lang);
-
-				if (d.loadFromFile(filename)) {
-					dict.add(d);
-				} else {
-					std::cerr << "Could not load language " << lang << " (" << filename << ")" << std::endl;
-				}
-			}
-			// Error out on any flag we don't support.
-			else if (argv[p][0] == '-') {
-				std::cerr << "Unrecognized flag: " << argv[p] << std::endl;
-				usage(argv[0]);
-				return 0;
-			}
-			// wordlist and count
-			else if (words.size() < 1) {
-				std::string arg = std::string(argv[p]);
-				if (arg.rfind("file:", 0) == 0) {
-					std::string filename = arg.substr(5);
-					if (!eoskeygen::readLines(filename, words)) {
-						std::cerr << "Could not read file: " << filename << std::endl;
-						return 0;
-					}
-
-					if (words.size() < 1) {
-						std::cerr << filename << " did not contain any words" << std::endl;
-						return 0;
-					}
-				}
-				// List
-				else {
-					words = eoskeygen::strlist::splitw(arg);
-				}
-
-				if (p + 1 < argc) {
-					count = atoi(argv[++p]);
-					if (count < 1) {
-						count = 1;
-					}
-				}
-			}
-		}
-
-		if (words.size() < 1) {
-			std::cerr << "You must specify a word list." << std::endl;
-			usage(argv[0]);
-			return 1;
-		}
-
-		return cmd_search(words, dict, count);
-	}
-	// Benchmark
-	else if (!strcmp(argv[p], "benchmark")) {
-		int num_keys = 1000;
-
-		if (++p < argc) {
-			num_keys = atoi(argv[p]);
-			if (num_keys < 1) {
-				num_keys = 1;
-			}
-		}
-
-		cmd_benchmark(num_keys);
-	} else {
-		std::cerr << "Unrecogniced command: " << argv[1] << std::endl;
-		usage(argv[0]);
-		return 1;
 	}
 
 	return 0;
