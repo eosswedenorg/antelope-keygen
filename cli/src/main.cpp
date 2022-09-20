@@ -49,7 +49,7 @@ void usage(const char *name) {
 
 	std::cout << std::endl
 		<< "Usage:" << std::endl
-		<< " " << name << " [ options ]" << std::endl;
+		<< "  " << name << " [ options ]" << std::endl;
 
 	std::cout << "  " << name
 		<< " [ options ] search [ -m | --l33t"
