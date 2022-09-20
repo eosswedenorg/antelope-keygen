@@ -69,6 +69,8 @@ public :
 
 	// Set the number of threads to use while searching.
 	void setThreadCount(size_t num);
+
+	size_t getThreadCount() const;
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 
 	// Aborts find() operation if started.

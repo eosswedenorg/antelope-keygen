@@ -73,6 +73,11 @@ size_t KeySearch::max_threads()
 	return std::thread::hardware_concurrency();
 }
 
+size_t KeySearch::getThreadCount() const
+{
+	return m_threads;
+}
+
 void KeySearch::_search_mt()
 {
 	std::vector<std::thread> t;
