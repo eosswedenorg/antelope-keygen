@@ -71,7 +71,7 @@ set( CMAKE_CXX_EXTENSIONS OFF )
 
 # c++ flags
 add_compile_options(
-	"$<$<CXX_COMPILER_ID:GNU>:-Werror;-Wall;-Wconversion;-Wno-sign-conversion;-Wextra>"
+	"$<$<CXX_COMPILER_ID:GNU>:-Wall;-Wconversion;-Wno-sign-conversion;-Wextra>"
 	"$<$<CXX_COMPILER_ID:MSVC>:/W3;-D_CRT_SECURE_NO_WARNINGS=1>"
 
 	# Debug
