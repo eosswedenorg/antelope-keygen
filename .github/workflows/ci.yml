@@ -44,6 +44,7 @@ jobs:
       if: startsWith(matrix.build, 'gui') && runner.os == 'Linux'
       shell: bash
       run: |
+        sudo apt-get update
         if [ "${{matrix.os}}" == "ubuntu-20.04" ]; then
           sudo apt-get install qt5-default=5.12.8+dfsg-0ubuntu2.1
         else :
