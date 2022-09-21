@@ -2,7 +2,7 @@
 #  Variables
 # --------------------------------
 set( LIBEOSIO_GIT_URL "https://github.com/eosswedenorg/libeosio.git" )
-set( LIBEOSIO_WANTED_VERSION v0.1.3 )
+set( LIBEOSIO_WANTED_VERSION v0.1.4 )
 
 # --------------------------------
 #  Macros
