@@ -180,19 +180,19 @@ int main(int argc, char **argv) {
 			eoskeygen::console::disable_color = true;
 		}
 
-		for(auto it = dict_list.begin(); it != dict_list.end(); it++) {
+		for (auto item : dict_list) {
 			eoskeygen::Dictionary d;
 
-			if (d.loadFromFile(*it)) {
+			if (d.loadFromFile(item)) {
 				dict.add(d);
 			} else {
-				std::cerr << "Could not load dictionary from file: " << *it << std::endl;
+				std::cerr << "Could not load dictionary from file: " << item << std::endl;
 			}
 		}
 
-		for(auto it = lang_list.begin(); it != lang_list.end(); it++) {
+		for (auto item : lang_list) {
 			eoskeygen::Dictionary d;
-			std::string filename(CONFIG_SHARE_FULL_PATH "/dicts/" + *it);
+			std::string filename(CONFIG_SHARE_FULL_PATH "/dicts/" + item);
 
 			if (d.loadFromFile(filename)) {
 				dict.add(d);
