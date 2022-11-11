@@ -16,7 +16,7 @@ macro(fromGit tag)
 		GIT_REPOSITORY ${LIBEOSIO_GIT_URL}
 		GIT_TAG        ${tag}
 		SOURCE_DIR     ${DOWNLOAD_CACHE_DIR}/libeosio/src
-		STAMP_DIR	   ${DOWNLOAD_CACHE_DIR}/libeosio/stamp
+		STAMP_DIR      ${DOWNLOAD_CACHE_DIR}/libeosio/stamp
 	)
 
 	FetchContent_GetProperties(libeosio)
