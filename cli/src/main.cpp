@@ -124,6 +124,9 @@ int main(int argc, char **argv) {
 	std::string search_words;
 	int search_count;
 	size_t bench_count;
+	int rc = 0;
+
+	libeosio::ec_init();
 
 	CLI::Option* version = cmd.add_flag("-v,--version", "Show version");
 	CLI::Option* fio = cmd.add_flag("--fio", "Generate keys from FIO network instead of EOSIO.");
@@ -165,7 +168,7 @@ int main(int argc, char **argv) {
 
 	if (*version) {
 		std::cout << PROGRAM_NAME << ": v" << PROGRAM_VERSION << std::endl;
-		return 0;
+		goto end;
 	}
 
 	if (*fio) {
@@ -205,18 +208,19 @@ int main(int argc, char **argv) {
 			std::string filename = search_words.substr(5);
 			if (!eoskeygen::readLines(filename, words)) {
 				std::cerr << "Could not read file: " << filename << std::endl;
-				return 0;
+				goto end;
 			}
 
 			if (words.size() < 1) {
 				std::cerr << filename << " did not contain any words" << std::endl;
-				return 0;
+				goto end;
 			}
 		} else {
 			words = eoskeygen::strlist::splitw(search_words);
 		}
 
-		return cmd_search(words, dict, search_count);
+		rc = cmd_search(words, dict, search_count);
+		goto end;
 
 	} else if (bench_cmd->parsed()) {
 		cmd_benchmark(bench_count);
@@ -226,8 +230,9 @@ int main(int argc, char **argv) {
 		struct libeosio::ec_keypair pair;
 		libeosio::ec_generate_key(&pair);
 		libeosio::wif_print_key(&pair, key_prefix);
-		return 0;
+		goto end;
 	}
 
-	return 0;
+end: 	libeosio::ec_shutdown();
+	return rc;
 }
