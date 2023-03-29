@@ -25,7 +25,7 @@
 #define EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 
 #include <string>
-#include <libeosio/types.hpp>
+#include <libeosio/ec.hpp>
 #include <eoskeygen/core/string.hpp>
 #include <eoskeygen/key_search.hpp>
 #include <eoskeygen/key_search_result.hpp>

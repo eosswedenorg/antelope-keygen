@@ -26,7 +26,7 @@
 
 #include <stdint.h>
 #include <string>
-#include <libeosio/types.hpp>
+#include <libeosio/ec.hpp>
 #include <eoskeygen/config.hpp>
 #include <eoskeygen/core/dictionary.hpp>
 #include <eoskeygen/core/strlist.hpp>
