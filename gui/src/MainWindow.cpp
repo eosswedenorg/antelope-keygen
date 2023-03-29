@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
 QMainWindow	(parent),
 m_fio_action (nullptr)
 {
+	libeosio::ec_init();
+
 	// Create sub windows and stacked widget.
 	m_stacked = new QStackedWidget();
 	m_stacked->addWidget(new GenerateWindow());
@@ -58,6 +60,11 @@ m_fio_action (nullptr)
 
 	// About
 	menuBar()->addAction("About", this, SLOT(showAbout()));
+}
+
+MainWindow::~MainWindow()
+{
+	libeosio::ec_shutdown();
 }
 
 void MainWindow::switchToGenerate()
