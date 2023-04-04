@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-20.04, ubuntu-18.04, macos-latest, windows-latest ]
+        os: [ ubuntu-20.04, macos-latest, windows-latest ]
         build: [ cli, cli-mt, cli-ansi, cli-ansi-mt, gui, gui-mt ]
         include:
           - build: cli
