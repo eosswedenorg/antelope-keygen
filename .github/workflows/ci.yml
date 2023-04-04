@@ -54,7 +54,7 @@ jobs:
 
     - name: Qt - Windows/Mac
       if: startsWith(matrix.build, 'gui') && runner.os != 'Linux'
-      uses: jurplel/install-qt-action@v2
+      uses: jurplel/install-qt-action@v3
       with:
         version: '5.11.0'
 
