@@ -31,6 +31,7 @@
 namespace eoskeygen {
 
 KeySearch::KeySearch() :
+	m_prefix        ("EOS"),
 	m_max		(0),
 	m_count		(0),
 #ifdef EOSIOKEYGEN_HAVE_THREADS
@@ -38,6 +39,11 @@ KeySearch::KeySearch() :
 #endif
 	m_callback	(NULL)
 {
+}
+
+void KeySearch::setPrefix(const std::string& prefix)
+{
+	m_prefix = prefix;
 }
 
 void KeySearch::addWord(const std::string& str)
@@ -107,14 +113,14 @@ void KeySearch::find(size_t num_results)
 
 bool KeySearch::_contains_word(const struct libeosio::ec_keypair* key, struct result& result) {
 
-	// skip first 3 chars, as those are always "EOS"
-	std::string pubstr = libeosio::wif_pub_encode(key->pub).substr(3);
+	size_t prefix_len = m_prefix.length();
+	std::string pubstr = libeosio::wif_pub_encode(key->pub, m_prefix).substr(prefix_len);
 	strtolower(pubstr);
 
 	for(auto const& w: m_words) {
 		size_t p = pubstr.find(w);
 		if (p != std::string::npos) {
-			result.pos = p + 3;
+			result.pos = p + prefix_len;
 			result.len = w.length();
 			return true;
 		}
