@@ -38,22 +38,23 @@ static size_t highlight(console::Color color, const std::string& str, size_t pos
 	return len;
 }
 
-CliKeySearchResult::CliKeySearchResult(const Dictionary& dict, const std::string& prefix) :
+CliKeySearchResult::CliKeySearchResult(const Dictionary& dict, const libeosio::wif_codec_t& codec) :
 m_dict (dict),
-m_prefix (prefix)
+m_codec (codec)
 {
 }
 
 void CliKeySearchResult::onResult(const struct libeosio::ec_keypair* key, const struct KeySearch::result& result) {
 
-	std::string pub = libeosio::wif_pub_encode(key->pub);
+	std::string pub = libeosio::wif_pub_encode(key->pub, m_codec.pub);
 	Dictionary::search_result_t dict_res = m_dict.search(pub);
+	int pub_prefix_len = (int) m_codec.pub.length();
 
 	std::cout << "----" << std::endl;
 	std::cout << "Found: " << pub.substr(result.pos, result.len) << std::endl;
 
-	std::cout << "Public: " << m_prefix.substr(0, 3);
-	for(size_t i = 3; i < pub.length(); ) {
+	std::cout << "Public: " << m_codec.pub;
+	for(size_t i = pub_prefix_len; i < pub.length(); ) {
 
 		if (i == result.pos) {
 			i += highlight(console::red, pub, result.pos, result.len);
@@ -70,7 +71,7 @@ void CliKeySearchResult::onResult(const struct libeosio::ec_keypair* key, const 
 	}
 
 	std::cout << std::endl
-		<< "Private: " << libeosio::wif_priv_encode(key->secret) << std::endl;
+		<< "Private: " << libeosio::wif_priv_encode(key->secret, m_codec.pvt) << std::endl;
 }
 
 } // namespace eoskeygen

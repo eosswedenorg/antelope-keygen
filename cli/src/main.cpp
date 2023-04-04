@@ -40,7 +40,7 @@
 
 // Command line options.
 bool option_l33t = false;
-std::string key_prefix = "EOS";
+libeosio::wif_codec_t key_codec;
 
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 size_t option_num_threads;
@@ -65,8 +65,9 @@ public:
 int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
 
 	eoskeygen::KeySearch ks;
-	eoskeygen::CliKeySearchResult rs(dict, key_prefix);
+	eoskeygen::CliKeySearchResult rs(dict, key_codec);
 
+	ks.setPrefix(key_codec.pub);
 	ks.setCallback(&rs);
 
 	for(auto it = words.begin(); it != words.end(); it++) {
@@ -122,6 +123,7 @@ int main(int argc, char **argv) {
 	std::vector<std::string> dict_list;
 	std::vector<std::string> lang_list;
 	std::string search_words;
+	std::string key_format;
 	int search_count;
 	size_t bench_count;
 	int rc = 0;
@@ -129,7 +131,7 @@ int main(int argc, char **argv) {
 	libeosio::ec_init();
 
 	CLI::Option* version = cmd.add_flag("-v,--version", "Show version");
-	CLI::Option* fio = cmd.add_flag("--fio", "Generate keys from FIO network instead of EOSIO.");
+	cmd.add_option("--format", key_format, "valid values: K1, fio, legacy")->default_val("K1");
 
 	// Search
 	CLI::App* search_cmd = cmd.add_subcommand("search",
@@ -171,8 +173,15 @@ int main(int argc, char **argv) {
 		goto end;
 	}
 
-	if (*fio) {
-		key_prefix = "FIO";
+	if (key_format == "fio") {
+		key_codec = libeosio::wif_create_legacy_codec("FIO");
+	} else if (key_format == "legacy") {
+		key_codec = libeosio::WIF_CODEC_LEG;
+	} else if (key_format == "K1") {
+		key_codec = libeosio::WIF_CODEC_K1;
+	} else {
+		std::cerr << "invalid key format: " << key_format << std::endl;
+		goto end;
 	}
 
 	if (search_cmd->parsed()) {
@@ -229,7 +238,7 @@ int main(int argc, char **argv) {
 	else {
 		struct libeosio::ec_keypair pair;
 		libeosio::ec_generate_key(&pair);
-		libeosio::wif_print_key(&pair, key_prefix);
+		libeosio::wif_print_key(&pair, key_codec);
 		goto end;
 	}
 
