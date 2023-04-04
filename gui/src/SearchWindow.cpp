@@ -150,14 +150,16 @@ void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct
 {
 	int pos = (int) result.pos;
 	int len = (int) result.len;
- 	QString pub = QString::fromStdString(libeosio::wif_pub_encode(key->pub, Settings::shouldGenerateFioKeys() ? "FIO" : "EOS"));
+	libeosio::wif_codec_t codec = Settings::getKeyCodec();
+ 	QString pub = QString::fromStdString(libeosio::wif_pub_encode(key->pub, codec.pub));
+	int pub_prefix_len = (int) codec.pub.length();
 	QString mid = pub.mid(pos, len);
 	QString left = pub.left(pos);
 	QString right = pub.mid(pos + len, pub.size() - pos);
 	eoskeygen::Dictionary::search_result_t dict_res = m_dict.search(pub.toStdString());
 
-	QString out = "Public:  " + pub.left(3);
-	for(int i = 3; i < pub.length(); ) {
+	QString out = "Public:  " + pub.left(pub_prefix_len);
+	for(int i = pub_prefix_len; i < pub.length(); ) {
 
 		if (i == pos) {
 			out += "<font color=red>" + pub.mid(pos, len) + "</font>";
@@ -178,7 +180,7 @@ void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct
 		out += pub[i++];
 	}
 
-	out += "<br/>Private: " + QString::fromStdString(libeosio::wif_priv_encode(key->secret));
+	out += "<br/>Private: " + QString::fromStdString(libeosio::wif_priv_encode(key->secret, codec.pvt));
 
 	// As this function could be called from a non-gui thread. we use signals.
 	emit addOutput("<p>" + out + "</p>");
@@ -253,6 +255,9 @@ void SearchWindow::langFileAdd()
 
 void SearchWindow::searchStarted()
 {
+	// Set prefix for search
+	m_ksearch.setPrefix(Settings::getKeyCodec().pub);
+
 	m_btn_exec.setText("Cancel");
 
 	m_txt_search.setEnabled(false);

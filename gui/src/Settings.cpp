@@ -24,16 +24,14 @@
 #include "Settings.hpp"
 
 namespace priv {
-	bool fio_keys = false;
 
+	libeosio::wif_codec_t key_format = libeosio::WIF_CODEC_K1;
 } // namespace priv
 
-bool Settings::shouldGenerateFioKeys()
-{
-	return priv::fio_keys;
+void Settings::setKeyCodec(const libeosio::wif_codec_t& format) {
+	priv::key_format = format;
 }
 
-void Settings::setGenerateFioKeys(bool value)
-{
-	priv::fio_keys = value;
+const libeosio::wif_codec_t& Settings::getKeyCodec() {
+	return priv::key_format;
 }

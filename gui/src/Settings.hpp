@@ -24,11 +24,13 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <libeosio/WIF.hpp>
+
 namespace Settings
 {
-	bool shouldGenerateFioKeys();
+	void setKeyCodec(const libeosio::wif_codec_t& format);
 
-	void setGenerateFioKeys(bool value);
+	const libeosio::wif_codec_t& getKeyCodec();
 };
 
 #endif /* SEARCH_WINDOW_H */
