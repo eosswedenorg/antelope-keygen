@@ -97,6 +97,19 @@ set( CPACK_DEBIAN_PACKAGE_HOMEPAGE "${PROJECT_HOMEPAGE_URL}" )
 set( CPACK_DEB_COMPONENT_INSTALL ON )
 
 
+# RPM
+
+# Always build components for rpm packages
+set( CPACK_RPM_COMPONENT_INSTALL ON )
+
+# Same as with DEB package.
+set( CPACK_RPM_PACKAGE_HOMEPAGE "${PROJECT_HOMEPAGE_URL}" )
+
+set( CPACK_RPM_PACKAGE_RELEASE_DIST ON )
+set( CPACK_RPM_PACKAGE_RELEASE "1" CACHE STRING "RPM package release version" )
+set( CPACK_RPM_PACKAGE_LICENSE "MIT" )
+set( CPACK_RPM_FILE_NAME "RPM-DEFAULT" )
+
 # --------------------------------
 #  Generator default
 # --------------------------------
