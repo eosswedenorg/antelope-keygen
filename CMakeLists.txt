@@ -87,6 +87,11 @@ add_compile_options(
 	"$<$<CONFIG:MinSizeRel>:$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/O1>>"
 )
 
+add_link_options(
+	# Release
+	"$<$<CONFIG:Release>:$<$<COMPILE_LANG_AND_ID:CXX,GNU>:-s>>"
+)
+
 # Project config file
 configure_file(config.hpp.in "${PROJECT_BINARY_DIR}/config.hpp" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
