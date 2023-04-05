@@ -92,6 +92,12 @@ add_link_options(
 	"$<$<CONFIG:Release>:$<$<COMPILE_LANG_AND_ID:CXX,GNU>:-s>>"
 )
 
+include(CheckPIESupported)
+check_pie_supported()
+#cmake_policy(SET CMP0083 NEW)
+
+set( CMAKE_POSITION_INDEPENDENT_CODE TRUE )
+
 # Project config file
 configure_file(config.hpp.in "${PROJECT_BINARY_DIR}/config.hpp" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
