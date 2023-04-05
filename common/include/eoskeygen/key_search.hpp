@@ -47,6 +47,8 @@ public :
 public :
 	KeySearch();
 
+	void setPrefix(const std::string& prefix);
+
 	// Add a word to search for.
 	void addWord(const std::string& str);
 
@@ -97,6 +99,10 @@ protected :
 	void _search_linear();
 
 protected :
+
+	// Public key prefix.
+	std::string m_prefix;
+
 	// List of words to search for.
 	strlist_t m_words;
 

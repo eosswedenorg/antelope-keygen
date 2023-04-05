@@ -47,13 +47,17 @@ private slots :
 
 	void showAbout();
 
-	void fioKeysCheckboxChanged();
+	void formatFioCheckboxChanged();
+	void formatLegacyCheckboxChanged();
+	void formatK1CheckboxChanged();
 
 private :
 
 	QStackedWidget* m_stacked;
 
-	QPointer<QAction> m_fio_action;
+	QPointer<QAction> m_format_fio_action;
+	QPointer<QAction> m_format_legacy_action;
+	QPointer<QAction> m_format_k1_action;
 };
 
 #endif /* MAIN_WINDOW_H */

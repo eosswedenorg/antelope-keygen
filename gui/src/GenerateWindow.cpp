@@ -92,14 +92,16 @@ m_btn_copy_both	("Copy keys")
 
 void GenerateWindow::generate_key()
 {
-	std::string pubstr;
+	std::string pubstr, pvtstr;
 	struct libeosio::ec_keypair pair;
+	const libeosio::wif_codec_t& codec = Settings::getKeyCodec();
 
 	libeosio::ec_generate_key(&pair);
 
-	pubstr = libeosio::wif_pub_encode(pair.pub, Settings::shouldGenerateFioKeys() ? "FIO" : "EOS");
+	pubstr = libeosio::wif_pub_encode(pair.pub, codec.pub);
+	pvtstr = libeosio::wif_priv_encode(pair.secret, codec.pvt);
 	m_pub.setText(QString::fromStdString(pubstr));
-	m_priv.setText(QString::fromStdString(libeosio::wif_priv_encode(pair.secret)));
+	m_priv.setText(QString::fromStdString(pvtstr));
 }
 
 void GenerateWindow::copy_both_keys()

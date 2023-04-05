@@ -25,6 +25,7 @@
 #include <QMenuBar>
 #include <QGridLayout>
 #include <QStackedWidget>
+#include <libeosio/WIF.hpp>
 #include "gui_text.h"
 #include "Settings.hpp"
 #include "GenerateWindow.hpp"
@@ -32,8 +33,10 @@
 #include "MainWindow.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
-QMainWindow	(parent),
-m_fio_action (nullptr)
+QMainWindow		(parent),
+m_format_fio_action 	(nullptr),
+m_format_legacy_action 	(nullptr),
+m_format_k1_action	(nullptr)
 {
 	libeosio::ec_init();
 
@@ -51,12 +54,28 @@ m_fio_action (nullptr)
 
 	// Settings
 
-	m_fio_action = new QAction("FIO Keys", this);
-	m_fio_action->setCheckable(true);
-	connect(m_fio_action, SIGNAL(triggered()), this, SLOT(fioKeysCheckboxChanged()));
+	QActionGroup* formatGroup = new QActionGroup(this);
 
-	QMenu *settings_menu = menuBar()->addMenu("Settings");
-	settings_menu->addAction(m_fio_action);
+	m_format_fio_action = new QAction("FIO", formatGroup);
+	m_format_fio_action->setCheckable(true);
+	m_format_legacy_action = new QAction("Legacy", formatGroup);
+	m_format_legacy_action->setCheckable(true);
+	m_format_k1_action = new QAction("K1", formatGroup);
+	m_format_k1_action->setCheckable(true);
+
+	// Set k1 and trigger the changed action so we set the codec.
+	m_format_k1_action->setChecked(true);
+	formatK1CheckboxChanged();
+
+	connect(m_format_fio_action, SIGNAL(triggered()), this, SLOT(formatFioCheckboxChanged()));
+	connect(m_format_legacy_action, SIGNAL(triggered()), this, SLOT(formatLegacyCheckboxChanged()));
+	connect(m_format_k1_action, SIGNAL(triggered()), this, SLOT(formatK1CheckboxChanged()));
+
+	QMenu *settings = menuBar()->addMenu("Settings");
+	QMenu *format_menu = settings->addMenu("Key Format");
+	format_menu->addAction(m_format_k1_action);
+	format_menu->addAction(m_format_legacy_action);
+	format_menu->addAction(m_format_fio_action);
 
 	// About
 	menuBar()->addAction("About", this, SLOT(showAbout()));
@@ -84,7 +103,23 @@ void MainWindow::showAbout()
 		EOSIOKEYGEN_GUI_TEXT_ABOUT_BODY);
 }
 
-void MainWindow::fioKeysCheckboxChanged()
+void MainWindow::formatFioCheckboxChanged()
 {
-	Settings::setGenerateFioKeys(m_fio_action ? m_fio_action->isChecked() : false);
+	if (m_format_fio_action->isChecked()) {
+		Settings::setKeyCodec(libeosio::wif_create_legacy_codec("FIO"));
+	}
+}
+
+void MainWindow::formatLegacyCheckboxChanged()
+{
+	if (m_format_legacy_action->isChecked()) {
+		Settings::setKeyCodec(libeosio::WIF_CODEC_LEG);
+	}
+}
+
+void MainWindow::formatK1CheckboxChanged()
+{
+	if (m_format_k1_action->isChecked()) {
+		Settings::setKeyCodec(libeosio::WIF_CODEC_K1);
+	}
 }
