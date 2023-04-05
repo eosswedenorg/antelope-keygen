@@ -34,7 +34,7 @@
 #include "GenerateWindow.hpp"
 
 void _initKeyWidget(QLineEdit& w, const QFont& font) {
-	w.setFixedWidth(450);
+	w.setFixedWidth(460);
 	w.setFont(font);
 	w.setReadOnly(true);
 }
