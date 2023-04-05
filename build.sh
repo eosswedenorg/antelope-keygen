@@ -28,7 +28,7 @@ while true; do
 		;;
 	--pkg-type)
 		shift
-		[[ ! "$1" =~ ^(nsis|deb|zip|tgz)$ ]] && {
+		[[ ! "$1" =~ ^(nsis|deb|rpm|zip|tgz)$ ]] && {
 		    echo "Incorrect package type '$1' provided"
 		    usage
 		}
