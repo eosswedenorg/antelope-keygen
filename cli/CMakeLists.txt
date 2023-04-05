@@ -57,7 +57,7 @@ install (FILES ${LIBCLI11_LICENSE}
 		DESTINATION ${CMAKE_INSTALL_SHAREDIR}
 		COMPONENT cli
 		RENAME LICENSE.libcli11)
-	
+
 
 # Documentation
 
