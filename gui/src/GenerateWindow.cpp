@@ -26,13 +26,16 @@
 #include <QGridLayout>
 #include <QClipboard>
 #include <QGuiApplication>
+#include <QFont>
+#include <QFontDatabase>
 #include <libeosio/ec.hpp>
 #include <libeosio/WIF.hpp>
 #include "Settings.hpp"
 #include "GenerateWindow.hpp"
 
-void _initKeyWidget(QLineEdit& w) {
+void _initKeyWidget(QLineEdit& w, const QFont& font) {
 	w.setFixedWidth(450);
+	w.setFont(font);
 	w.setReadOnly(true);
 }
 
@@ -46,11 +49,13 @@ QWidget 		(parent),
 m_btn_gen		("Generate"),
 m_btn_copy_both	("Copy keys")
 {
+	QFont mono = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+
 	QIcon copy_icon = QIcon::fromTheme("edit-copy");
 	QGridLayout* layout;
 
-	_initKeyWidget(m_pub);
-	_initKeyWidget(m_priv);
+	_initKeyWidget(m_pub, mono);
+	_initKeyWidget(m_priv, mono);
 
 	_initKeyCopyButton(m_btn_copy_pub, copy_icon);
 	_initKeyCopyButton(m_btn_copy_priv, copy_icon);
