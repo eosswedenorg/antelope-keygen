@@ -11,6 +11,7 @@ options=$(getopt -n "${0##*/}" -o "lht:" -l "help,cli,no-cli,gui,no-gui,type:,li
 
 eval set -- "$options"
 
+TARGET="all"
 ONLY_CONFIG=0
 ARGS=""
 BUILD_ARGS="--clean-first"
