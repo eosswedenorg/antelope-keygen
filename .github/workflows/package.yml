@@ -16,7 +16,7 @@ jobs:
             build-opts: --cli --no-gui -t Release --pkg-type deb
           - component: gui
             build-opts: --no-cli --gui -t Release --pkg-type deb
-    name: ${{matrix.os}} (${{matrix.component}})
+    name: DBM ${{matrix.os}} (${{matrix.component}})
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v1
@@ -49,6 +49,55 @@ jobs:
           asset_name: ${{ steps.package.outputs.name }}
           asset_path: ${{ steps.package.outputs.filename }}
           asset_content_type: application/x-deb
+
+  # RPM package for redhat based systems.
+  rpm:
+    strategy:
+      matrix:
+        container: [ "fedora:36" ]
+        component: [ cli, gui ]
+        include:
+          - component: cli
+            build-opts: --cli --no-gui -t Release --pkg-type rpm
+          - component: gui
+            build-opts: --no-cli --gui -t Release --pkg-type rpm
+    name: RPM ${{matrix.container}} (${{matrix.component}})
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container}}
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Dependancies
+        run: |
+          sudo dnf install -y util-linux rpmdevtools git \
+            gcc-12.2.1-4.fc36.x86_64 \
+            gcc-c++-12.2.1-4.fc36.x86_64 \
+            cmake-3.25.2-1.fc36.x86_64 \
+            openssl1.1-devel-1.1.1q-1.fc36.x86_64
+
+      - name: Qt
+        if: startsWith(matrix.component, 'gui')
+        shell: bash
+        run: |
+          sudo dnf install -y qt5-qtbase-devel-5.15.3-1.fc36.x86_64
+
+      - name: Package
+        id: package
+        run: |
+            ./build.sh ${{matrix.build-opts}}
+            FILE=$(ls build/eosio-*.rpm | head -1)
+            echo "::set-output name=filename::$FILE"
+            echo "::set-output name=name::$(basename $FILE)"
+
+      - name: Upload
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_name: ${{ steps.package.outputs.name }}
+          asset_path: ${{ steps.package.outputs.filename }}
+          asset_content_type: application/octet-stream
 
   # Windows installer
   windows:
