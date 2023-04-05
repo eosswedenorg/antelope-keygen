@@ -71,20 +71,20 @@ set( CMAKE_CXX_EXTENSIONS OFF )
 
 # c++ flags
 add_compile_options(
-	"$<$<CXX_COMPILER_ID:GNU>:-Wall;-Wconversion;-Wno-sign-conversion;-Wextra>"
-	"$<$<CXX_COMPILER_ID:MSVC>:/W3;-D_CRT_SECURE_NO_WARNINGS=1>"
+	"$<$<COMPILE_LANG_AND_ID:CXX,GNU>:-Wall;-Wconversion;-Wno-sign-conversion;-Wextra>"
+	"$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/W3;-D_CRT_SECURE_NO_WARNINGS=1>"
 
 	# Debug
-	"$<$<CONFIG:Debug>:$<$<CXX_COMPILER_ID:GNU>:-O0;-g>>"
-	"$<$<CONFIG:Debug>:$<$<CXX_COMPILER_ID:MSVC>:/Od;/Zi>>"
+	"$<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:CXX,GNU>:-O0;-g>>"
+	"$<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/Od;/Zi>>"
 
 	# Release
-	"$<$<CONFIG:Release>:$<$<CXX_COMPILER_ID:GNU>:-O3>>"
-	"$<$<CONFIG:Release>:$<$<CXX_COMPILER_ID:MSVC>:/O2>>"
+	"$<$<CONFIG:Release>:$<$<COMPILE_LANG_AND_ID:CXX,GNU>:-O3>>"
+	"$<$<CONFIG:Release>:$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/O2>>"
 
 	# MinSizeRel
-	"$<$<CONFIG:MinSizeRel>:$<$<CXX_COMPILER_ID:GNU>:-Os>>"
-	"$<$<CONFIG:MinSizeRel>:$<$<CXX_COMPILER_ID:MSVC>:/O1>>"
+	"$<$<CONFIG:MinSizeRel>:$<$<COMPILE_LANG_AND_ID:CXX,GNU>:-Os>>"
+	"$<$<CONFIG:MinSizeRel>:$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/O1>>"
 )
 
 # Project config file
