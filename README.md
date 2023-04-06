@@ -9,7 +9,7 @@ This program generates public and private keypair for [EOS](https://eos.io/)
 
 ## Compile
 
-You will need `libeosio` and `cmake 3.15` or later to compile this project.
+You will need `libantelope` and `cmake 3.15` or later to compile this project.
 
 `Qt 5.9.0` or later is required for the graphical program.
 
@@ -78,7 +78,7 @@ $ brew install cmake
 
 If you need a newer version of cmake, you can download the official `.dmg` file: [cmake-3.15.7-Darwin-x86_64.dmg](https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Darwin-x86_64.dmg). or see https://cmake.org/download for other versions.
 
-`libeosio` needs to be compiled and installed from source. [Go here](https://github.com/eosswedenorg/libeosio)
+`libantelope` needs to be compiled and installed from source. [Go here](https://github.com/eosswedenorg/libantelope)
 
 **Qt (only for gui program)**
 
@@ -150,9 +150,9 @@ These compile options are available:
 
 For more details about options run `./build.sh -l` or `mkdir build && cmake build -LA`
 
-### libeosio
+### libantelope
 
-To speed up the build process, you can install `libeosio`
+To speed up the build process, you can install `libantelope`
 
 #### Ubuntu
 
@@ -162,19 +162,19 @@ You can use [EOS Sweden's APT Repository](https://eosswedenorg.github.io/apt) li
 $ sudo apt-get install software-properties-common
 $ curl https://apt.eossweden.org/key 2> /dev/null | sudo apt-key add -
 $ sudo apt-add-repository -y 'deb [arch=amd64] https://apt.eossweden.org/main `lsb_release -cs` stable'
-$ sudo apt-get install libeosio-dev
+$ sudo apt-get install libantelope-dev
 ```
 
-or manually via `.deb` file from [github](https://github.com/eosswedenorg/libeosio/releases)
+or manually via `.deb` file from [github](https://github.com/eosswedenorg/libantelope/releases)
 
 ```sh
 $ wget <url>
-$ sudo apt install ./libeosio-dev-<version>.deb
+$ sudo apt install ./libantelope-dev-<version>.deb
 ```
 
 #### Other
 
-Consult [libeosio's github](https://github.com/eosswedenorg/libeosio)
+Consult [libantelope's github](https://github.com/eosswedenorg/libantelope)
 
 ## Install
 
