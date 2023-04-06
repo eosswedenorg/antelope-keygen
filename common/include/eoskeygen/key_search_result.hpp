@@ -32,7 +32,7 @@ class IKeySearchResult
 {
 public :
 
-	virtual void onResult(const struct libeosio::ec_keypair* key, const struct KeySearch::result& result) = 0;
+	virtual void onResult(const struct libantelope::ec_keypair* key, const struct KeySearch::result& result) = 0;
 };
 
 } // namespace eoskeygen

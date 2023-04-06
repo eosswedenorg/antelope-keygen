@@ -28,7 +28,7 @@
 #include <QGridLayout>
 #include <QFuture>
 #include <QtConcurrent>
-#include <libeosio/WIF.hpp>
+#include <libantelope/WIF.hpp>
 #include <eoskeygen/core/leet.hpp>
 #include <eoskeygen/core/string.hpp>
 #include "Settings.hpp"
@@ -146,12 +146,12 @@ void SearchWindow::loadDictionaries()
 	}
 }
 
-void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct eoskeygen::KeySearch::result& result)
+void SearchWindow::onResult(const struct libantelope::ec_keypair* key, const struct eoskeygen::KeySearch::result& result)
 {
 	int pos = (int) result.pos;
 	int len = (int) result.len;
-	libeosio::wif_codec_t codec = Settings::getKeyCodec();
- 	QString pub = QString::fromStdString(libeosio::wif_pub_encode(key->pub, codec.pub));
+	libantelope::wif_codec_t codec = Settings::getKeyCodec();
+ 	QString pub = QString::fromStdString(libantelope::wif_pub_encode(key->pub, codec.pub));
 	int pub_prefix_len = (int) codec.pub.length();
 	QString mid = pub.mid(pos, len);
 	QString left = pub.left(pos);
@@ -180,7 +180,7 @@ void SearchWindow::onResult(const struct libeosio::ec_keypair* key, const struct
 		out += pub[i++];
 	}
 
-	out += "<br/>Private: " + QString::fromStdString(libeosio::wif_priv_encode(key->secret, codec.pvt));
+	out += "<br/>Private: " + QString::fromStdString(libantelope::wif_priv_encode(key->secret, codec.pvt));
 
 	// As this function could be called from a non-gui thread. we use signals.
 	emit addOutput("<p>" + out + "</p>");

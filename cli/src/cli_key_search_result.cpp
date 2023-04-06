@@ -23,7 +23,7 @@
  */
 #include <string>
 #include <iostream>
-#include <libeosio/WIF.hpp>
+#include <libantelope/WIF.hpp>
 #include <eoskeygen/core/dictionary.hpp>
 #include "console.hpp"
 #include "cli_key_search_result.hpp"
@@ -38,15 +38,15 @@ static size_t highlight(console::Color color, const std::string& str, size_t pos
 	return len;
 }
 
-CliKeySearchResult::CliKeySearchResult(const Dictionary& dict, const libeosio::wif_codec_t& codec) :
+CliKeySearchResult::CliKeySearchResult(const Dictionary& dict, const libantelope::wif_codec_t& codec) :
 m_dict (dict),
 m_codec (codec)
 {
 }
 
-void CliKeySearchResult::onResult(const struct libeosio::ec_keypair* key, const struct KeySearch::result& result) {
+void CliKeySearchResult::onResult(const struct libantelope::ec_keypair* key, const struct KeySearch::result& result) {
 
-	std::string pub = libeosio::wif_pub_encode(key->pub, m_codec.pub);
+	std::string pub = libantelope::wif_pub_encode(key->pub, m_codec.pub);
 	Dictionary::search_result_t dict_res = m_dict.search(pub);
 	int pub_prefix_len = (int) m_codec.pub.length();
 
@@ -71,7 +71,7 @@ void CliKeySearchResult::onResult(const struct libeosio::ec_keypair* key, const 
 	}
 
 	std::cout << std::endl
-		<< "Private: " << libeosio::wif_priv_encode(key->secret, m_codec.pvt) << std::endl;
+		<< "Private: " << libantelope::wif_priv_encode(key->secret, m_codec.pvt) << std::endl;
 }
 
 } // namespace eoskeygen

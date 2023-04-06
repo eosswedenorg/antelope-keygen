@@ -43,7 +43,7 @@ class SearchWindow : public QWidget, public eoskeygen::IKeySearchResult
 public:
 	explicit SearchWindow(QWidget *parent = 0, Qt::WindowFlags flags = Qt::WindowFlags());
 
-	void onResult(const struct libeosio::ec_keypair* key, const struct eoskeygen::KeySearch::result& result);
+	void onResult(const struct libantelope::ec_keypair* key, const struct eoskeygen::KeySearch::result& result);
 
 private :
 	void initSignals();

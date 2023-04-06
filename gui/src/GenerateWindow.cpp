@@ -28,8 +28,8 @@
 #include <QGuiApplication>
 #include <QFont>
 #include <QFontDatabase>
-#include <libeosio/ec.hpp>
-#include <libeosio/WIF.hpp>
+#include <libantelope/ec.hpp>
+#include <libantelope/WIF.hpp>
 #include "Settings.hpp"
 #include "GenerateWindow.hpp"
 
@@ -98,13 +98,13 @@ m_btn_copy_both	("Copy keys")
 void GenerateWindow::generate_key()
 {
 	std::string pubstr, pvtstr;
-	struct libeosio::ec_keypair pair;
-	const libeosio::wif_codec_t& codec = Settings::getKeyCodec();
+	struct libantelope::ec_keypair pair;
+	const libantelope::wif_codec_t& codec = Settings::getKeyCodec();
 
-	libeosio::ec_generate_key(&pair);
+	libantelope::ec_generate_key(&pair);
 
-	pubstr = libeosio::wif_pub_encode(pair.pub, codec.pub);
-	pvtstr = libeosio::wif_priv_encode(pair.secret, codec.pvt);
+	pubstr = libantelope::wif_pub_encode(pair.pub, codec.pub);
+	pvtstr = libantelope::wif_priv_encode(pair.secret, codec.pvt);
 	m_pub.setText(QString::fromStdString(pubstr));
 	m_priv.setText(QString::fromStdString(pvtstr));
 }

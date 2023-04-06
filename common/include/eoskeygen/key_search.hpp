@@ -26,7 +26,7 @@
 
 #include <stdint.h>
 #include <string>
-#include <libeosio/ec.hpp>
+#include <libantelope/ec.hpp>
 #include <eoskeygen/config.hpp>
 #include <eoskeygen/core/dictionary.hpp>
 #include <eoskeygen/core/strlist.hpp>
@@ -88,7 +88,7 @@ protected :
 
 	// Check if any word in <word_list> appears in <key>'s public key.
 	// returns true if a word was found (stored in <result>), false otherwise.
-	bool _contains_word(const struct libeosio::ec_keypair* key, struct result& result);
+	bool _contains_word(const struct libantelope::ec_keypair* key, struct result& result);
 
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 	void _thr_proc();

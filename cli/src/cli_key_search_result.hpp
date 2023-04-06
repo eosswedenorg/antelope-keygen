@@ -25,8 +25,8 @@
 #define EOSIOKEYGEN_KEY_SEARCH_HELPERS_H
 
 #include <string>
-#include <libeosio/ec.hpp>
-#include <libeosio/WIF.hpp>
+#include <libantelope/ec.hpp>
+#include <libantelope/WIF.hpp>
 #include <eoskeygen/core/string.hpp>
 #include <eoskeygen/key_search.hpp>
 #include <eoskeygen/key_search_result.hpp>
@@ -38,15 +38,15 @@ class Dictionary;
 class CliKeySearchResult : public IKeySearchResult
 {
 public:
-	CliKeySearchResult(const Dictionary& dict, const libeosio::wif_codec_t& codec);
+	CliKeySearchResult(const Dictionary& dict, const libantelope::wif_codec_t& codec);
 
-	virtual void onResult(const struct libeosio::ec_keypair* key, const struct KeySearch::result& result);
+	virtual void onResult(const struct libantelope::ec_keypair* key, const struct KeySearch::result& result);
 
 protected :
 
 	const Dictionary& m_dict;
 
-	libeosio::wif_codec_t m_codec;
+	libantelope::wif_codec_t m_codec;
 };
 
 } // namespace eoskeygen

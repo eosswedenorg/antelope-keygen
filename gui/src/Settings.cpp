@@ -25,13 +25,13 @@
 
 namespace priv {
 
-	libeosio::wif_codec_t key_format = libeosio::WIF_CODEC_K1;
+	libantelope::wif_codec_t key_format = libantelope::WIF_CODEC_K1;
 } // namespace priv
 
-void Settings::setKeyCodec(const libeosio::wif_codec_t& format) {
+void Settings::setKeyCodec(const libantelope::wif_codec_t& format) {
 	priv::key_format = format;
 }
 
-const libeosio::wif_codec_t& Settings::getKeyCodec() {
+const libantelope::wif_codec_t& Settings::getKeyCodec() {
 	return priv::key_format;
 }

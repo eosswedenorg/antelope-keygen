@@ -40,10 +40,10 @@ add_library( ${COMMON_NAME} STATIC ${COMMON_SOURCE} )
 
 target_include_directories( ${COMMON_NAME} PUBLIC include )
 
-# Link with libeosio and threads library.
-include( libeosio )
+# Link with libantelope and threads library.
+include( libantelope )
 target_link_libraries( ${COMMON_NAME}
 	PUBLIC
-		libeosio
+		libantelope
 		${CMAKE_THREAD_LIBS_INIT}
 )

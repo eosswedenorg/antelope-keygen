@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 #include <chrono>
-#include <libeosio/ec.hpp>
+#include <libantelope/ec.hpp>
 #include "benchmark.hpp"
 
 namespace eoskeygen {
@@ -30,8 +30,8 @@ namespace eoskeygen {
 std::chrono::duration<float> _run_benchmark(size_t num_keys) {
 	auto start = std::chrono::steady_clock::now();
 	for(size_t i = 0; i < num_keys; i++) {
-		struct libeosio::ec_keypair k;
-		libeosio::ec_generate_key(&k);
+		struct libantelope::ec_keypair k;
+		libantelope::ec_generate_key(&k);
 	}
 	return std::chrono::steady_clock::now() - start;
 }

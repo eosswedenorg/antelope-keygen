@@ -24,13 +24,13 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <libeosio/WIF.hpp>
+#include <libantelope/WIF.hpp>
 
 namespace Settings
 {
-	void setKeyCodec(const libeosio::wif_codec_t& format);
+	void setKeyCodec(const libantelope::wif_codec_t& format);
 
-	const libeosio::wif_codec_t& getKeyCodec();
+	const libantelope::wif_codec_t& getKeyCodec();
 };
 
 #endif /* SEARCH_WINDOW_H */

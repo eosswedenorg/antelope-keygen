@@ -25,7 +25,7 @@
 #include <QMenuBar>
 #include <QGridLayout>
 #include <QStackedWidget>
-#include <libeosio/WIF.hpp>
+#include <libantelope/WIF.hpp>
 #include "gui_text.h"
 #include "Settings.hpp"
 #include "GenerateWindow.hpp"
@@ -38,7 +38,7 @@ m_format_fio_action 	(nullptr),
 m_format_legacy_action 	(nullptr),
 m_format_k1_action	(nullptr)
 {
-	libeosio::ec_init();
+	libantelope::ec_init();
 
 	// Create sub windows and stacked widget.
 	m_stacked = new QStackedWidget();
@@ -83,7 +83,7 @@ m_format_k1_action	(nullptr)
 
 MainWindow::~MainWindow()
 {
-	libeosio::ec_shutdown();
+	libantelope::ec_shutdown();
 }
 
 void MainWindow::switchToGenerate()
@@ -106,20 +106,20 @@ void MainWindow::showAbout()
 void MainWindow::formatFioCheckboxChanged()
 {
 	if (m_format_fio_action->isChecked()) {
-		Settings::setKeyCodec(libeosio::wif_create_legacy_codec("FIO"));
+		Settings::setKeyCodec(libantelope::wif_create_legacy_codec("FIO"));
 	}
 }
 
 void MainWindow::formatLegacyCheckboxChanged()
 {
 	if (m_format_legacy_action->isChecked()) {
-		Settings::setKeyCodec(libeosio::WIF_CODEC_LEG);
+		Settings::setKeyCodec(libantelope::WIF_CODEC_LEG);
 	}
 }
 
 void MainWindow::formatK1CheckboxChanged()
 {
 	if (m_format_k1_action->isChecked()) {
-		Settings::setKeyCodec(libeosio::WIF_CODEC_K1);
+		Settings::setKeyCodec(libantelope::WIF_CODEC_K1);
 	}
 }

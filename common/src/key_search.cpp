@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <libeosio/ec.hpp>
-#include <libeosio/WIF.hpp>
+#include <libantelope/ec.hpp>
+#include <libantelope/WIF.hpp>
 #include <eoskeygen/config.hpp>
 #include <eoskeygen/core/string.hpp>
 #include <eoskeygen/key_search_result.hpp>
@@ -77,11 +77,11 @@ void KeySearch::setCallback(IKeySearchResult* callback)
 
 void KeySearch::_search_linear()
 {
-	struct libeosio::ec_keypair pair;
+	struct libantelope::ec_keypair pair;
 
 	while (m_count < m_max) {
 		struct result res;
-		libeosio::ec_generate_key(&pair);
+		libantelope::ec_generate_key(&pair);
 		if (_contains_word(&pair, res)) {
 			m_callback->onResult(&pair, res);
 			m_count++;
@@ -111,10 +111,10 @@ void KeySearch::find(size_t num_results)
 	_search_linear();
 }
 
-bool KeySearch::_contains_word(const struct libeosio::ec_keypair* key, struct result& result) {
+bool KeySearch::_contains_word(const struct libantelope::ec_keypair* key, struct result& result) {
 
 	size_t prefix_len = m_prefix.length();
-	std::string pubstr = libeosio::wif_pub_encode(key->pub, m_prefix).substr(prefix_len);
+	std::string pubstr = libantelope::wif_pub_encode(key->pub, m_prefix).substr(prefix_len);
 	strtolower(pubstr);
 
 	for(auto const& w: m_words) {

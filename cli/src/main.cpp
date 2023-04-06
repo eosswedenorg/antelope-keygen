@@ -24,9 +24,9 @@
 #include <iostream>
 #include <cstring>
 #include <CLI11/CLI11.hpp>
-#include <libeosio/base58.hpp>
-#include <libeosio/ec.hpp>
-#include <libeosio/WIF.hpp>
+#include <libantelope/base58.hpp>
+#include <libantelope/ec.hpp>
+#include <libantelope/WIF.hpp>
 #include <eoskeygen/config.hpp>
 #include <eoskeygen/core/file.hpp>
 #include <eoskeygen/core/string.hpp>
@@ -40,7 +40,7 @@
 
 // Command line options.
 bool option_l33t = false;
-libeosio::wif_codec_t key_codec;
+libantelope::wif_codec_t key_codec;
 
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 size_t option_num_threads;
@@ -71,7 +71,7 @@ int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& d
 	ks.setCallback(&rs);
 
 	for(auto it = words.begin(); it != words.end(); it++) {
-		size_t p = libeosio::is_base58(*it);
+		size_t p = libantelope::is_base58(*it);
 		if (p != std::string::npos) {
 			std::cerr << "The word '"
 				<< *it << "' contains an invalid non-base58 character '"
@@ -128,7 +128,7 @@ int main(int argc, char **argv) {
 	size_t bench_count;
 	int rc = 0;
 
-	libeosio::ec_init();
+	libantelope::ec_init();
 
 	CLI::Option* version = cmd.add_flag("-v,--version", "Show version");
 	cmd.add_option("--format", key_format, "valid values: K1, fio, legacy")->default_val("K1");
@@ -174,11 +174,11 @@ int main(int argc, char **argv) {
 	}
 
 	if (key_format == "fio") {
-		key_codec = libeosio::wif_create_legacy_codec("FIO");
+		key_codec = libantelope::wif_create_legacy_codec("FIO");
 	} else if (key_format == "legacy") {
-		key_codec = libeosio::WIF_CODEC_LEG;
+		key_codec = libantelope::WIF_CODEC_LEG;
 	} else if (key_format == "K1") {
-		key_codec = libeosio::WIF_CODEC_K1;
+		key_codec = libantelope::WIF_CODEC_K1;
 	} else {
 		std::cerr << "invalid key format: " << key_format << std::endl;
 		goto end;
@@ -236,12 +236,12 @@ int main(int argc, char **argv) {
 	}
 	// No subcommand given, just generate and print a keypair.
 	else {
-		struct libeosio::ec_keypair pair;
-		libeosio::ec_generate_key(&pair);
-		libeosio::wif_print_key(&pair, key_codec);
+		struct libantelope::ec_keypair pair;
+		libantelope::ec_generate_key(&pair);
+		libantelope::wif_print_key(&pair, key_codec);
 		goto end;
 	}
 
-end: 	libeosio::ec_shutdown();
+end: 	libantelope::ec_shutdown();
 	return rc;
 }

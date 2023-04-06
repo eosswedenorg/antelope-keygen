@@ -25,7 +25,7 @@
 #include <thread>
 #include <mutex>
 #include <vector>
-#include <libeosio/ec.hpp>
+#include <libantelope/ec.hpp>
 #include <eoskeygen/key_search_result.hpp>
 #include <eoskeygen/key_search.hpp>
 
@@ -37,12 +37,12 @@ std::mutex g_count_mtx;
 // Thread process.
 void KeySearch::_thr_proc()
 {
-	struct libeosio::ec_keypair pair;
+	struct libantelope::ec_keypair pair;
 
 	while (m_count < m_max) {
 		struct result res;
 
-		libeosio::ec_generate_key(&pair);
+		libantelope::ec_generate_key(&pair);
 		if (_contains_word(&pair, res)) {
 
 			// Guard output with mutex, so we don't get
