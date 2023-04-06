@@ -156,7 +156,7 @@ To speed up the build process, you can install `libantelope`
 
 #### Ubuntu
 
-You can use [EOS Sweden's APT Repository](https://eosswedenorg.github.io/apt) like this:
+You can use [Sw/eden's APT Repository](https://eosswedenorg.github.io/apt) like this:
 
 ```sh
 $ sudo apt-get install software-properties-common
