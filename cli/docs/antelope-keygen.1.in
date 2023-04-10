@@ -1,9 +1,9 @@
-.TH @PROJECT_NAME@ 1 "January, 2020" "@PROJECT_NAME@ @PROJECT_VERSION@"
+.TH @PROJECT_NAME@ 1 "April, 2023" "@PROJECT_NAME@ @PROJECT_VERSION@"
 
 .SH NAME
 @PROJECT_NAME@ - Generate public and private keypair for
-.UR https://eos.io/
-EOS
+.UR https://antelope.io
+Antelope IO
 .UE .
 
 .SH SYNOPSIS
@@ -17,12 +17,16 @@ EOS
 .YS
 
 .SY @PROJECT_NAME@
+.OP \--format <value>
+.YS
+
+.SY @PROJECT_NAME@
 search
 .OP -m
 .OP \--l33t
-.OP \--threads=<num>
-.OP \--dict=<file1> ...
-.OP \--lang=<value> ...
+.OP \--threads <num>
+.OP \--dict <file1> ...
+.OP \--lang <value> ...
 .B word_list
 .OP count
 .YS
@@ -34,17 +38,20 @@ benchmark
 
 .SH DESCRIPTION
 .P
-Output one EOSIO key pair if no arguments are given
+Output one Antelope key pair if no arguments are given
 .P
 Options and subcommands are as follows:
 
-.TP 15
+.TP 20
 .B -h, --help
 Shows this help text.
-.TP 15
+.TP 20
 .B -v
 Shows version.
-.TP 15
+.TP 20
+.B --format <value>
+What keyformat to use, valid values are: K1, legacy, fio
+.TP 20
 .B search
 performs a search, finding
 .I <count>
@@ -65,12 +72,12 @@ Takes each word in
 .I <word_list>
 and find all l33tspeak combinations of that word and uses the new list for the search.
 .TP 20
-.B --threads=<num>
+.B --threads <num>
 Use
 .I <num>
 of parallel threads for searching. Default is what the operating system recommends.
 .TP 20
-.B --dict=<file>
+.B --dict <file>
 Use words found in
 .I <file>
 (separated by newline) to highlight words in the keys found (note that the words in this
@@ -78,7 +85,7 @@ Use words found in
 .B --dict
 flag. In that case contents of all files are merged into one dictionary.
 .TP 20
-.B --lang=<value>
+.B --lang <value>
 Same as
 .B --dict
 but will use
