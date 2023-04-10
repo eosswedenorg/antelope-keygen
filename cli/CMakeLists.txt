@@ -68,6 +68,8 @@ install(FILES ${PROJECT_BINARY_DIR}/README.cli.md
 
 if (UNIX)
 	configure_file( docs/antelope-keygen.1.in ${PROJECT_BINARY_DIR}/man1/antelope-keygen.1 )
+	configure_file( docs/antelope-keygen-search.1.in ${PROJECT_BINARY_DIR}/man1/antelope-keygen-search.1 )
+	configure_file( docs/antelope-keygen-benchmark.1.in ${PROJECT_BINARY_DIR}/man1/antelope-keygen-benchmark.1 )
 
 	install(DIRECTORY ${PROJECT_BINARY_DIR}/man1
 			DESTINATION ${CMAKE_INSTALL_MANDIR}
