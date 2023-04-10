@@ -1,9 +1,9 @@
 
-# eosio-keygen (gui)
+# antelope-keygen (gui)
 
-This is the graphical version of [eosio-keygen](https://github.com/eosswedenorg/eosio-keygen) project.
+This is the graphical version of the [antelope-keygen](https://github.com/eosswedenorg/antelope-keygen) project.
 
-The program generates public and private keypairs for [EOSIO](https://eos.io/)
+This program generates public and private keypair for [Antelope IO](https://antelope.io)
 
 Among the basic functionality the program can also search for keys containing specific words also know as _vanity keys_.
 
