@@ -1,5 +1,5 @@
 
-# antelope-keygen (cli)
+# @PROJECT_NAME@ (cli)
 
 Generate public and private keypair for [Antelope IO](https://antelope.io)
 
@@ -32,7 +32,7 @@ Options and subcommands are as follows:
 
 ### search command
 
-`eosio-keygen search [-m] [--l33t] [--threads <num>] [--dict <file1> ...]  [--lang <value> ...]  word_list [count]`
+`@PROJECT_NAME@ search [-m] [--l33t] [--threads <num>] [--dict <file1> ...]  [--lang <value> ...]  word_list [count]`
 
 performs a search, finding `count` public keys containing one or more words from `word_list` (separated with ',').
 
@@ -70,7 +70,7 @@ Number of keys to search for (default is 10)
 
 ### benchmark command
 
-`antelope-keygen benchmark [num_keys]`
+`@PROJECT_NAME@ benchmark [num_keys]`
 
 performs a benchmark test, generating `num_keys` keys and measuring the time.
 
