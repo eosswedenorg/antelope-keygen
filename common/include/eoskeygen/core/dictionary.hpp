@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_CORE_DICTIONARY_H
-#define EOSIOKEYGEN_COMMON_CORE_DICTIONARY_H
+#ifndef ANTELOPEKEYGEN_COMMON_CORE_DICTIONARY_H
+#define ANTELOPEKEYGEN_COMMON_CORE_DICTIONARY_H
 
 #include <string>
 #include <map>
 #include <set>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 class Dictionary
 {
@@ -70,6 +70,6 @@ protected :
 	std::set<std::string> m_words;
 };
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
-#endif /* EOSIOKEYGEN_COMMON_CORE_DICTIONARY_H */
+#endif /* ANTELOPEKEYGEN_COMMON_CORE_DICTIONARY_H */

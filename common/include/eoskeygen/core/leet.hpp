@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_CORE_LEET_H
-#define EOSIOKEYGEN_COMMON_CORE_LEET_H
+#ifndef ANTELOPEKEYGEN_COMMON_CORE_LEET_H
+#define ANTELOPEKEYGEN_COMMON_CORE_LEET_H
 
 #include <string>
 #include <eoskeygen/core/strlist.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 strlist_t l33twords(std::string str);
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
-#endif /* EOSIOKEYGEN_COMMON_CORE_LEET_H */
+#endif /* ANTELOPEKEYGEN_COMMON_CORE_LEET_H */

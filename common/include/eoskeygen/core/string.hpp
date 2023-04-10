@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_CORE_STRING_H
-#define EOSIOKEYGEN_COMMON_CORE_STRING_H
+#ifndef ANTELOPEKEYGEN_COMMON_CORE_STRING_H
+#define ANTELOPEKEYGEN_COMMON_CORE_STRING_H
 
 #include <vector>
 #include <string>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 std::string& strtolower(std::string& str);
 
@@ -35,6 +35,6 @@ std::string& rtrim(std::string& str);
 std::string& ltrim(std::string& str);
 std::string& trim(std::string& str);
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
-#endif /* EOSIOKEYGEN_COMMON_CORE_STRING_H */
+#endif /* ANTELOPEKEYGEN_COMMON_CORE_STRING_H */

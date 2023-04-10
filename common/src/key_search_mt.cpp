@@ -29,7 +29,7 @@
 #include <eoskeygen/key_search_result.hpp>
 #include <eoskeygen/key_search.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 // Mutex guard for m_count.
 std::mutex g_count_mtx;
@@ -98,4 +98,4 @@ void KeySearch::_search_mt()
 	}
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

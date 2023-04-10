@@ -62,10 +62,10 @@ public:
 	}
 };
 
-int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& dict, int count) {
+int cmd_search(const antelopekeygen::strlist_t& words, const antelopekeygen::Dictionary& dict, int count) {
 
-	eoskeygen::KeySearch ks;
-	eoskeygen::CliKeySearchResult rs(dict, key_codec);
+	antelopekeygen::KeySearch ks;
+	antelopekeygen::CliKeySearchResult rs(dict, key_codec);
 
 	ks.setPrefix(key_codec.pub);
 	ks.setCallback(&rs);
@@ -82,7 +82,7 @@ int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& d
 
 	if (option_l33t) {
 		for(std::size_t i = 0; i < words.size(); i++) {
-			ks.addList(eoskeygen::l33twords(words[i]));
+			ks.addList(antelopekeygen::l33twords(words[i]));
 		}
 	} else {
 		ks.addList(words);
@@ -93,7 +93,7 @@ int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& d
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 
 	std::cout << "Searching for " << count
-		<< " keys containing: " << eoskeygen::strlist::join(ks.getList(), ",")
+		<< " keys containing: " << antelopekeygen::strlist::join(ks.getList(), ",")
 #ifdef EOSIOKEYGEN_HAVE_THREADS
 		<< ", Using: " << ks.getThreadCount() << " threads"
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
@@ -106,12 +106,12 @@ int cmd_search(const eoskeygen::strlist_t& words, const eoskeygen::Dictionary& d
 
 void cmd_benchmark(size_t num_keys) {
 
-	struct eoskeygen::benchmark_result res;
+	struct antelopekeygen::benchmark_result res;
 
 	std::cout << "Benchmark: Generating "
 		<< num_keys << " keys" << std::endl;
 
-	eoskeygen::benchmark(num_keys, &res);
+	antelopekeygen::benchmark(num_keys, &res);
 
 	std::cout << "Result: Took " << res.sec << " seconds, "
 		<< res.kps << " keys per second." << std::endl;
@@ -146,7 +146,7 @@ int main(int argc, char **argv) {
 	search_cmd->add_option("--threads", option_num_threads,
 		"Use <num> of parallel threads for searching.\n"
 		"Default is what the operating system recomends.")
-		->default_val(eoskeygen::KeySearch::max_threads());
+		->default_val(antelopekeygen::KeySearch::max_threads());
 
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 
@@ -185,15 +185,15 @@ int main(int argc, char **argv) {
 	}
 
 	if (search_cmd->parsed()) {
-		eoskeygen::strlist_t words;
-		eoskeygen::Dictionary dict;
+		antelopekeygen::strlist_t words;
+		antelopekeygen::Dictionary dict;
 
 		if (*monocrome) {
-			eoskeygen::console::disable_color = true;
+			antelopekeygen::console::disable_color = true;
 		}
 
 		for (auto item : dict_list) {
-			eoskeygen::Dictionary d;
+			antelopekeygen::Dictionary d;
 
 			if (d.loadFromFile(item)) {
 				dict.add(d);
@@ -203,7 +203,7 @@ int main(int argc, char **argv) {
 		}
 
 		for (auto item : lang_list) {
-			eoskeygen::Dictionary d;
+			antelopekeygen::Dictionary d;
 			std::string filename(CONFIG_SHARE_FULL_PATH "/dicts/" + item);
 
 			if (d.loadFromFile(filename)) {
@@ -215,7 +215,7 @@ int main(int argc, char **argv) {
 
 		if (search_words.rfind("file:", 0) == 0) {
 			std::string filename = search_words.substr(5);
-			if (!eoskeygen::readLines(filename, words)) {
+			if (!antelopekeygen::readLines(filename, words)) {
 				std::cerr << "Could not read file: " << filename << std::endl;
 				goto end;
 			}
@@ -225,7 +225,7 @@ int main(int argc, char **argv) {
 				goto end;
 			}
 		} else {
-			words = eoskeygen::strlist::splitw(search_words);
+			words = antelopekeygen::strlist::splitw(search_words);
 		}
 
 		rc = cmd_search(words, dict, search_count);

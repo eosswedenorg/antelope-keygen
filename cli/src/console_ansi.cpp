@@ -24,7 +24,7 @@
 #include <iostream>
 #include "console.hpp"
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 namespace console {
 
@@ -80,4 +80,4 @@ std::ostream& operator<<(std::ostream& os, const fg& obj) {
 
 } // namespace console
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

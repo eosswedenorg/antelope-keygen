@@ -26,7 +26,7 @@
 #include <algorithm>
 #include <eoskeygen/core/string.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 std::string& strtolower(std::string& str) {
 	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c){ return std::tolower(c); });
@@ -49,4 +49,4 @@ std::string& trim(std::string& str) {
 	return ltrim(rtrim(str));
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

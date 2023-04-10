@@ -28,7 +28,7 @@
 #include <eoskeygen/key_search_result.hpp>
 #include <eoskeygen/key_search.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 KeySearch::KeySearch() :
 	m_prefix        ("EOS"),
@@ -128,4 +128,4 @@ bool KeySearch::_contains_word(const struct libantelope::ec_keypair* key, struct
 	return false;
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

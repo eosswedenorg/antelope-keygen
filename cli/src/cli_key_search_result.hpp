@@ -31,7 +31,7 @@
 #include <eoskeygen/key_search.hpp>
 #include <eoskeygen/key_search_result.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 class Dictionary;
 
@@ -49,6 +49,6 @@ protected :
 	libantelope::wif_codec_t m_codec;
 };
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
 #endif /* EOSIOKEYGEN_KEY_SEARCH_HELPERS_H */

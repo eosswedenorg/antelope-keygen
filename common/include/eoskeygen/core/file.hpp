@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_CORE_FILE_H
-#define EOSIOKEYGEN_COMMON_CORE_FILE_H
+#ifndef ANTELOPEKEYGEN_COMMON_CORE_FILE_H
+#define ANTELOPEKEYGEN_COMMON_CORE_FILE_H
 
 #include <eoskeygen/core/strlist.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 bool readLines(const std::string& filename, strlist_t& lines);
 
 } // namespace
 
-#endif /* EOSIOKEYGEN_COMMON_CORE_FILE_H */
+#endif /* ANTELOPEKEYGEN_COMMON_CORE_FILE_H */

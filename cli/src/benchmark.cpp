@@ -25,7 +25,7 @@
 #include <libantelope/ec.hpp>
 #include "benchmark.hpp"
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 std::chrono::duration<float> _run_benchmark(size_t num_keys) {
 	auto start = std::chrono::steady_clock::now();
@@ -47,4 +47,4 @@ void benchmark(size_t num_keys, struct benchmark_result* res) {
 	res->kps = static_cast<float>(num_keys) / res->sec;
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

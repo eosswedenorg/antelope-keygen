@@ -24,7 +24,7 @@
 #include <algorithm>
 #include <eoskeygen/core/leet.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 static bool is_l33t(char ch, char& r) {
 
@@ -79,4 +79,4 @@ strlist_t l33twords(std::string str) {
 	return list;
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

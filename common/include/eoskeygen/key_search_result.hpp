@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_KEY_SEARCH_RESULT_H
-#define EOSIOKEYGEN_COMMON_KEY_SEARCH_RESULT_H
+#ifndef ANTELOPEKEYGEN_COMMON_KEY_SEARCH_RESULT_H
+#define ANTELOPEKEYGEN_COMMON_KEY_SEARCH_RESULT_H
 
 #include <eoskeygen/key_search.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 class IKeySearchResult
 {
@@ -35,6 +35,6 @@ public :
 	virtual void onResult(const struct libantelope::ec_keypair* key, const struct KeySearch::result& result) = 0;
 };
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
-#endif /* EOSIOKEYGEN_COMMON_KEY_SEARCH_RESULT_H */
+#endif /* ANTELOPEKEYGEN_COMMON_KEY_SEARCH_RESULT_H */

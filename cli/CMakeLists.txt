@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.15)
 #  Project Info
 # --------------------------------
 
-project(eosio-keygen
+project(antelope-keygen
 	VERSION ${CMAKE_PROJECT_VERSION}
 	LANGUAGES CXX)
 
@@ -67,7 +67,7 @@ install(FILES ${PROJECT_BINARY_DIR}/README.cli.md
 		COMPONENT cli)
 
 if (UNIX)
-	configure_file( docs/eosio-keygen.1.in ${PROJECT_BINARY_DIR}/man1/eosio-keygen.1 )
+	configure_file( docs/antelope-keygen.1.in ${PROJECT_BINARY_DIR}/man1/antelope-keygen.1 )
 
 	install(DIRECTORY ${PROJECT_BINARY_DIR}/man1
 			DESTINATION ${CMAKE_INSTALL_MANDIR}

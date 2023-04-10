@@ -37,13 +37,13 @@
 #include <eoskeygen/key_search.hpp>
 #include "MultiSelect.hpp"
 
-class SearchWindow : public QWidget, public eoskeygen::IKeySearchResult
+class SearchWindow : public QWidget, public antelopekeygen::IKeySearchResult
 {
 	Q_OBJECT
 public:
 	explicit SearchWindow(QWidget *parent = 0, Qt::WindowFlags flags = Qt::WindowFlags());
 
-	void onResult(const struct libantelope::ec_keypair* key, const struct eoskeygen::KeySearch::result& result);
+	void onResult(const struct libantelope::ec_keypair* key, const struct antelopekeygen::KeySearch::result& result);
 
 private :
 	void initSignals();
@@ -76,9 +76,9 @@ private:
 	// Search worker thread.
 	QFutureWatcher<void> m_worker;
 
-	eoskeygen::KeySearch m_ksearch;
+	antelopekeygen::KeySearch m_ksearch;
 
-	eoskeygen::Dictionary m_dict;
+	antelopekeygen::Dictionary m_dict;
 
 	//  Widgets
 	// ----------------

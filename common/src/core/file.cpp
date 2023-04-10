@@ -25,7 +25,7 @@
 #include <eoskeygen/core/string.hpp>
 #include <eoskeygen/core/file.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 bool readLines(const std::string& filename, strlist_t& lines) {
 
@@ -46,4 +46,4 @@ bool readLines(const std::string& filename, strlist_t& lines) {
 	return true;
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

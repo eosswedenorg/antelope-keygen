@@ -25,7 +25,7 @@
 #include <eoskeygen/core/string.hpp>
 #include <eoskeygen/core/strlist.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 strlist_t strlist::splitw(const std::string& str, const std::string& delim) {
 
@@ -48,7 +48,7 @@ strlist_t strlist::split(const std::string& str, const std::string& delim) {
 	return r;
 }
 
-std::string strlist::join(const eoskeygen::strlist_t& list, const std::string& delim) {
+std::string strlist::join(const strlist_t& list, const std::string& delim) {
 
 	std::string out;
 
@@ -72,4 +72,4 @@ strlist_t& strlist::strip(strlist_t& list, strlist_stripfunc_t fn) {
 	return list;
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

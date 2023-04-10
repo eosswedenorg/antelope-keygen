@@ -28,7 +28,7 @@
 #include "console.hpp"
 #include "cli_key_search_result.hpp"
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 static size_t highlight(console::Color color, const std::string& str, size_t pos, size_t len) {
 
@@ -74,4 +74,4 @@ void CliKeySearchResult::onResult(const struct libantelope::ec_keypair* key, con
 		<< "Private: " << libantelope::wif_priv_encode(key->secret, m_codec.pvt) << std::endl;
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_CORE_STRLIST_H
-#define EOSIOKEYGEN_COMMON_CORE_STRLIST_H
+#ifndef ANTELOPEKEYGEN_COMMON_CORE_STRLIST_H
+#define ANTELOPEKEYGEN_COMMON_CORE_STRLIST_H
 
 #include <vector>
 #include <string>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 typedef std::vector<std::string> strlist_t;
 
@@ -45,6 +45,6 @@ strlist_t& strip(strlist_t& list, strlist_stripfunc_t fn);
 
 } // namespace strlist
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
-#endif /* EOSIOKEYGEN_COMMON_CORE_STRLIST_H */
+#endif /* ANTELOPEKEYGEN_COMMON_CORE_STRLIST_H */

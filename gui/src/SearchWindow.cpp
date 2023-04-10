@@ -72,8 +72,8 @@ m_btn_clear		("Clear")
 	m_layout.addWidget(&m_leet_cb, 0, 2);
 
 #ifdef EOSIOKEYGEN_HAVE_THREADS
-	m_num_threads.setValue((int) eoskeygen::KeySearch::max_threads());
-	m_num_threads.setRange(1, (int) eoskeygen::KeySearch::max_threads());
+	m_num_threads.setValue((int) antelopekeygen::KeySearch::max_threads());
+	m_num_threads.setRange(1, (int) antelopekeygen::KeySearch::max_threads());
 	m_num_threads.setSuffix(" Threads");
 	m_layout.addWidget(&m_num_threads, 0, 3);
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
@@ -121,7 +121,7 @@ void SearchWindow::initSignals()
 void SearchWindow::loadDictionaries()
 {
 	QStringList list;
-	eoskeygen::Dictionary tmpDict;
+	antelopekeygen::Dictionary tmpDict;
 	std::string base_path(CONFIG_DICT_FULL_PATH);
 
 	// Clear dictionary first.
@@ -146,7 +146,7 @@ void SearchWindow::loadDictionaries()
 	}
 }
 
-void SearchWindow::onResult(const struct libantelope::ec_keypair* key, const struct eoskeygen::KeySearch::result& result)
+void SearchWindow::onResult(const struct libantelope::ec_keypair* key, const struct antelopekeygen::KeySearch::result& result)
 {
 	int pos = (int) result.pos;
 	int len = (int) result.len;
@@ -156,7 +156,7 @@ void SearchWindow::onResult(const struct libantelope::ec_keypair* key, const str
 	QString mid = pub.mid(pos, len);
 	QString left = pub.left(pos);
 	QString right = pub.mid(pos + len, pub.size() - pos);
-	eoskeygen::Dictionary::search_result_t dict_res = m_dict.search(pub.toStdString());
+	antelopekeygen::Dictionary::search_result_t dict_res = m_dict.search(pub.toStdString());
 
 	QString out = "Public:  " + pub.left(pub_prefix_len);
 	for(int i = pub_prefix_len; i < pub.length(); ) {
@@ -198,12 +198,12 @@ void SearchWindow::search()
 	}
 
 	const std::string& input = m_txt_search.text().toLocal8Bit().constData();
-	eoskeygen::strlist_t list;
+	antelopekeygen::strlist_t list;
 
 	if (m_leet_cb.isChecked()) {
-		list = eoskeygen::l33twords(input);
+		list = antelopekeygen::l33twords(input);
 	} else {
-		list = eoskeygen::strlist::splitw(input);
+		list = antelopekeygen::strlist::splitw(input);
 	}
 
 	// Validate that we atleast got something to search for.
@@ -222,10 +222,10 @@ void SearchWindow::search()
 	m_ksearch.setThreadCount(m_num_threads.value());
 #endif /* EOSIOKEYGEN_HAVE_THREADS */
 
-	QFuture<void> future = QtConcurrent::run(&m_ksearch, &eoskeygen::KeySearch::find, m_num_results.value());
+	QFuture<void> future = QtConcurrent::run(&m_ksearch, &antelopekeygen::KeySearch::find, m_num_results.value());
 	m_worker.setFuture(future);
 
-	m_status.setText("Searching for: " + QString::fromStdString(eoskeygen::strlist::join(list, ", ")));
+	m_status.setText("Searching for: " + QString::fromStdString(antelopekeygen::strlist::join(list, ", ")));
 }
 
 void SearchWindow::output(const std::string& html)

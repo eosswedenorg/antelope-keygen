@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(eosio-keygen-gui
+project(antelope-keygen-gui
 	VERSION ${CMAKE_PROJECT_VERSION}
-	DESCRIPTION "Keygenerator for EOSIO (gui)"
+	DESCRIPTION "Keygenerator for Antelope blockchain (gui)"
 	LANGUAGES CXX)
 
 # Append modules dir

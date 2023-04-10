@@ -29,7 +29,7 @@
 #include <eoskeygen/core/dictionary.hpp>
 #include <eoskeygen/core/file.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 struct StringContains {
     StringContains(const std::string& str, std::vector<size_t>& pos) : m_str(str), m_pos(pos) {}
@@ -126,4 +126,4 @@ Dictionary::search_result_t Dictionary::search(const std::string& subject) const
 	return res;
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

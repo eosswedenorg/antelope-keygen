@@ -31,7 +31,7 @@
 #endif
 #include "isatty.hpp"
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 bool isatty(int fd) {
     return ::_isatty(fd);
@@ -42,4 +42,4 @@ bool isatty(FILE* fd) {
     return fd ? isatty(_fileno(fd)) : false;
 }
 
-} // namespace eoskeygen
+} // namespace antelopekeygen

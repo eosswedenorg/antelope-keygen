@@ -26,7 +26,7 @@
 
 #include <ostream>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 namespace console {
 
@@ -86,6 +86,6 @@ namespace console {
 
 } // namespace console
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
 #endif /* EOSIOKEYGEN_CONSOLE_H */

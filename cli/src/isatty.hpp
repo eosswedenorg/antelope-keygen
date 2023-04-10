@@ -26,12 +26,12 @@
 
 #include <stdio.h>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 bool isatty(int fd);
 
 bool isatty(FILE* fd);
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
 #endif /* EOSIOKEYGEN_CORE_ISATTY_H */

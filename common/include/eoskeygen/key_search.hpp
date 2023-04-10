@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef EOSIOKEYGEN_COMMON_KEY_SEARCH_H
-#define EOSIOKEYGEN_COMMON_KEY_SEARCH_H
+#ifndef ANTELOPEKEYGEN_COMMON_KEY_SEARCH_H
+#define ANTELOPEKEYGEN_COMMON_KEY_SEARCH_H
 
 #include <stdint.h>
 #include <string>
@@ -31,7 +31,7 @@
 #include <eoskeygen/core/dictionary.hpp>
 #include <eoskeygen/core/strlist.hpp>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 class IKeySearchResult;
 
@@ -64,7 +64,7 @@ public :
 	// Set callback for search result.
 	void setCallback(IKeySearchResult* callback);
 
-#ifdef EOSIOKEYGEN_HAVE_THREADS
+#ifdef ANTELOPEKEYGEN_HAVE_THREADS
 	// Returns the maximum number of threads
 	// reported by the operating system.
 	static size_t max_threads();
@@ -73,7 +73,7 @@ public :
 	void setThreadCount(size_t num);
 
 	size_t getThreadCount() const;
-#endif /* EOSIOKEYGEN_HAVE_THREADS */
+#endif /* ANTELOPEKEYGEN_HAVE_THREADS */
 
 	// Aborts find() operation if started.
 	// This is useful for multithreaded code (like GUI application)
@@ -90,11 +90,11 @@ protected :
 	// returns true if a word was found (stored in <result>), false otherwise.
 	bool _contains_word(const struct libantelope::ec_keypair* key, struct result& result);
 
-#ifdef EOSIOKEYGEN_HAVE_THREADS
+#ifdef ANTELOPEKEYGEN_HAVE_THREADS
 	void _thr_proc();
 
 	void _search_mt();
-#endif /* EOSIOKEYGEN_HAVE_THREADS */
+#endif /* ANTELOPEKEYGEN_HAVE_THREADS */
 
 	void _search_linear();
 
@@ -112,14 +112,14 @@ protected :
 	// Current number of keys found.
 	std::size_t m_count;
 
-#ifdef EOSIOKEYGEN_HAVE_THREADS
+#ifdef ANTELOPEKEYGEN_HAVE_THREADS
 	// Number of threads to use.
 	size_t m_threads;
-#endif /* EOSIOKEYGEN_HAVE_THREADS */
+#endif /* ANTELOPEKEYGEN_HAVE_THREADS */
 
 	IKeySearchResult* m_callback;
 };
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
-#endif /* EOSIOKEYGEN_COMMON_KEY_SEARCH_H */
+#endif /* ANTELOPEKEYGEN_COMMON_KEY_SEARCH_H */

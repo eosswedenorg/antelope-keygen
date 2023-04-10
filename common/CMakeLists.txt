@@ -28,7 +28,7 @@ set( COMMON_SOURCE
 if (USE_THREADS)
 	find_package(Threads)
 	if (Threads_FOUND)
-		set( EOSIOKEYGEN_HAVE_THREADS TRUE )
+		set( ANTELOPEKEYGEN_HAVE_THREADS TRUE )
 		set( COMMON_SOURCE ${COMMON_SOURCE} src/key_search_mt.cpp )
 	endif (Threads_FOUND)
 endif (USE_THREADS)

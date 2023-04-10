@@ -26,7 +26,7 @@
 
 #include <ctime>
 
-namespace eoskeygen {
+namespace antelopekeygen {
 
 struct benchmark_result {
 	float sec; // elapsed seconds.
@@ -35,6 +35,6 @@ struct benchmark_result {
 
 void benchmark(size_t num_keys, struct benchmark_result* res);
 
-} // namespace eoskeygen
+} // namespace antelopekeygen
 
 #endif /* EOSIOKEYGEN_BENCHMARK_H */

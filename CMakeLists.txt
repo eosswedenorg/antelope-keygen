@@ -4,10 +4,10 @@ cmake_minimum_required(VERSION 3.15)
 #  Project Info
 # --------------------------------
 
-project(eosio-keygen
+project(antelope-keygen
 	VERSION 1.0.8
-	DESCRIPTION "Keygenerator for EOSIO"
-	HOMEPAGE_URL "https://github.com/eosswedenorg/eosio-keygen" )
+	DESCRIPTION "Keygenerator for Antelope blockchain"
+	HOMEPAGE_URL "https://github.com/eosswedenorg/antelope-keygen" )
 
 set( PROJECT_MAINTAINER "Henrik Hautakoski <henrik@eossweden.org>")
 set( PROJECT_LICENSE_FILE ${CMAKE_CURRENT_LIST_DIR}/LICENSE )
@@ -102,7 +102,7 @@ set( CMAKE_POSITION_INDEPENDENT_CODE TRUE )
 configure_file(config.hpp.in "${PROJECT_BINARY_DIR}/config.hpp" @ONLY)
 include_directories(${PROJECT_BINARY_DIR})
 
-# Bundle eosio-extras on windows.
+# Bundle antelope-extras on windows.
 if (WIN32)
 	include(extras)
 	list(APPEND components extras )

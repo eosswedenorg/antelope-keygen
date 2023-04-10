@@ -25,7 +25,7 @@
 #include "isatty.hpp"
 #include "console.hpp"
 
-namespace eoskeygen { namespace console {
+namespace antelopekeygen { namespace console {
 
 bool disable_color = false;
 
@@ -45,4 +45,4 @@ bool isColorsSupported(const std::ostream& os) {
 	return disable_color == false && isatty(fd);
 }
 
-} } // namespace eoskeygen::console
+} } // namespace antelopekeygen::console

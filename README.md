@@ -1,11 +1,11 @@
 
-![](https://github.com/eosswedenorg/eosio-keygen/workflows/CI/badge.svg)
-[![GitHub release](https://img.shields.io/github/v/release/eosswedenorg/eosio-keygen?include_prereleases)](https://github.com/eosswedenorg/eosio-keygen/releases/latest)
+![](https://github.com/eosswedenorg/antelope-keygen/workflows/CI/badge.svg)
+[![GitHub release](https://img.shields.io/github/v/release/eosswedenorg/antelope-keygen?include_prereleases)](https://github.com/eosswedenorg/antelope-keygen/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# EOSIO Keygen
+# Antelope Keygen
 
-This program generates public and private keypair for [EOS](https://eos.io/)
+This program generates public and private keypair for [Antelope IO](https://antelope.io)
 
 ## Compile
 
@@ -164,7 +164,6 @@ $ curl https://apt.eossweden.org/key 2> /dev/null | sudo apt-key add -
 $ sudo apt-add-repository -y 'deb [arch=amd64] https://apt.eossweden.org/main `lsb_release -cs` stable'
 $ sudo apt-get install libantelope-dev
 ```
-
 or manually via `.deb` file from [github](https://github.com/eosswedenorg/libantelope/releases)
 
 ```sh
