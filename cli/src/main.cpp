@@ -119,7 +119,7 @@ void cmd_benchmark(size_t num_keys) {
 
 int main(int argc, char **argv) {
 
-	CLI::App cmd("Keygenerator for EOSIO", PROGRAM_NAME);
+	CLI::App cmd("Keygenerator for Antelope based blockchains", PROGRAM_NAME);
 	std::vector<std::string> dict_list;
 	std::vector<std::string> lang_list;
 	std::string search_words;
