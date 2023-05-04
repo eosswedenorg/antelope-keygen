@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.15)
 # --------------------------------
 
 project(antelope-keygen
-	VERSION 1.0.8
+	VERSION 1.1.0
 	DESCRIPTION "Keygenerator for Antelope based blockchain"
 	HOMEPAGE_URL "https://github.com/eosswedenorg/antelope-keygen" )
 
