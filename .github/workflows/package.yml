@@ -36,7 +36,7 @@ jobs:
         id: package
         run: |
             ./build.sh ${{matrix.build-opts}}
-            FILE=$(ls build/eosio-*.deb | head -1)
+            FILE=$(ls build/*.deb | head -1)
             echo "filename=$FILE" >> "$GITHUB_OUTPUT"
             echo "name=$(basename $FILE)" >> "$GITHUB_OUTPUT"
 
@@ -85,7 +85,7 @@ jobs:
         id: package
         run: |
             ./build.sh ${{matrix.build-opts}}
-            FILE=$(ls build/eosio-*.rpm | head -1)
+            FILE=$(ls build/*.rpm | head -1)
             echo "filename=$FILE" >> "$GITHUB_OUTPUT"
             echo "name=$(basename $FILE)" >> "$GITHUB_OUTPUT"
 
