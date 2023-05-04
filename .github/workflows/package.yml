@@ -37,8 +37,8 @@ jobs:
         run: |
             ./build.sh ${{matrix.build-opts}}
             FILE=$(ls build/eosio-*.deb | head -1)
-            echo "::set-output name=filename::$FILE"
-            echo "::set-output name=name::$(basename $FILE)"
+            echo "filename=$FILE" >> "$GITHUB_OUTPUT"
+            echo "name=$(basename $FILE)" >> "$GITHUB_OUTPUT"
 
       - name: Upload
         uses: actions/upload-release-asset@v1
@@ -86,8 +86,8 @@ jobs:
         run: |
             ./build.sh ${{matrix.build-opts}}
             FILE=$(ls build/eosio-*.rpm | head -1)
-            echo "::set-output name=filename::$FILE"
-            echo "::set-output name=name::$(basename $FILE)"
+            echo "filename=$FILE" >> "$GITHUB_OUTPUT"
+            echo "name=$(basename $FILE)" >> "$GITHUB_OUTPUT"
 
       - name: Upload
         uses: actions/upload-release-asset@v1
