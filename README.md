@@ -18,7 +18,7 @@ You will need `libantelope` and `cmake 3.15` or later to compile this project.
 **NOTE:** Only Ubuntu 20.04 and 22.04 and Fedoora 36 is officially supported.
 
 The project should compile fine on most versions/distros but it is only tested
-and distributed for those distros/versions by [Sw/eden](www.eossweden.org).
+and distributed for those distros/versions by [Sw/eden](http://www.eossweden.org).
 
 #### Dependencies
 
