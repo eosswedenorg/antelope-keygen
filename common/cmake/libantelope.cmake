@@ -2,7 +2,7 @@
 #  Variables
 # --------------------------------
 set( LIBANTELOPE_GIT_URL "https://github.com/eosswedenorg/libantelope.git" )
-set( LIBANTELOPE_WANTED_VERSION v0.2.1 )
+set( LIBANTELOPE_WANTED_VERSION v0.2.2 )
 
 # --------------------------------
 #  Macros
