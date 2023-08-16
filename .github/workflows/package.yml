@@ -19,7 +19,7 @@ jobs:
     name: DBM ${{matrix.os}} (${{matrix.component}})
     runs-on: ${{matrix.os}}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Qt
         if: startsWith(matrix.component, 'gui')
@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ${{ matrix.container}}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Dependancies
         run: |
@@ -112,7 +112,7 @@ jobs:
     name: Windows (${{matrix.arch}})
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Qt
         uses: jurplel/install-qt-action@v3
