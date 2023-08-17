@@ -147,8 +147,8 @@ jobs:
         run: |
           cmake --build build --config Release --target package
           $FILE=(ls build/*.exe)
-          echo "::set-output name=filename::$FILE"
-          echo "::set-output name=name::$(([io.fileinfo]"$FILE").basename).exe"
+          echo "filename=$FILE" >> "$GITHUB_OUTPUT"
+          echo "name=$(([io.fileinfo]"$FILE").basename)" >> "$GITHUB_OUTPUT"
 
       - name: Upload
         uses: actions/upload-release-asset@v1
