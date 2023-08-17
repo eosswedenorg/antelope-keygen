@@ -63,6 +63,14 @@ jobs:
               openssl1.1-devel-1.1.1q-1.fc36.x86_64
             qt: qt5-qtbase-devel-5.15.3-1.fc36.x86_64
 
+          - name: "fedora:37"
+            deps:
+              gcc-12.3.1-1.fc37.x86_64
+              gcc-c++-12.3.1-1.fc37.x86_64
+              cmake-3.27.1-1.fc37.x86_64
+              openssl-devel-3.0.9-1.fc37.x86_64
+            qt: qt5-qtbase-devel-5.15.9-3.fc37.x86_64
+
           - name: "fedora:38"
             deps:
               gcc-13.2.1-1.fc38.x86_64
