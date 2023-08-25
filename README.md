@@ -1,5 +1,5 @@
 
-![](https://github.com/eosswedenorg/antelope-keygen/workflows/CI/badge.svg)
+[![CI Test](https://github.com/eosswedenorg/antelope-keygen/workflows/CI/badge.svg)](https://github.com/eosswedenorg/antelope-keygen/actions)
 [![GitHub release](https://img.shields.io/github/v/release/eosswedenorg/antelope-keygen?include_prereleases)](https://github.com/eosswedenorg/antelope-keygen/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
