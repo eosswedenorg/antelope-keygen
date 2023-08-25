@@ -12,6 +12,10 @@ jobs:
         os: [ ubuntu-20.04, ubuntu-22.04 ]
         component: [ cli, gui ]
         include:
+          - os: ubuntu-20.04
+            qt: qt5-default=5.12.8+dfsg-0ubuntu2.1
+          - os: ubuntu-22.04
+            qt: qtbase5-dev=5.15.3+dfsg-2ubuntu0.2
           - component: cli
             build-opts: --cli --no-gui -t Release --pkg-type deb
           - component: gui
@@ -26,11 +30,7 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update
-          if [ "${{matrix.os}}" == "ubuntu-22.04" ]; then
-            sudo apt-get install qtbase5-dev=5.15.3+dfsg-2ubuntu0.2
-          else :
-            sudo apt-get install qt5-default=5.12.8+dfsg-0ubuntu2.1
-          fi
+          sudo apt-get install ${{matrix.qt}}
 
       - name: Package
         id: package
